@@ -1,0 +1,17 @@
+name: FacPlugin
+version: ${project.version}
+main: com.fac.FacPlugin
+api-version: '1.21.5'
+description: Applies the AI-designed factory (dimensions, biomes, mobs, structures) to real Paper flat worlds.
+authors: [Fac AI]
+libraries:
+  - com.google.code.gson:gson:2.11.0
+commands:
+  fac:
+    description: Fac AI factory control (setup/validate/status/render/clear/reload/tp).
+    usage: /fac <setup|validate|status|render|clear|reload|tp>
+    permission: fac.admin
+permissions:
+  fac.admin:
+    description: Operate the Fac factory builder.
+    default: op
