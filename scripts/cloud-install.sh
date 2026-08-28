@@ -30,7 +30,11 @@ echo "== Fac install: AI design pass (design -> simulate -> accept -> export) ==
 PYTHONPATH=src python3 -m fac complete --out .
 
 echo "== Fac install: Python acceptance tests =="
-PYTHONPATH=src python3 -m unittest tests/test_factory.py
+PYTHONPATH=src python3 -m unittest tests/test_factory.py tests/test_farms.py
+
+echo "== Fac install: validate the 100-farm knowledge base against the 26.2 registry =="
+PYTHONPATH=src python3 -m fac.farms validate
+PYTHONPATH=src python3 -m fac.farms export --out web/farms.json
 
 echo "== Fac install: building the Paper plugin =="
 ( cd plugin && mvn -q -B -DskipTests package )

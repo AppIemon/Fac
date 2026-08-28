@@ -1,70 +1,74 @@
-# Fac — AI 공장 월드
+# Fac — 야생 팜 설계 지식베이스 + 설계 도구
 
-크리에이티브 / OP가 있는 전제에서, **구조물 · 바이옴 · 몹 · 차원**을 데이터로 고정해 두고, AI가 공장을 배치하고 **직접 테스트한 뒤** 실제 마인크래프트 월드에 적용합니다.
+**야생(서바이벌)에서 지을 팜/공장을 AI로 미리 설계**하는 도구입니다. 유튜브/설계도로 검증된 팜을 **작동 원리 · 요구조건 · 산출물**로 정리해 두었고, **작동 원리만 알면 바로 설계도(블루프린트)** 를 뽑을 수 있습니다.
 
-대상: **Paper 26.2** (Java 25, data pack format 107.1).
+대상 버전: **Minecraft 26.2** (Java, data pack format 107.1, Java 25 런타임).
 
-두 가지 산출물이 있습니다.
+## 1. 팜 지식베이스 (핵심)
 
-- **Paper 플러그인 (기본, 실제 평면 월드)** — `plugin/` 의 `FacPlugin` 이 AI 설계를 읽어 **진짜 평면(superflat) 월드**에 구조물을 짓고, 바이옴을 칠하고, 역할 몹을 소환합니다. 차원은 차원별 평면 월드(`fac_campus`, `fac_nether_works`, `fac_end_works`, `fac_void_stack`)로 만들어집니다.
-- **데이터팩** — `datapacks/fac` 는 커스텀 월드젠 차원 프리셋 버전입니다(월드 생성 시 선택).
+`farms/data/*.json` 에 **엄선된 서바이벌 팜 100개** 가 들어 있습니다. 각 항목은 다음을 담습니다.
 
-## 월드가 하는 일
+- `principle` — 핵심 작동 원리 (스폰/이송/처치/수집)
+- `mechanics` — 메커니즘 태그 (예: `spawning_dark`, `water_stream`, `fall_damage`, `observer_harvest`, `crafter` …)
+- 요구조건 — 차원 / 바이옴 / Y / 광원 / 크기(footprint)
+- 구성 — 주요 블록, 필요 몹, 투입/산출 아이템
+- 생산량·AFK·레드스톤 난이도, 버전 상태(`works` / `works_with_caveat` / `situational`), 주의사항, 출처(제작자)
 
-| 차원 (플러그인 월드) | 역할 |
+카테고리: 몹/경험치 27 · 자원 15 · 작물 19 · 나무 12 · 동물 12 · 유틸/레드스톤 15 = **100**.
+
+### 최신 버전 검증
+
+지식베이스의 **모든 블록/아이템/몹/바이옴 ID를 실제 26.2 레지스트리로 검증**합니다. 레지스트리 스냅샷(`farms/registry/ids_26.2.json`)은 바닐라 26.2 데이터 리포트(`--reports`)에서 생성했습니다. → "지금 버전에 실제로 존재하는 요소인가"를 프로그램으로 보장.
+
+```bash
+PYTHONPATH=src python3 -m fac.farms validate     # 전체 100개 ID 검증
+PYTHONPATH=src python3 -m fac.farms stats
+PYTHONPATH=src python3 -m fac.farms list --category mob
+PYTHONPATH=src python3 -m fac.farms search gold
+```
+
+> 참고: 실제 인게임 완전 검증은 100개를 헤드리스로 다 돌릴 수 없어, (1) 구성요소·버전 유효성은 레지스트리로 자동 검증하고, (2) 설계도는 실제로 빌드/미리보기 가능하게 했습니다. 각 팜의 `status`/`caveats`/`sources` 에 최신 버전 상태를 명시합니다.
+
+## 2. 작동 원리 → 설계도
+
+`principle`/`mechanics` 로부터 **빌드 순서 + 자재 목록(BOM) + 배치도**를 생성합니다.
+
+```bash
+PYTHONPATH=src python3 -m fac.farms blueprint iron_farm          # 텍스트 설계도
+PYTHONPATH=src python3 -m fac.farms blueprint iron_farm --json   # 배치/자재 JSON
+```
+
+브라우저 대시보드로도 탐색합니다(검색·카테고리·설계도):
+
+```bash
+python3 -m http.server 8765 --directory web
+# http://localhost:8765/farms.html
+```
+
+## 3. 실제 월드에 적용 (Paper 26.2 플러그인)
+
+`plugin/` 의 `FacPlugin` 은 설계를 **실제 평면(superflat) 월드**에 짓고, 바이옴을 칠하고, 몹을 소환해 미리보기/검증합니다.
+
+```bash
+bash scripts/cloud-install.sh                      # JDK25+Maven, 테스트, 플러그인 빌드, Paper 캐시
+PYTHONPATH=src python3 -m fac apply --render /tmp/r # 평면 월드에 적용 + 인게임 검증 + 맵 렌더
+```
+
+바로 켜지는 예시 서버(간단 철공장 평면월드)는 `scripts/make-dist.sh` 로 만듭니다.
+
+## 레이아웃
+
+| 경로 | 내용 |
 | --- | --- |
-| `fac:campus` (`fac_campus`) | 본부, 사일로, 철, 작물, 나무, 조약돌, 제련 |
-| `fac:nether_works` (`fac_nether_works`) | 금 홀, 석영, 호글린 |
-| `fac:end_works` (`fac_end_works`) | 후렴과, 엔더 진주, 셜커 |
-| `fac:void_stack` (`fac_void_stack`) | 크리퍼 / 스켈레톤 / 거미 스택 |
+| `farms/data/*.json` | 검증된 팜 100개 (지식베이스) |
+| `farms/registry/ids_26.2.json` | 26.2 블록/아이템/몹/바이옴 ID (검증 기준) |
+| `src/fac/farms/` | 스키마 · 로더 · 레지스트리 검증 · 설계도 생성 · CLI |
+| `web/farms.html` | 팜 탐색 대시보드 |
+| `plugin/` | Paper 26.2 플러그인 (실제 평면 월드 적용/미리보기) |
+| `datapacks/fac` | 커스텀 월드젠 차원 데이터팩 (선택) |
 
-플러그인은 각 차원을 **평면 월드**로 만들고, y=63 에 공장 바닥 슬래브를 깐 뒤 그 위(y=64)에 32칸 그리드로 모듈을 배치합니다.
-
-## AI가 돌리는 루프
-
-1. **카탈로그**에서 모듈(철 주조소, 금 홀, …)과 생산량(개/시간)을 읽는다.
-2. 목표 생산량을 채울 때까지 모듈을 32칸 그리드에 놓는다. 차원·바이옴·몹 요구를 지킨다.
-3. **1시간 시뮬** — 사일로 버퍼, 벨트 용량, 입력 결핍을 계산한다.
-4. 합격할 때까지 벨트 증설 / 모듈 추가.
-5. `datapacks/fac` 데이터팩과 `web/` 대시보드를 내보낸다.
+## 테스트
 
 ```bash
-# 설계 → 시뮬 → 합격 → 내보내기 (web/factory.json + datapacks/fac)
-PYTHONPATH=src python3 -m fac complete --out .
-PYTHONPATH=src python3 -m unittest tests/test_factory.py
-python3 -m http.server 8765 --directory web   # 대시보드
+PYTHONPATH=src python3 -m unittest tests/test_farms.py tests/test_factory.py
 ```
-
-### Paper 플러그인 — 실제 평면 월드에 적용 (기본 경로)
-
-```bash
-# 개발 환경 준비 (JDK 25 + Maven + Paper 26.2 캐시 + 플러그인 빌드)
-bash scripts/cloud-install.sh
-
-# AI가 설계 → 플러그인으로 실제 평면 월드에 짓고 → 스스로 검증 → 맵 렌더
-PYTHONPATH=src python3 -m fac apply --render /tmp/fac-renders
-```
-
-`fac apply` 는 설계를 새로 뽑고, Paper 26.2 를 띄워 `FacPlugin` 을 로드한 뒤 RCON 으로 다음을 실행합니다.
-
-```
-/fac setup      # 4개 평면 월드 생성 + 구조물/바이옴/몹 배치
-/fac validate   # 월드·모듈·엔티티 점검 (ok=true 확인)
-/fac status     # 현재 상태 요약
-/fac render <dir>  # 각 월드 top-down PNG 저장
-/fac tp <campus|nether_works|end_works|void_stack>
-```
-
-성공 시 `worlds=4 modules=30 blocks=~104k mobs=14 mobFailures=0` 와 `FAC VALIDATE ok=true` 가 나옵니다.
-
-### 데이터팩 — 커스텀 월드젠 차원 (선택 경로)
-
-```bash
-PYTHONPATH=src python3 -m fac live   # Paper 로 데이터팩 차원 로드 검증
-```
-
-새 월드를 만들 때 월드 타입 **Fac Factory** (`fac:factory`) 를 고르면 됩니다. 인게임(OP/크리에이티브)에서 `/function fac:setup`, `/function fac:validate`.
-
-## 레이아웃을 바꾸고 싶을 때
-
-`src/fac/catalog.py` 의 `DEFAULT_GOALS` 와 `MODULES` 가 설계 입력입니다. 목표만 바꿔도 AI가 모듈 수를 다시 맞춥니다.
