@@ -19,3 +19,6 @@ artifacts/
 
 # Java plugin build output
 plugin/target/
+
+# Generated distribution zips
+dist/

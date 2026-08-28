@@ -1,0 +1,67 @@
+{
+  "design": {
+    "goals": { "iron_ingot": 800.0 },
+    "modules": [
+      {
+        "uid": "hq_0", "spec": "hq", "name": "HQ", "name_ko": "본부",
+        "dimension": "fac:campus", "biome": "fac:steel_plains",
+        "x": 0, "y": 64, "z": 0, "w": 20, "h": 16, "d": 20,
+        "structure": "hq_tower", "palette": "campus",
+        "mobs": ["foreman", "guard"]
+      },
+      {
+        "uid": "silo_0", "spec": "silo", "name": "Silo", "name_ko": "사일로",
+        "dimension": "fac:campus", "biome": "fac:steel_plains",
+        "x": 32, "y": 64, "z": 0, "w": 20, "h": 20, "d": 20,
+        "structure": "silo", "palette": "campus",
+        "mobs": []
+      },
+      {
+        "uid": "iron_foundry_0", "spec": "iron_foundry", "name": "Iron Foundry", "name_ko": "철 주조소",
+        "dimension": "fac:campus", "biome": "fac:steel_plains",
+        "x": 64, "y": 64, "z": 0, "w": 22, "h": 16, "d": 22,
+        "structure": "iron_cell", "palette": "campus",
+        "mobs": ["guard"]
+      },
+      {
+        "uid": "iron_foundry_1", "spec": "iron_foundry", "name": "Iron Foundry", "name_ko": "철 주조소",
+        "dimension": "fac:campus", "biome": "fac:steel_plains",
+        "x": 96, "y": 64, "z": 0, "w": 22, "h": 16, "d": 22,
+        "structure": "iron_cell", "palette": "campus",
+        "mobs": ["guard"]
+      }
+    ]
+  },
+  "report": { "ok": true, "passed": 6, "failed": 0 },
+  "catalog": {
+    "dimensions": {
+      "fac:campus": {
+        "id": "fac:campus", "name": "Campus", "name_ko": "캠퍼스",
+        "vanilla_type": "minecraft:overworld", "biome": "fac:steel_plains",
+        "color": "#5b8def",
+        "floor_layers": [["minecraft:bedrock", 1], ["minecraft:stone", 3], ["minecraft:smooth_stone", 1], ["minecraft:gray_concrete", 1]]
+      }
+    },
+    "biomes": {
+      "fac:steel_plains": { "id": "fac:steel_plains", "name": "Steel Plains", "vanilla": "minecraft:plains" }
+    },
+    "palettes": {
+      "campus": {
+        "floor": "minecraft:gray_concrete",
+        "frame": "minecraft:iron_block",
+        "glass": "minecraft:light_gray_stained_glass",
+        "light": "minecraft:sea_lantern",
+        "accent": "minecraft:copper_block"
+      }
+    },
+    "structures": {
+      "hq_tower": { "name": "HQ Tower", "block": "minecraft:iron_block" },
+      "silo": { "name": "Storage Silo", "block": "minecraft:barrel" },
+      "iron_cell": { "name": "Iron Cell", "block": "minecraft:iron_block" }
+    },
+    "mobs": {
+      "foreman": { "id": "foreman", "name": "Foreman", "name_ko": "현장감독", "entity": "minecraft:villager", "dimension": "fac:campus" },
+      "guard": { "id": "guard", "name": "Guard Golem", "name_ko": "경비 골렘", "entity": "minecraft:iron_golem", "dimension": "fac:campus" }
+    }
+  }
+}
