@@ -136,6 +136,32 @@ java -Xms1G -Xmx2G -jar "%JAR%" nogui
 pause
 EOF
 
+cat > "$DIST/README.txt" <<'EOF'
+Fac - Iron Factory (Paper 26.2 flat world)
+==========================================
+
+압축을 풀고 바로 실행하면, 평면 월드에 이미 지어진 간단한 철공장
+(본부 · 사일로 · 철 주조소 2 · 아이언 골렘 경비)이 나옵니다.
+
+■ 필요 사항
+  - Java 25 이상 (Paper 26.2 는 Java 25 필요).  확인: java -version
+
+■ 실행
+  - Linux/macOS :  ./run.sh
+  - Windows     :  run.bat  (더블클릭)
+  * 최초 1회 실행 시 Paper 26.2 서버 런타임을 자동 다운로드합니다(인터넷 필요, 약 60MB).
+    이후에는 오프라인 실행 가능. 콘솔에 "Done (...)" 가 뜨면 준비 완료.
+
+■ 접속
+  - Minecraft Java 26.2 클라이언트 → 멀티플레이 → 서버 추가 → 주소: localhost
+  - online-mode=false, 크리에이티브. 스폰이 철공장 앞 평지입니다.
+  - OP: 서버 콘솔에  op <닉네임>
+
+■ 플러그인 명령 (OP)
+  /fac status | setup | validate | render <경로> | reload | tp campus
+  설계 변경: plugins/FacPlugin/factory.json 교체 후  /fac reload → /fac setup
+EOF
+
 mkdir -p "$(dirname "$OUT_ZIP")"
 rm -f "$OUT_ZIP"
 ( cd "$BUILD" && zip -r -q "$OUT_ZIP" "$NAME" )
