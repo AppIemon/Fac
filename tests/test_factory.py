@@ -56,6 +56,36 @@ class SimulatorTests(unittest.TestCase):
             self.assertGreaterEqual(net.get(item, 0.0) + 1e-6, goal, item)
 
 
+class PluginExportTests(unittest.TestCase):
+    def test_factory_json_has_plugin_inputs(self):
+        from fac.report import export_report
+
+        result = complete()
+        dest = ROOT / "web"
+        export_report(result["design"], result["sim"], result["report"], dest)
+        data = json.loads((dest / "factory.json").read_text(encoding="utf-8"))
+        catalog = data["catalog"]
+        # The Paper plugin is fully data-driven from these catalog sections.
+        for key in ("dimensions", "biomes", "palettes", "structures", "mobs"):
+            self.assertIn(key, catalog, key)
+        for palette in ("campus", "nether", "end", "void"):
+            self.assertIn(palette, catalog["palettes"], palette)
+            self.assertIn("floor", catalog["palettes"][palette])
+        # Every biome maps to a vanilla biome the plugin can setBiome() with.
+        for bid, biome in catalog["biomes"].items():
+            self.assertTrue(str(biome.get("vanilla", "")).startswith("minecraft:"), bid)
+        # Every dimension exposes vanilla_type + floor layers for the flat world.
+        for did, dim in catalog["dimensions"].items():
+            self.assertIn("vanilla_type", dim, did)
+            self.assertTrue(dim.get("floor_layers"), did)
+
+    def test_pluginserver_imports(self):
+        # Smoke check that the live plugin-test harness imports cleanly.
+        from fac import pluginserver
+
+        self.assertTrue(hasattr(pluginserver, "run_plugin_test"))
+
+
 class DatapackTests(unittest.TestCase):
     def test_export_writes_dimensions_biomes_functions(self):
         result = complete()

@@ -98,6 +98,28 @@ def cmd_live(args: argparse.Namespace) -> int:
     return 0 if result.get("ok") else 3
 
 
+def cmd_apply(args: argparse.Namespace) -> int:
+    """Boot Paper with the Fac plugin and apply the design to real flat worlds."""
+    from fac.pluginserver import run_plugin_test
+
+    # Always refresh the design so the plugin applies the latest AI run.
+    cmd_complete(argparse.Namespace(out=str(ROOT)))
+    plugin_jar = Path(args.jar)
+    factory_json = ROOT / "web" / "factory.json"
+    render_dir = Path(args.render).resolve() if args.render else None
+    result = run_plugin_test(plugin_jar, factory_json, render_dir)
+    printable = {k: v for k, v in result.items() if k not in ("log_tail", "results")}
+    print(json.dumps(printable, indent=2, ensure_ascii=False))
+    if result.get("results"):
+        print("--- rcon ---")
+        for key, val in result["results"].items():
+            print(f"[{key}]\n{val}\n")
+    if not result.get("ok") and result.get("log_tail"):
+        print("--- log tail ---")
+        print(result["log_tail"][-4000:])
+    return 0 if result.get("ok") else 4
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="fac", description="AI Minecraft factory designer")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -109,6 +131,12 @@ def main(argv: list[str] | None = None) -> int:
     p_live = sub.add_parser("live", help="boot Paper and validate datapack")
     p_live.add_argument("--datapack", default=str(ROOT / "datapacks" / "fac"))
     p_live.set_defaults(func=cmd_live)
+    p_apply = sub.add_parser(
+        "apply", help="boot Paper + Fac plugin and build the factory on flat worlds"
+    )
+    p_apply.add_argument("--jar", default=str(ROOT / "plugin" / "target" / "FacPlugin.jar"))
+    p_apply.add_argument("--render", default=None, help="directory to write PNG world maps")
+    p_apply.set_defaults(func=cmd_apply)
     args = parser.parse_args(argv)
     return args.func(args)
 
