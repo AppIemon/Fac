@@ -16,3 +16,6 @@ logs/
 artifacts/
 .idea/
 .vscode/
+
+# Java plugin build output
+plugin/target/

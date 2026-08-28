@@ -1,0 +1,11 @@
+{
+  "name": "Fac AI Factory World",
+  "install": "bash scripts/cloud-install.sh",
+  "terminals": [
+    {
+      "name": "dashboard",
+      "command": "python3 -m http.server 8765 --directory web"
+    }
+  ],
+  "ports": [8765]
+}
