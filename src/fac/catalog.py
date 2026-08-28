@@ -39,6 +39,9 @@ class BiomeSpec:
     ambient_mobs: tuple[tuple[str, int, int, int], ...] = ()
     monster_mobs: tuple[tuple[str, int, int, int], ...] = ()
     creature_mobs: tuple[tuple[str, int, int, int], ...] = ()
+    # Closest vanilla biome the Paper plugin applies with setBiome() when
+    # building on a real flat world (custom biomes need a datapack).
+    vanilla: str = "minecraft:plains"
 
 
 @dataclass(frozen=True)
@@ -149,6 +152,7 @@ BIOMES: dict[str, BiomeSpec] = {
         foliage_color=0x3E4E3E,
         creature_mobs=(("minecraft:villager", 8, 2, 4), ("minecraft:iron_golem", 4, 1, 1)),
         ambient_mobs=(("minecraft:bat", 2, 1, 1),),
+        vanilla="minecraft:plains",
     ),
     "fac:crop_grid": BiomeSpec(
         id="fac:crop_grid",
@@ -167,6 +171,7 @@ BIOMES: dict[str, BiomeSpec] = {
             ("minecraft:chicken", 8, 2, 4),
             ("minecraft:sheep", 6, 2, 4),
         ),
+        vanilla="minecraft:plains",
     ),
     "fac:crimson_foundry": BiomeSpec(
         id="fac:crimson_foundry",
@@ -181,6 +186,7 @@ BIOMES: dict[str, BiomeSpec] = {
         foliage_color=0x9B3030,
         monster_mobs=(("minecraft:piglin", 40, 4, 8), ("minecraft:hoglin", 12, 2, 4)),
         creature_mobs=(("minecraft:strider", 4, 1, 2),),
+        vanilla="minecraft:crimson_forest",
     ),
     "fac:end_garden": BiomeSpec(
         id="fac:end_garden",
@@ -194,6 +200,7 @@ BIOMES: dict[str, BiomeSpec] = {
         grass_color=0x8E82B8,
         foliage_color=0xC9B3FF,
         monster_mobs=(("minecraft:enderman", 40, 1, 4), ("minecraft:shulker", 4, 1, 1)),
+        vanilla="minecraft:the_end",
     ),
     "fac:dark_chamber": BiomeSpec(
         id="fac:dark_chamber",
@@ -212,6 +219,7 @@ BIOMES: dict[str, BiomeSpec] = {
             ("minecraft:spider", 40, 1, 3),
             ("minecraft:witch", 8, 1, 1),
         ),
+        vanilla="minecraft:deep_dark",
     ),
     "fac:warehouse_void": BiomeSpec(
         id="fac:warehouse_void",
@@ -224,6 +232,7 @@ BIOMES: dict[str, BiomeSpec] = {
         fog_color=0x111118,
         grass_color=0x3A3A40,
         foliage_color=0x3A3A40,
+        vanilla="minecraft:the_void",
     ),
 }
 

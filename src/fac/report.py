@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from fac.catalog import BIOMES, DIMENSIONS, MOBS, MODULES, STRUCTURES
+from fac.catalog import BIOMES, DIMENSIONS, MOBS, MODULES, PALETTES, STRUCTURES
 from fac.designer import FactoryDesign
 from fac.acceptance import Report
 from fac.simulator import SimResult
@@ -35,6 +35,7 @@ def export_report(
             },
             "mobs": {k: v.__dict__ for k, v in MOBS.items()},
             "structures": STRUCTURES,
+            "palettes": PALETTES,
             "modules": {
                 k: {
                     **v.__dict__,

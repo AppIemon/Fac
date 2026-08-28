@@ -40,32 +40,32 @@
       "iter 20: +shulker_bay for shulker_shell (need 80/h)"
     ],
     "net": {
-      "gold_ingot": 6000.0,
-      "wheat": 7800.0,
-      "glass": 2400.0,
-      "smooth_stone": 2400.0,
-      "gunpowder": 2800.0,
-      "stick": 800.0,
-      "popped_chorus_fruit": 2000.0,
-      "iron_ingot": 1600.0,
-      "chorus_fruit": 2500.0,
-      "bone_meal": 3500.0,
-      "bone": 3500.0,
-      "obsidian": 40.0,
-      "cooked_beef": 900.0,
-      "gold_nugget": 2000.0,
-      "bread": 2600.0,
-      "spider_eye": 400.0,
-      "poppy": 160.0,
-      "ender_pearl": 1880.0,
-      "cobblestone": 69600.0,
-      "oak_log": 4700.0,
-      "shulker_shell": 80.0,
-      "oak_sapling": 400.0,
       "arrow": 3500.0,
-      "quartz": 3000.0,
+      "cobblestone": 69600.0,
+      "chorus_fruit": 2500.0,
       "string": 2200.0,
-      "leather": 900.0
+      "bread": 2600.0,
+      "obsidian": 40.0,
+      "smooth_stone": 2400.0,
+      "cooked_beef": 900.0,
+      "leather": 900.0,
+      "wheat": 7800.0,
+      "bone": 3500.0,
+      "gold_ingot": 6000.0,
+      "gold_nugget": 2000.0,
+      "oak_log": 4700.0,
+      "oak_sapling": 400.0,
+      "stick": 800.0,
+      "bone_meal": 3500.0,
+      "popped_chorus_fruit": 2000.0,
+      "shulker_shell": 80.0,
+      "gunpowder": 2800.0,
+      "glass": 2400.0,
+      "spider_eye": 400.0,
+      "iron_ingot": 1600.0,
+      "poppy": 160.0,
+      "quartz": 3000.0,
+      "ender_pearl": 1880.0
     },
     "modules": [
       {
@@ -980,17 +980,7 @@
         "detail": "has modules"
       },
       {
-        "id": "dim_known:fac:nether_works",
-        "ok": true,
-        "detail": "catalog dimension"
-      },
-      {
         "id": "dim_known:fac:campus",
-        "ok": true,
-        "detail": "catalog dimension"
-      },
-      {
-        "id": "dim_known:fac:void_stack",
         "ok": true,
         "detail": "catalog dimension"
       },
@@ -1000,12 +990,27 @@
         "detail": "catalog dimension"
       },
       {
-        "id": "biome:fac:crop_grid",
+        "id": "dim_known:fac:void_stack",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "dim_known:fac:nether_works",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "biome:fac:crimson_foundry",
         "ok": true,
         "detail": "catalog biome"
       },
       {
-        "id": "biome:fac:crimson_foundry",
+        "id": "biome:fac:dark_chamber",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:crop_grid",
         "ok": true,
         "detail": "catalog biome"
       },
@@ -1015,17 +1020,12 @@
         "detail": "catalog biome"
       },
       {
-        "id": "biome:fac:steel_plains",
-        "ok": true,
-        "detail": "catalog biome"
-      },
-      {
         "id": "biome:fac:end_garden",
         "ok": true,
         "detail": "catalog biome"
       },
       {
-        "id": "biome:fac:dark_chamber",
+        "id": "biome:fac:steel_plains",
         "ok": true,
         "detail": "catalog biome"
       },
@@ -1430,6 +1430,7 @@
         "fog_color": 1779768,
         "grass_color": 4872778,
         "foliage_color": 4083262,
+        "vanilla": "minecraft:plains",
         "creature_mobs": [
           [
             "minecraft:villager",
@@ -1465,6 +1466,7 @@
         "fog_color": 12638440,
         "grass_color": 8172354,
         "foliage_color": 5606191,
+        "vanilla": "minecraft:plains",
         "creature_mobs": [
           [
             "minecraft:villager",
@@ -1505,6 +1507,7 @@
         "fog_color": 3344392,
         "grass_color": 8006186,
         "foliage_color": 10170416,
+        "vanilla": "minecraft:crimson_forest",
         "creature_mobs": [
           [
             "minecraft:strider",
@@ -1540,6 +1543,7 @@
         "fog_color": 10518688,
         "grass_color": 9339576,
         "foliage_color": 13218815,
+        "vanilla": "minecraft:the_end",
         "creature_mobs": [],
         "monster_mobs": [
           [
@@ -1568,6 +1572,7 @@
         "fog_color": 0,
         "grass_color": 1710618,
         "foliage_color": 1710618,
+        "vanilla": "minecraft:deep_dark",
         "creature_mobs": [],
         "monster_mobs": [
           [
@@ -1608,6 +1613,7 @@
         "fog_color": 1118488,
         "grass_color": 3816000,
         "foliage_color": 3816000,
+        "vanilla": "minecraft:the_void",
         "creature_mobs": [],
         "monster_mobs": [],
         "ambient_mobs": []
@@ -1865,6 +1871,36 @@
         "h": 8,
         "d": 8,
         "block": "minecraft:respawn_anchor"
+      }
+    },
+    "palettes": {
+      "campus": {
+        "floor": "minecraft:gray_concrete",
+        "frame": "minecraft:iron_block",
+        "glass": "minecraft:light_gray_stained_glass",
+        "light": "minecraft:sea_lantern",
+        "accent": "minecraft:copper_block"
+      },
+      "nether": {
+        "floor": "minecraft:red_nether_bricks",
+        "frame": "minecraft:gold_block",
+        "glass": "minecraft:orange_stained_glass",
+        "light": "minecraft:shroomlight",
+        "accent": "minecraft:gilded_blackstone"
+      },
+      "end": {
+        "floor": "minecraft:purpur_block",
+        "frame": "minecraft:end_stone_bricks",
+        "glass": "minecraft:purple_stained_glass",
+        "light": "minecraft:end_rod",
+        "accent": "minecraft:purpur_pillar"
+      },
+      "void": {
+        "floor": "minecraft:black_concrete",
+        "frame": "minecraft:crying_obsidian",
+        "glass": "minecraft:black_stained_glass",
+        "light": "minecraft:sculk_sensor",
+        "accent": "minecraft:obsidian"
       }
     },
     "modules": {
