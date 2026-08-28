@@ -1,0 +1,16 @@
+function fac:build/hq_0
+function fac:build/silo_0
+function fac:build/portal_hub_0
+function fac:build/chunk_anchor_0
+function fac:build/cobble_gen_0
+function fac:build/crop_tower_0
+function fac:build/tree_hall_0
+function fac:build/smelter_0
+function fac:build/cobble_gen_1
+function fac:build/iron_foundry_0
+function fac:build/iron_foundry_1
+function fac:build/cow_cooker_0
+function fac:build/iron_foundry_2
+function fac:build/iron_foundry_3
+function fac:build/tree_hall_1
+function fac:build/crop_tower_1

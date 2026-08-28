@@ -1,0 +1,202 @@
+"""Write the operator dashboard (static HTML) and design JSON."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from fac.catalog import BIOMES, DIMENSIONS, MOBS, MODULES, STRUCTURES
+from fac.designer import FactoryDesign
+from fac.acceptance import Report
+from fac.simulator import SimResult
+
+
+def export_report(
+    design: FactoryDesign,
+    sim: SimResult,
+    report: Report,
+    dest: Path,
+) -> None:
+    dest.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "design": design.to_dict(),
+        "sim": sim.to_dict(),
+        "report": report.to_dict(),
+        "catalog": {
+            "dimensions": {k: v.__dict__ for k, v in DIMENSIONS.items()},
+            "biomes": {
+                k: {
+                    **{ak: av for ak, av in v.__dict__.items() if not isinstance(av, tuple)},
+                    "creature_mobs": list(v.creature_mobs),
+                    "monster_mobs": list(v.monster_mobs),
+                    "ambient_mobs": list(v.ambient_mobs),
+                }
+                for k, v in BIOMES.items()
+            },
+            "mobs": {k: v.__dict__ for k, v in MOBS.items()},
+            "structures": STRUCTURES,
+            "modules": {
+                k: {
+                    **v.__dict__,
+                    "mobs": list(v.mobs),
+                    "workers": list(v.workers),
+                    "footprint": list(v.footprint),
+                }
+                for k, v in MODULES.items()
+            },
+        },
+    }
+    (dest / "factory.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    (dest / "index.html").write_text(_html(), encoding="utf-8")
+
+
+def _html() -> str:
+    return """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Fac — AI 공장 월드</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --panel: #121821;
+    --line: #243044;
+    --text: #d7e3f4;
+    --muted: #8aa0b8;
+    --ok: #3ee0a0;
+    --bad: #ff5d73;
+    --accent: #5ee0ff;
+    --gold: #ffc857;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: "IBM Plex Sans", "Noto Sans KR", sans-serif;
+    background: radial-gradient(1200px 600px at 10% -10%, #1a2a3d 0%, var(--bg) 55%);
+    color: var(--text);
+  }
+  header {
+    padding: 28px 36px 8px; display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 { font-size: 22px; letter-spacing: 0.08em; margin: 0; text-transform: uppercase; }
+  h1 span { color: var(--accent); }
+  .sub { color: var(--muted); font-size: 13px; }
+  .badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--line); }
+  .badge.ok { color: var(--ok); border-color: var(--ok); }
+  .badge.bad { color: var(--bad); border-color: var(--bad); }
+  main { display: grid; grid-template-columns: 280px 1fr 320px; gap: 16px; padding: 16px 36px 40px; }
+  section {
+    background: color-mix(in srgb, var(--panel) 92%, black);
+    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
+  }
+  h2 { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .kpi { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #1e2a3b; font-size: 13px; }
+  .kpi b { font-variant-numeric: tabular-nums; }
+  .okt { color: var(--ok); } .badt { color: var(--bad); }
+  canvas { width: 100%; height: 560px; background: #0a1018; border-radius: 8px; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .tabs button {
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+    border-radius: 8px; padding: 4px 10px; cursor: pointer;
+  }
+  .tabs button.on { color: var(--accent); border-color: var(--accent); }
+  .check { font-size: 12px; padding: 4px 0; display: flex; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex: none; }
+  .list { max-height: 240px; overflow: auto; font-size: 12px; color: var(--muted); }
+  .mob { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1a2433; }
+  footer { padding: 0 36px 28px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Fac <span>AI Factory World</span></h1>
+    <div class="sub">크리에이티브 / OP · 차원 · 바이옴 · 몹 · 구조물 · AI가 테스트하고 내보냄</div>
+  </div>
+  <div id="status" class="badge">loading</div>
+</header>
+<main>
+  <section>
+    <h2>Production /h</h2>
+    <div id="kpis"></div>
+    <h2 style="margin-top:18px">Dimensions</h2>
+    <div id="dims" class="list"></div>
+  </section>
+  <section>
+    <div class="tabs" id="tabs"></div>
+    <canvas id="map" width="1100" height="560"></canvas>
+  </section>
+  <section>
+    <h2>Acceptance</h2>
+    <div id="checks"></div>
+    <h2 style="margin-top:18px">Mobs</h2>
+    <div id="mobs"></div>
+  </section>
+</main>
+<footer>Fac designer loop: catalog → place modules → simulate 1h → accept → export datapack. 맵은 플롯 그리드(32블럭 피치)입니다.</footer>
+<script>
+fetch('factory.json').then(r => r.json()).then(draw);
+let DATA, DIM = 'fac:campus';
+function draw(data) {
+  DATA = data;
+  const ok = data.report.ok;
+  const st = document.getElementById('status');
+  st.textContent = ok ? `PASS ${data.report.passed}/${data.report.passed + data.report.failed}` : 'FAIL';
+  st.className = 'badge ' + (ok ? 'ok' : 'bad');
+  const net = data.design.net, goals = data.design.goals;
+  const kpis = document.getElementById('kpis');
+  kpis.innerHTML = Object.keys(goals).map(item => {
+    const have = net[item] || 0, goal = goals[item];
+    const good = have + 1e-6 >= goal;
+    return `<div class="kpi"><span>${item}</span><b class="${good?'okt':'badt'}">${have.toFixed(0)} / ${goal}</b></div>`;
+  }).join('');
+  const dims = Object.keys(data.catalog.dimensions);
+  document.getElementById('dims').innerHTML = dims.map(id => {
+    const d = data.catalog.dimensions[id];
+    const n = data.design.modules.filter(m => m.dimension === id).length;
+    return `<div class="mob"><span>${d.name_ko} <code>${id}</code></span><span>${n} modules</span></div>`;
+  }).join('');
+  document.getElementById('tabs').innerHTML = dims.map(id => {
+    const d = data.catalog.dimensions[id];
+    return `<button data-dim="${id}" class="${id===DIM?'on':''}">${d.name_ko}</button>`;
+  }).join('');
+  document.getElementById('tabs').onclick = e => {
+    const b = e.target.closest('button'); if (!b) return;
+    DIM = b.dataset.dim;
+    [...document.getElementById('tabs').children].forEach(x => x.classList.toggle('on', x===b));
+    paint();
+  };
+  document.getElementById('checks').innerHTML = data.report.checks.map(c =>
+    `<div class="check"><div class="dot" style="background:${c.ok?'#3ee0a0':'#ff5d73'}"></div><div><b>${c.id}</b><div class="sub">${c.detail}</div></div></div>`
+  ).join('');
+  document.getElementById('mobs').innerHTML = Object.values(data.catalog.mobs).map(m =>
+    `<div class="mob"><span>${m.name_ko}</span><span>${m.entity.replace('minecraft:','')}</span></div>`
+  ).join('');
+  paint();
+}
+function paint() {
+  const c = document.getElementById('map'), ctx = c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  const mods = DATA.design.modules.filter(m => m.dimension === DIM);
+  ctx.fillStyle = '#7f93ab';
+  ctx.font = '12px sans-serif';
+  ctx.fillText(DIM + '  —  ' + mods.length + ' modules', 16, 22);
+  const color = DATA.catalog.dimensions[DIM]?.color || '#5ee0ff';
+  mods.forEach(m => {
+    const x = 40 + m.x * 1.35, y = 50 + m.z * 1.35, w = m.w * 1.35, d = m.d * 1.35;
+    ctx.fillStyle = color + '33';
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.4;
+    ctx.fillRect(x, y, w, d);
+    ctx.strokeRect(x, y, w, d);
+    ctx.fillStyle = '#e8f4ff';
+    ctx.fillText(m.name_ko, x + 4, y + 14);
+  });
+}
+</script>
+</body>
+</html>
+"""

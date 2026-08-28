@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:the_nether",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "fac:crimson_foundry",
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:blackstone",
+          "height": 3
+        },
+        {
+          "block": "minecraft:polished_blackstone",
+          "height": 1
+        },
+        {
+          "block": "minecraft:red_nether_bricks",
+          "height": 1
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}

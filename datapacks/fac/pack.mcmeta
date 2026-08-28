@@ -1,0 +1,13 @@
+{
+  "pack": {
+    "description": "Fac AI Factory World \u2014 dimensions, biomes, mobs, structures",
+    "min_format": [
+      107,
+      1
+    ],
+    "max_format": [
+      107,
+      1
+    ]
+  }
+}

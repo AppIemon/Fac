@@ -1,0 +1,2377 @@
+{
+  "design": {
+    "goals": {
+      "iron_ingot": 1600.0,
+      "gold_ingot": 6000.0,
+      "gunpowder": 2800.0,
+      "bone": 3500.0,
+      "string": 2200.0,
+      "ender_pearl": 1800.0,
+      "oak_log": 2500.0,
+      "wheat": 4000.0,
+      "cobblestone": 36000.0,
+      "cooked_beef": 900.0,
+      "glass": 2400.0,
+      "chorus_fruit": 2500.0,
+      "shulker_shell": 80.0,
+      "quartz": 3000.0
+    },
+    "iterations": 21,
+    "notes": [
+      "iter 1: +cobble_gen for cobblestone (need 36000/h)",
+      "iter 2: +gold_hall for gold_ingot (need 6000/h)",
+      "iter 3: +crop_tower for wheat (need 4000/h)",
+      "iter 4: +skeleton_stack for bone (need 3500/h)",
+      "iter 5: +quartz_pit for quartz (need 3000/h)",
+      "iter 6: +creeper_stack for gunpowder (need 2800/h)",
+      "iter 7: +tree_hall for oak_log (need 2500/h)",
+      "iter 8: +chorus_grid for chorus_fruit (need 2500/h)",
+      "iter 9: +smelter for glass (need 2400/h)",
+      "iter 10: +cobble_gen for cobblestone (need 2400/h)",
+      "iter 11: +spider_stack for string (need 2200/h)",
+      "iter 12: +pearl_drop for ender_pearl (need 1720/h)",
+      "iter 13: +iron_foundry for iron_ingot (need 1600/h)",
+      "iter 14: +iron_foundry for iron_ingot (need 1200/h)",
+      "iter 15: +cow_cooker for cooked_beef (need 900/h)",
+      "iter 16: +iron_foundry for iron_ingot (need 800/h)",
+      "iter 17: +iron_foundry for iron_ingot (need 400/h)",
+      "iter 18: +tree_hall for oak_log (need 300/h)",
+      "iter 19: +crop_tower for wheat (need 200/h)",
+      "iter 20: +shulker_bay for shulker_shell (need 80/h)"
+    ],
+    "net": {
+      "gold_ingot": 6000.0,
+      "wheat": 7800.0,
+      "glass": 2400.0,
+      "smooth_stone": 2400.0,
+      "gunpowder": 2800.0,
+      "stick": 800.0,
+      "popped_chorus_fruit": 2000.0,
+      "iron_ingot": 1600.0,
+      "chorus_fruit": 2500.0,
+      "bone_meal": 3500.0,
+      "bone": 3500.0,
+      "obsidian": 40.0,
+      "cooked_beef": 900.0,
+      "gold_nugget": 2000.0,
+      "bread": 2600.0,
+      "spider_eye": 400.0,
+      "poppy": 160.0,
+      "ender_pearl": 1880.0,
+      "cobblestone": 69600.0,
+      "oak_log": 4700.0,
+      "shulker_shell": 80.0,
+      "oak_sapling": 400.0,
+      "arrow": 3500.0,
+      "quartz": 3000.0,
+      "string": 2200.0,
+      "leather": 900.0
+    },
+    "modules": [
+      {
+        "uid": "hq_0",
+        "spec": "hq",
+        "name": "HQ",
+        "name_ko": "본부",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 0,
+        "y": 64,
+        "z": 0,
+        "w": 20,
+        "h": 24,
+        "d": 20,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [
+          "foreman",
+          "guard"
+        ],
+        "structure": "hq_tower",
+        "palette": "campus"
+      },
+      {
+        "uid": "silo_0",
+        "spec": "silo",
+        "name": "Silo",
+        "name_ko": "사일로",
+        "dimension": "fac:campus",
+        "biome": "fac:warehouse_void",
+        "x": 32,
+        "y": 64,
+        "z": 0,
+        "w": 24,
+        "h": 32,
+        "d": 24,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "silo",
+        "palette": "campus"
+      },
+      {
+        "uid": "portal_hub_0",
+        "spec": "portal_hub",
+        "name": "Portal Hub",
+        "name_ko": "포탈 허브",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 64,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "portal_hub",
+        "palette": "campus"
+      },
+      {
+        "uid": "chunk_anchor_0",
+        "spec": "chunk_anchor",
+        "name": "Chunk Anchor",
+        "name_ko": "청크 앵커",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 96,
+        "y": 64,
+        "z": 0,
+        "w": 8,
+        "h": 8,
+        "d": 8,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "chunk_anchor",
+        "palette": "campus"
+      },
+      {
+        "uid": "portal_hub_1",
+        "spec": "portal_hub",
+        "name": "Portal Hub",
+        "name_ko": "포탈 허브",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "x": 0,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "portal_hub",
+        "palette": "campus"
+      },
+      {
+        "uid": "chunk_anchor_1",
+        "spec": "chunk_anchor",
+        "name": "Chunk Anchor",
+        "name_ko": "청크 앵커",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "x": 32,
+        "y": 64,
+        "z": 0,
+        "w": 8,
+        "h": 8,
+        "d": 8,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "chunk_anchor",
+        "palette": "campus"
+      },
+      {
+        "uid": "portal_hub_2",
+        "spec": "portal_hub",
+        "name": "Portal Hub",
+        "name_ko": "포탈 허브",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "x": 0,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "portal_hub",
+        "palette": "campus"
+      },
+      {
+        "uid": "chunk_anchor_2",
+        "spec": "chunk_anchor",
+        "name": "Chunk Anchor",
+        "name_ko": "청크 앵커",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "x": 32,
+        "y": 64,
+        "z": 0,
+        "w": 8,
+        "h": 8,
+        "d": 8,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "chunk_anchor",
+        "palette": "campus"
+      },
+      {
+        "uid": "portal_hub_3",
+        "spec": "portal_hub",
+        "name": "Portal Hub",
+        "name_ko": "포탈 허브",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "x": 0,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "portal_hub",
+        "palette": "campus"
+      },
+      {
+        "uid": "chunk_anchor_3",
+        "spec": "chunk_anchor",
+        "name": "Chunk Anchor",
+        "name_ko": "청크 앵커",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "x": 32,
+        "y": 64,
+        "z": 0,
+        "w": 8,
+        "h": 8,
+        "d": 8,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "structure": "chunk_anchor",
+        "palette": "campus"
+      },
+      {
+        "uid": "cobble_gen_0",
+        "spec": "cobble_gen",
+        "name": "Cobble Gen",
+        "name_ko": "조약돌 생성기",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 128,
+        "y": 64,
+        "z": 0,
+        "w": 12,
+        "h": 8,
+        "d": 12,
+        "belts": 2,
+        "belt_rate": 36000.0,
+        "outputs": {
+          "cobblestone": 36000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "cobble_gen",
+        "palette": "campus"
+      },
+      {
+        "uid": "gold_hall_0",
+        "spec": "gold_hall",
+        "name": "Gold Hall",
+        "name_ko": "금 홀",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "x": 64,
+        "y": 64,
+        "z": 0,
+        "w": 28,
+        "h": 24,
+        "d": 28,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "gold_ingot": 6000.0,
+          "gold_nugget": 2000.0,
+          "ender_pearl": 80.0,
+          "obsidian": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "barterer"
+        ],
+        "structure": "gold_hall",
+        "palette": "nether"
+      },
+      {
+        "uid": "crop_tower_0",
+        "spec": "crop_tower",
+        "name": "Crop Tower",
+        "name_ko": "작물 타워",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "x": 160,
+        "y": 64,
+        "z": 0,
+        "w": 18,
+        "h": 28,
+        "d": 18,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "wheat": 4000.0,
+          "bread": 1300.0
+        },
+        "inputs": {},
+        "mobs": [
+          "farmer"
+        ],
+        "structure": "crop_tower",
+        "palette": "campus"
+      },
+      {
+        "uid": "skeleton_stack_0",
+        "spec": "skeleton_stack",
+        "name": "Skeleton Stack",
+        "name_ko": "스켈레톤 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "x": 64,
+        "y": 64,
+        "z": 0,
+        "w": 20,
+        "h": 48,
+        "d": 20,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "bone": 3500.0,
+          "arrow": 3500.0,
+          "bone_meal": 3500.0
+        },
+        "inputs": {},
+        "mobs": [
+          "skeleton_stock"
+        ],
+        "structure": "skeleton_stack",
+        "palette": "void"
+      },
+      {
+        "uid": "quartz_pit_0",
+        "spec": "quartz_pit",
+        "name": "Quartz Pit",
+        "name_ko": "석영 피트",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "x": 96,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 16,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "quartz": 3000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "quartz_pit",
+        "palette": "nether"
+      },
+      {
+        "uid": "creeper_stack_0",
+        "spec": "creeper_stack",
+        "name": "Creeper Stack",
+        "name_ko": "크리퍼 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "x": 96,
+        "y": 64,
+        "z": 0,
+        "w": 20,
+        "h": 48,
+        "d": 20,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "gunpowder": 2800.0
+        },
+        "inputs": {},
+        "mobs": [
+          "creeper_stock"
+        ],
+        "structure": "creeper_stack",
+        "palette": "void"
+      },
+      {
+        "uid": "tree_hall_0",
+        "spec": "tree_hall",
+        "name": "Tree Hall",
+        "name_ko": "나무 홀",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "x": 192,
+        "y": 64,
+        "z": 0,
+        "w": 20,
+        "h": 20,
+        "d": 28,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "oak_log": 2500.0,
+          "oak_sapling": 200.0,
+          "stick": 400.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "tree_hall",
+        "palette": "campus"
+      },
+      {
+        "uid": "chorus_grid_0",
+        "spec": "chorus_grid",
+        "name": "Chorus Grid",
+        "name_ko": "후렴과 그리드",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "x": 64,
+        "y": 64,
+        "z": 0,
+        "w": 24,
+        "h": 22,
+        "d": 24,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "chorus_fruit": 2500.0,
+          "popped_chorus_fruit": 2000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "chorus_grid",
+        "palette": "end"
+      },
+      {
+        "uid": "smelter_0",
+        "spec": "smelter",
+        "name": "Super Smelter",
+        "name_ko": "슈퍼 제련소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 224,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 24,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "glass": 2400.0,
+          "smooth_stone": 2400.0
+        },
+        "inputs": {
+          "cobblestone": 2400.0,
+          "oak_log": 300.0
+        },
+        "mobs": [],
+        "structure": "smelter",
+        "palette": "campus"
+      },
+      {
+        "uid": "cobble_gen_1",
+        "spec": "cobble_gen",
+        "name": "Cobble Gen",
+        "name_ko": "조약돌 생성기",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 0,
+        "y": 64,
+        "z": 32,
+        "w": 12,
+        "h": 8,
+        "d": 12,
+        "belts": 2,
+        "belt_rate": 36000.0,
+        "outputs": {
+          "cobblestone": 36000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "cobble_gen",
+        "palette": "campus"
+      },
+      {
+        "uid": "spider_stack_0",
+        "spec": "spider_stack",
+        "name": "Spider Stack",
+        "name_ko": "거미 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "x": 128,
+        "y": 64,
+        "z": 0,
+        "w": 18,
+        "h": 36,
+        "d": 18,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "string": 2200.0,
+          "spider_eye": 400.0
+        },
+        "inputs": {},
+        "mobs": [
+          "spider_stock"
+        ],
+        "structure": "spider_stack",
+        "palette": "void"
+      },
+      {
+        "uid": "pearl_drop_0",
+        "spec": "pearl_drop",
+        "name": "Pearl Drop",
+        "name_ko": "진주 드롭",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "x": 96,
+        "y": 64,
+        "z": 0,
+        "w": 20,
+        "h": 40,
+        "d": 20,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "ender_pearl": 1800.0
+        },
+        "inputs": {},
+        "mobs": [
+          "pearl_hunter"
+        ],
+        "structure": "pearl_drop",
+        "palette": "end"
+      },
+      {
+        "uid": "iron_foundry_0",
+        "spec": "iron_foundry",
+        "name": "Iron Foundry",
+        "name_ko": "철 주조소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 32,
+        "y": 64,
+        "z": 32,
+        "w": 22,
+        "h": 16,
+        "d": 22,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "iron_ingot": 400.0,
+          "poppy": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "guard"
+        ],
+        "structure": "iron_cell",
+        "palette": "campus"
+      },
+      {
+        "uid": "iron_foundry_1",
+        "spec": "iron_foundry",
+        "name": "Iron Foundry",
+        "name_ko": "철 주조소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 64,
+        "y": 64,
+        "z": 32,
+        "w": 22,
+        "h": 16,
+        "d": 22,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "iron_ingot": 400.0,
+          "poppy": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "guard"
+        ],
+        "structure": "iron_cell",
+        "palette": "campus"
+      },
+      {
+        "uid": "cow_cooker_0",
+        "spec": "cow_cooker",
+        "name": "Cow Cooker",
+        "name_ko": "소 조리장",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "x": 96,
+        "y": 64,
+        "z": 32,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "cooked_beef": 900.0,
+          "leather": 900.0
+        },
+        "inputs": {
+          "wheat": 200.0
+        },
+        "mobs": [],
+        "structure": "crop_tower",
+        "palette": "campus"
+      },
+      {
+        "uid": "iron_foundry_2",
+        "spec": "iron_foundry",
+        "name": "Iron Foundry",
+        "name_ko": "철 주조소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 128,
+        "y": 64,
+        "z": 32,
+        "w": 22,
+        "h": 16,
+        "d": 22,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "iron_ingot": 400.0,
+          "poppy": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "guard"
+        ],
+        "structure": "iron_cell",
+        "palette": "campus"
+      },
+      {
+        "uid": "iron_foundry_3",
+        "spec": "iron_foundry",
+        "name": "Iron Foundry",
+        "name_ko": "철 주조소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "x": 160,
+        "y": 64,
+        "z": 32,
+        "w": 22,
+        "h": 16,
+        "d": 22,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "iron_ingot": 400.0,
+          "poppy": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "guard"
+        ],
+        "structure": "iron_cell",
+        "palette": "campus"
+      },
+      {
+        "uid": "tree_hall_1",
+        "spec": "tree_hall",
+        "name": "Tree Hall",
+        "name_ko": "나무 홀",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "x": 192,
+        "y": 64,
+        "z": 32,
+        "w": 20,
+        "h": 20,
+        "d": 28,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "oak_log": 2500.0,
+          "oak_sapling": 200.0,
+          "stick": 400.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "structure": "tree_hall",
+        "palette": "campus"
+      },
+      {
+        "uid": "crop_tower_1",
+        "spec": "crop_tower",
+        "name": "Crop Tower",
+        "name_ko": "작물 타워",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "x": 224,
+        "y": 64,
+        "z": 32,
+        "w": 18,
+        "h": 28,
+        "d": 18,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "wheat": 4000.0,
+          "bread": 1300.0
+        },
+        "inputs": {},
+        "mobs": [
+          "farmer"
+        ],
+        "structure": "crop_tower",
+        "palette": "campus"
+      },
+      {
+        "uid": "shulker_bay_0",
+        "spec": "shulker_bay",
+        "name": "Shulker Bay",
+        "name_ko": "셜커 베이",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "x": 128,
+        "y": 64,
+        "z": 0,
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "belts": 1,
+        "belt_rate": 18000.0,
+        "outputs": {
+          "shulker_shell": 80.0
+        },
+        "inputs": {},
+        "mobs": [
+          "shell_keeper"
+        ],
+        "structure": "shulker_bay",
+        "palette": "end"
+      }
+    ]
+  },
+  "sim": {
+    "hours": 1.0,
+    "produced": {
+      "cobblestone": 72000.0,
+      "gold_ingot": 6000.0,
+      "gold_nugget": 1999.9999999999982,
+      "ender_pearl": 1879.9999999999984,
+      "obsidian": 39.99999999999999,
+      "wheat": 8000.000000000014,
+      "bread": 2599.999999999999,
+      "bone": 3500.0000000000027,
+      "arrow": 3500.0000000000027,
+      "bone_meal": 3500.0000000000027,
+      "quartz": 3000.0,
+      "gunpowder": 2799.9999999999986,
+      "oak_log": 5000.000000000001,
+      "oak_sapling": 399.9999999999995,
+      "stick": 799.999999999999,
+      "chorus_fruit": 2500.0,
+      "popped_chorus_fruit": 1999.9999999999982,
+      "string": 2200.000000000001,
+      "spider_eye": 400.0000000000003,
+      "iron_ingot": 1600.0000000000043,
+      "poppy": 159.9999999999999,
+      "shulker_shell": 79.99999999999999,
+      "glass": 2360.0,
+      "smooth_stone": 2360.0,
+      "cooked_beef": 885.0,
+      "leather": 885.0
+    },
+    "consumed": {
+      "cobblestone": 2360.0,
+      "oak_log": 295.0,
+      "wheat": 196.6666666666668
+    },
+    "silo": {
+      "cobblestone": 69640.0,
+      "oak_log": 4704.999999999998,
+      "wheat": 7803.333333333354,
+      "gold_ingot": 6000.0,
+      "gold_nugget": 1999.9999999999982,
+      "ender_pearl": 1879.9999999999984,
+      "obsidian": 39.99999999999999,
+      "bread": 2599.999999999999,
+      "bone": 3500.0000000000027,
+      "arrow": 3500.0000000000027,
+      "bone_meal": 3500.0000000000027,
+      "quartz": 3000.0,
+      "gunpowder": 2799.9999999999986,
+      "oak_sapling": 399.9999999999995,
+      "stick": 799.999999999999,
+      "chorus_fruit": 2500.0,
+      "popped_chorus_fruit": 1999.9999999999982,
+      "string": 2200.000000000001,
+      "spider_eye": 400.0000000000003,
+      "iron_ingot": 1600.0000000000043,
+      "poppy": 159.9999999999999,
+      "shulker_shell": 79.99999999999999,
+      "glass": 2360.0,
+      "smooth_stone": 2360.0,
+      "cooked_beef": 885.0,
+      "leather": 885.0
+    },
+    "starved": {
+      "smelter_0": 0.016666666666666666,
+      "cow_cooker_0": 0.016666666666666666
+    },
+    "overflow": {},
+    "belt_backlog": {},
+    "snapshots": [
+      {
+        "hour": 0.016666666666666666,
+        "silo_total": 2066.0,
+        "iron": 26.666666666666668,
+        "gold": 100.0,
+        "gunpowder": 46.666666666666664
+      },
+      {
+        "hour": 0.5166666666666666,
+        "silo_total": 65896.0,
+        "iron": 826.6666666666655,
+        "gold": 3100.0,
+        "gunpowder": 1446.666666666667
+      },
+      {
+        "hour": 1.0,
+        "silo_total": 127598.33333333336,
+        "iron": 1600.0000000000043,
+        "gold": 6000.0,
+        "gunpowder": 2799.9999999999986
+      }
+    ]
+  },
+  "report": {
+    "ok": true,
+    "passed": 84,
+    "failed": 0,
+    "checks": [
+      {
+        "id": "goal:iron_ingot",
+        "ok": true,
+        "detail": "1600.0/h net, 1600.0/h shipped vs goal 1600.0/h"
+      },
+      {
+        "id": "goal:gold_ingot",
+        "ok": true,
+        "detail": "6000.0/h net, 6000.0/h shipped vs goal 6000.0/h"
+      },
+      {
+        "id": "goal:gunpowder",
+        "ok": true,
+        "detail": "2800.0/h net, 2800.0/h shipped vs goal 2800.0/h"
+      },
+      {
+        "id": "goal:bone",
+        "ok": true,
+        "detail": "3500.0/h net, 3500.0/h shipped vs goal 3500.0/h"
+      },
+      {
+        "id": "goal:string",
+        "ok": true,
+        "detail": "2200.0/h net, 2200.0/h shipped vs goal 2200.0/h"
+      },
+      {
+        "id": "goal:ender_pearl",
+        "ok": true,
+        "detail": "1880.0/h net, 1880.0/h shipped vs goal 1800.0/h"
+      },
+      {
+        "id": "goal:oak_log",
+        "ok": true,
+        "detail": "4700.0/h net, 5000.0/h shipped vs goal 2500.0/h"
+      },
+      {
+        "id": "goal:wheat",
+        "ok": true,
+        "detail": "7800.0/h net, 8000.0/h shipped vs goal 4000.0/h"
+      },
+      {
+        "id": "goal:cobblestone",
+        "ok": true,
+        "detail": "69600.0/h net, 72000.0/h shipped vs goal 36000.0/h"
+      },
+      {
+        "id": "goal:cooked_beef",
+        "ok": true,
+        "detail": "900.0/h net, 885.0/h shipped vs goal 900.0/h"
+      },
+      {
+        "id": "goal:glass",
+        "ok": true,
+        "detail": "2400.0/h net, 2360.0/h shipped vs goal 2400.0/h"
+      },
+      {
+        "id": "goal:chorus_fruit",
+        "ok": true,
+        "detail": "2500.0/h net, 2500.0/h shipped vs goal 2500.0/h"
+      },
+      {
+        "id": "goal:shulker_shell",
+        "ok": true,
+        "detail": "80.0/h net, 80.0/h shipped vs goal 80.0/h"
+      },
+      {
+        "id": "goal:quartz",
+        "ok": true,
+        "detail": "3000.0/h net, 3000.0/h shipped vs goal 3000.0/h"
+      },
+      {
+        "id": "dim:fac:campus",
+        "ok": true,
+        "detail": "has modules"
+      },
+      {
+        "id": "dim:fac:nether_works",
+        "ok": true,
+        "detail": "has modules"
+      },
+      {
+        "id": "dim:fac:end_works",
+        "ok": true,
+        "detail": "has modules"
+      },
+      {
+        "id": "dim:fac:void_stack",
+        "ok": true,
+        "detail": "has modules"
+      },
+      {
+        "id": "dim_known:fac:nether_works",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "dim_known:fac:campus",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "dim_known:fac:void_stack",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "dim_known:fac:end_works",
+        "ok": true,
+        "detail": "catalog dimension"
+      },
+      {
+        "id": "biome:fac:crop_grid",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:crimson_foundry",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:warehouse_void",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:steel_plains",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:end_garden",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "biome:fac:dark_chamber",
+        "ok": true,
+        "detail": "catalog biome"
+      },
+      {
+        "id": "portal:fac:campus",
+        "ok": true,
+        "detail": "1 hub(s)"
+      },
+      {
+        "id": "chunks:fac:campus",
+        "ok": true,
+        "detail": "1 anchor(s)"
+      },
+      {
+        "id": "portal:fac:nether_works",
+        "ok": true,
+        "detail": "1 hub(s)"
+      },
+      {
+        "id": "chunks:fac:nether_works",
+        "ok": true,
+        "detail": "1 anchor(s)"
+      },
+      {
+        "id": "portal:fac:end_works",
+        "ok": true,
+        "detail": "1 hub(s)"
+      },
+      {
+        "id": "chunks:fac:end_works",
+        "ok": true,
+        "detail": "1 anchor(s)"
+      },
+      {
+        "id": "portal:fac:void_stack",
+        "ok": true,
+        "detail": "1 hub(s)"
+      },
+      {
+        "id": "chunks:fac:void_stack",
+        "ok": true,
+        "detail": "1 anchor(s)"
+      },
+      {
+        "id": "infra:hq",
+        "ok": true,
+        "detail": "1 HQ"
+      },
+      {
+        "id": "infra:silo",
+        "ok": true,
+        "detail": "1 silo(s)"
+      },
+      {
+        "id": "layout:overlap",
+        "ok": true,
+        "detail": "none"
+      },
+      {
+        "id": "layout:dim:hq_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:silo_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:portal_hub_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:chunk_anchor_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:portal_hub_1",
+        "ok": true,
+        "detail": "fac:nether_works (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:chunk_anchor_1",
+        "ok": true,
+        "detail": "fac:nether_works (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:portal_hub_2",
+        "ok": true,
+        "detail": "fac:end_works (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:chunk_anchor_2",
+        "ok": true,
+        "detail": "fac:end_works (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:portal_hub_3",
+        "ok": true,
+        "detail": "fac:void_stack (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:chunk_anchor_3",
+        "ok": true,
+        "detail": "fac:void_stack (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:cobble_gen_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:gold_hall_0",
+        "ok": true,
+        "detail": "fac:nether_works (spec fac:nether_works)"
+      },
+      {
+        "id": "layout:dim:crop_tower_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:skeleton_stack_0",
+        "ok": true,
+        "detail": "fac:void_stack (spec fac:void_stack)"
+      },
+      {
+        "id": "layout:dim:quartz_pit_0",
+        "ok": true,
+        "detail": "fac:nether_works (spec fac:nether_works)"
+      },
+      {
+        "id": "layout:dim:creeper_stack_0",
+        "ok": true,
+        "detail": "fac:void_stack (spec fac:void_stack)"
+      },
+      {
+        "id": "layout:dim:tree_hall_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:chorus_grid_0",
+        "ok": true,
+        "detail": "fac:end_works (spec fac:end_works)"
+      },
+      {
+        "id": "layout:dim:smelter_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:cobble_gen_1",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:spider_stack_0",
+        "ok": true,
+        "detail": "fac:void_stack (spec fac:void_stack)"
+      },
+      {
+        "id": "layout:dim:pearl_drop_0",
+        "ok": true,
+        "detail": "fac:end_works (spec fac:end_works)"
+      },
+      {
+        "id": "layout:dim:iron_foundry_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:iron_foundry_1",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:cow_cooker_0",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:iron_foundry_2",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:iron_foundry_3",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:tree_hall_1",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:crop_tower_1",
+        "ok": true,
+        "detail": "fac:campus (spec fac:campus)"
+      },
+      {
+        "id": "layout:dim:shulker_bay_0",
+        "ok": true,
+        "detail": "fac:end_works (spec fac:end_works)"
+      },
+      {
+        "id": "logistics:overflow",
+        "ok": true,
+        "detail": "ok"
+      },
+      {
+        "id": "logistics:belts",
+        "ok": true,
+        "detail": "ok"
+      },
+      {
+        "id": "starve:smelter_0",
+        "ok": true,
+        "detail": "starved 0.017h of 1.0h"
+      },
+      {
+        "id": "starve:cow_cooker_0",
+        "ok": true,
+        "detail": "starved 0.017h of 1.0h"
+      },
+      {
+        "id": "mob:barterer",
+        "ok": true,
+        "detail": "Barterer in fac:nether_works"
+      },
+      {
+        "id": "mob:creeper_stock",
+        "ok": true,
+        "detail": "Creeper Stock in fac:void_stack"
+      },
+      {
+        "id": "mob:farmer",
+        "ok": true,
+        "detail": "Crop Farmer in fac:campus"
+      },
+      {
+        "id": "mob:foreman",
+        "ok": true,
+        "detail": "Foreman in fac:campus"
+      },
+      {
+        "id": "mob:guard",
+        "ok": true,
+        "detail": "Guard Golem in fac:campus"
+      },
+      {
+        "id": "mob:hauler",
+        "ok": true,
+        "detail": "Hauler Allay in fac:campus"
+      },
+      {
+        "id": "mob:hoglin_stock",
+        "ok": true,
+        "detail": "Hoglin Stock in fac:nether_works"
+      },
+      {
+        "id": "mob:pearl_hunter",
+        "ok": true,
+        "detail": "Pearl Hunter in fac:end_works"
+      },
+      {
+        "id": "mob:shell_keeper",
+        "ok": true,
+        "detail": "Shell Keeper in fac:end_works"
+      },
+      {
+        "id": "mob:skeleton_stock",
+        "ok": true,
+        "detail": "Skeleton Stock in fac:void_stack"
+      },
+      {
+        "id": "mob:spider_stock",
+        "ok": true,
+        "detail": "Spider Stock in fac:void_stack"
+      }
+    ]
+  },
+  "catalog": {
+    "dimensions": {
+      "fac:campus": {
+        "id": "fac:campus",
+        "name": "Campus",
+        "name_ko": "캠퍼스",
+        "vanilla_type": "minecraft:overworld",
+        "sky": "overworld",
+        "floor_layers": [
+          [
+            "minecraft:bedrock",
+            1
+          ],
+          [
+            "minecraft:stone",
+            3
+          ],
+          [
+            "minecraft:smooth_stone",
+            1
+          ],
+          [
+            "minecraft:gray_concrete",
+            1
+          ]
+        ],
+        "biome": "fac:steel_plains",
+        "color": "#5b8def",
+        "description": "HQ, storage, crops, iron, wood, auto-craft."
+      },
+      "fac:nether_works": {
+        "id": "fac:nether_works",
+        "name": "Nether Works",
+        "name_ko": "네더 공방",
+        "vanilla_type": "minecraft:the_nether",
+        "sky": "nether",
+        "floor_layers": [
+          [
+            "minecraft:bedrock",
+            1
+          ],
+          [
+            "minecraft:blackstone",
+            3
+          ],
+          [
+            "minecraft:polished_blackstone",
+            1
+          ],
+          [
+            "minecraft:red_nether_bricks",
+            1
+          ]
+        ],
+        "biome": "fac:crimson_foundry",
+        "color": "#e23d3d",
+        "description": "Gold barter, quartz, debris, hoglin meat."
+      },
+      "fac:end_works": {
+        "id": "fac:end_works",
+        "name": "End Works",
+        "name_ko": "엔드 공방",
+        "vanilla_type": "minecraft:the_end",
+        "sky": "end",
+        "floor_layers": [
+          [
+            "minecraft:bedrock",
+            1
+          ],
+          [
+            "minecraft:end_stone",
+            4
+          ],
+          [
+            "minecraft:purpur_block",
+            1
+          ]
+        ],
+        "biome": "fac:end_garden",
+        "color": "#c9b3ff",
+        "description": "Chorus, pearls, shulkers, elytra dock."
+      },
+      "fac:void_stack": {
+        "id": "fac:void_stack",
+        "name": "Void Stack",
+        "name_ko": "보이드 스택",
+        "vanilla_type": "minecraft:overworld",
+        "sky": "overworld",
+        "floor_layers": [
+          [
+            "minecraft:bedrock",
+            1
+          ],
+          [
+            "minecraft:obsidian",
+            2
+          ],
+          [
+            "minecraft:black_concrete",
+            1
+          ]
+        ],
+        "biome": "fac:dark_chamber",
+        "color": "#2ee6a6",
+        "description": "Stacked hostile farms in a light-zero void."
+      }
+    },
+    "biomes": {
+      "fac:steel_plains": {
+        "id": "fac:steel_plains",
+        "name": "Steel Plains",
+        "temperature": 0.7,
+        "downfall": 0.2,
+        "precipitation": false,
+        "water_color": 4020864,
+        "sky_color": 1779768,
+        "fog_color": 1779768,
+        "grass_color": 4872778,
+        "foliage_color": 4083262,
+        "creature_mobs": [
+          [
+            "minecraft:villager",
+            8,
+            2,
+            4
+          ],
+          [
+            "minecraft:iron_golem",
+            4,
+            1,
+            1
+          ]
+        ],
+        "monster_mobs": [],
+        "ambient_mobs": [
+          [
+            "minecraft:bat",
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "fac:crop_grid": {
+        "id": "fac:crop_grid",
+        "name": "Crop Grid",
+        "temperature": 0.9,
+        "downfall": 0.6,
+        "precipitation": true,
+        "water_color": 3842248,
+        "sky_color": 7915775,
+        "fog_color": 12638440,
+        "grass_color": 8172354,
+        "foliage_color": 5606191,
+        "creature_mobs": [
+          [
+            "minecraft:villager",
+            20,
+            4,
+            8
+          ],
+          [
+            "minecraft:cow",
+            8,
+            2,
+            4
+          ],
+          [
+            "minecraft:chicken",
+            8,
+            2,
+            4
+          ],
+          [
+            "minecraft:sheep",
+            6,
+            2,
+            4
+          ]
+        ],
+        "monster_mobs": [],
+        "ambient_mobs": []
+      },
+      "fac:crimson_foundry": {
+        "id": "fac:crimson_foundry",
+        "name": "Crimson Foundry",
+        "temperature": 2.0,
+        "downfall": 0.0,
+        "precipitation": false,
+        "water_color": 9460055,
+        "sky_color": 3344392,
+        "fog_color": 3344392,
+        "grass_color": 8006186,
+        "foliage_color": 10170416,
+        "creature_mobs": [
+          [
+            "minecraft:strider",
+            4,
+            1,
+            2
+          ]
+        ],
+        "monster_mobs": [
+          [
+            "minecraft:piglin",
+            40,
+            4,
+            8
+          ],
+          [
+            "minecraft:hoglin",
+            12,
+            2,
+            4
+          ]
+        ],
+        "ambient_mobs": []
+      },
+      "fac:end_garden": {
+        "id": "fac:end_garden",
+        "name": "End Garden",
+        "temperature": 0.5,
+        "downfall": 0.0,
+        "precipitation": false,
+        "water_color": 6443678,
+        "sky_color": 0,
+        "fog_color": 10518688,
+        "grass_color": 9339576,
+        "foliage_color": 13218815,
+        "creature_mobs": [],
+        "monster_mobs": [
+          [
+            "minecraft:enderman",
+            40,
+            1,
+            4
+          ],
+          [
+            "minecraft:shulker",
+            4,
+            1,
+            1
+          ]
+        ],
+        "ambient_mobs": []
+      },
+      "fac:dark_chamber": {
+        "id": "fac:dark_chamber",
+        "name": "Dark Chamber",
+        "temperature": 0.2,
+        "downfall": 0.0,
+        "precipitation": false,
+        "water_color": 1052696,
+        "sky_color": 0,
+        "fog_color": 0,
+        "grass_color": 1710618,
+        "foliage_color": 1710618,
+        "creature_mobs": [],
+        "monster_mobs": [
+          [
+            "minecraft:creeper",
+            80,
+            1,
+            4
+          ],
+          [
+            "minecraft:skeleton",
+            80,
+            1,
+            4
+          ],
+          [
+            "minecraft:spider",
+            40,
+            1,
+            3
+          ],
+          [
+            "minecraft:witch",
+            8,
+            1,
+            1
+          ]
+        ],
+        "ambient_mobs": []
+      },
+      "fac:warehouse_void": {
+        "id": "fac:warehouse_void",
+        "name": "Warehouse Void",
+        "temperature": 0.5,
+        "downfall": 0.0,
+        "precipitation": false,
+        "water_color": 2763314,
+        "sky_color": 1118488,
+        "fog_color": 1118488,
+        "grass_color": 3816000,
+        "foliage_color": 3816000,
+        "creature_mobs": [],
+        "monster_mobs": [],
+        "ambient_mobs": []
+      }
+    },
+    "mobs": {
+      "foreman": {
+        "id": "foreman",
+        "name": "Foreman",
+        "name_ko": "현장감독",
+        "entity": "minecraft:villager",
+        "role": "ops",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "notes": "Named villager at HQ. Creative/OP stand-in for workstation routing."
+      },
+      "guard": {
+        "id": "guard",
+        "name": "Guard Golem",
+        "name_ko": "경비 골렘",
+        "entity": "minecraft:iron_golem",
+        "role": "security",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "notes": "Patrols campus plots; player-made golem so it never attacks operators."
+      },
+      "hauler": {
+        "id": "hauler",
+        "name": "Hauler Allay",
+        "name_ko": "운반 알레이",
+        "entity": "minecraft:allay",
+        "role": "logistics",
+        "dimension": "fac:campus",
+        "biome": "fac:warehouse_void",
+        "notes": "Item mover between module barrels and the silo."
+      },
+      "farmer": {
+        "id": "farmer",
+        "name": "Crop Farmer",
+        "name_ko": "농부",
+        "entity": "minecraft:villager",
+        "role": "production",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "notes": "Composter villagers for crop towers."
+      },
+      "barterer": {
+        "id": "barterer",
+        "name": "Barterer",
+        "name_ko": "물물교환 피글린",
+        "entity": "minecraft:piglin",
+        "role": "production",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "notes": "Gold farm / barter hall operator. Zombified piglins for portal gold."
+      },
+      "hoglin_stock": {
+        "id": "hoglin_stock",
+        "name": "Hoglin Stock",
+        "name_ko": "호글린 축산",
+        "entity": "minecraft:hoglin",
+        "role": "production",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "notes": "Nether meat line."
+      },
+      "pearl_hunter": {
+        "id": "pearl_hunter",
+        "name": "Pearl Hunter",
+        "name_ko": "진주 엔더맨",
+        "entity": "minecraft:enderman",
+        "role": "production",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "notes": "Enderman farm stock."
+      },
+      "shell_keeper": {
+        "id": "shell_keeper",
+        "name": "Shell Keeper",
+        "name_ko": "셜커",
+        "entity": "minecraft:shulker",
+        "role": "production",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "notes": "Shulker clone farm seed."
+      },
+      "creeper_stock": {
+        "id": "creeper_stock",
+        "name": "Creeper Stock",
+        "name_ko": "크리퍼",
+        "entity": "minecraft:creeper",
+        "role": "production",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "notes": "Gunpowder stack."
+      },
+      "skeleton_stock": {
+        "id": "skeleton_stock",
+        "name": "Skeleton Stock",
+        "name_ko": "스켈레톤",
+        "entity": "minecraft:skeleton",
+        "role": "production",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "notes": "Bone / arrow stack."
+      },
+      "spider_stock": {
+        "id": "spider_stock",
+        "name": "Spider Stock",
+        "name_ko": "거미",
+        "entity": "minecraft:spider",
+        "role": "production",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "notes": "String stack."
+      }
+    },
+    "structures": {
+      "hq_tower": {
+        "name": "HQ Tower",
+        "w": 20,
+        "h": 24,
+        "d": 20,
+        "block": "minecraft:iron_block"
+      },
+      "silo": {
+        "name": "Storage Silo",
+        "w": 24,
+        "h": 32,
+        "d": 24,
+        "block": "minecraft:barrel"
+      },
+      "iron_cell": {
+        "name": "Iron Cell",
+        "w": 22,
+        "h": 16,
+        "d": 22,
+        "block": "minecraft:iron_block"
+      },
+      "crop_tower": {
+        "name": "Crop Tower",
+        "w": 18,
+        "h": 28,
+        "d": 18,
+        "block": "minecraft:farmland"
+      },
+      "tree_hall": {
+        "name": "Tree Hall",
+        "w": 20,
+        "h": 20,
+        "d": 28,
+        "block": "minecraft:oak_log"
+      },
+      "smelter": {
+        "name": "Super Smelter",
+        "w": 16,
+        "h": 12,
+        "d": 24,
+        "block": "minecraft:blast_furnace"
+      },
+      "crafter_bay": {
+        "name": "Crafter Bay",
+        "w": 16,
+        "h": 10,
+        "d": 16,
+        "block": "minecraft:crafter"
+      },
+      "gold_hall": {
+        "name": "Gold Hall",
+        "w": 28,
+        "h": 24,
+        "d": 28,
+        "block": "minecraft:gold_block"
+      },
+      "quartz_pit": {
+        "name": "Quartz Pit",
+        "w": 16,
+        "h": 16,
+        "d": 16,
+        "block": "minecraft:nether_quartz_ore"
+      },
+      "debris_line": {
+        "name": "Debris Line",
+        "w": 16,
+        "h": 10,
+        "d": 20,
+        "block": "minecraft:ancient_debris"
+      },
+      "chorus_grid": {
+        "name": "Chorus Grid",
+        "w": 24,
+        "h": 22,
+        "d": 24,
+        "block": "minecraft:chorus_flower"
+      },
+      "pearl_drop": {
+        "name": "Pearl Drop",
+        "w": 20,
+        "h": 40,
+        "d": 20,
+        "block": "minecraft:end_stone_bricks"
+      },
+      "shulker_bay": {
+        "name": "Shulker Bay",
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "block": "minecraft:shulker_box"
+      },
+      "elytra_dock": {
+        "name": "Elytra Dock",
+        "w": 14,
+        "h": 10,
+        "d": 18,
+        "block": "minecraft:purpur_pillar"
+      },
+      "creeper_stack": {
+        "name": "Creeper Stack",
+        "w": 20,
+        "h": 48,
+        "d": 20,
+        "block": "minecraft:moss_block"
+      },
+      "skeleton_stack": {
+        "name": "Skeleton Stack",
+        "w": 20,
+        "h": 48,
+        "d": 20,
+        "block": "minecraft:bone_block"
+      },
+      "spider_stack": {
+        "name": "Spider Stack",
+        "w": 18,
+        "h": 36,
+        "d": 18,
+        "block": "minecraft:cobweb"
+      },
+      "cobble_gen": {
+        "name": "Cobble Gen",
+        "w": 12,
+        "h": 8,
+        "d": 12,
+        "block": "minecraft:cobblestone"
+      },
+      "portal_hub": {
+        "name": "Portal Hub",
+        "w": 16,
+        "h": 12,
+        "d": 16,
+        "block": "minecraft:obsidian"
+      },
+      "chunk_anchor": {
+        "name": "Chunk Anchor",
+        "w": 8,
+        "h": 8,
+        "d": 8,
+        "block": "minecraft:respawn_anchor"
+      }
+    },
+    "modules": {
+      "hq": {
+        "id": "hq",
+        "name": "HQ",
+        "name_ko": "본부",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "hq_tower",
+        "footprint": [
+          20,
+          24,
+          20
+        ],
+        "palette": "campus",
+        "outputs": {},
+        "inputs": {},
+        "mobs": [
+          "foreman",
+          "guard"
+        ],
+        "workers": [],
+        "description": "Command tower, scoreboards, operator spawn."
+      },
+      "silo": {
+        "id": "silo",
+        "name": "Silo",
+        "name_ko": "사일로",
+        "dimension": "fac:campus",
+        "biome": "fac:warehouse_void",
+        "structure": "silo",
+        "footprint": [
+          24,
+          32,
+          24
+        ],
+        "palette": "campus",
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "workers": [
+          "hauler"
+        ],
+        "description": "Central item buffer. Capacity is modeled, not vanilla chests."
+      },
+      "iron_foundry": {
+        "id": "iron_foundry",
+        "name": "Iron Foundry",
+        "name_ko": "철 주조소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "iron_cell",
+        "footprint": [
+          22,
+          16,
+          22
+        ],
+        "palette": "campus",
+        "outputs": {
+          "iron_ingot": 400.0,
+          "poppy": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "guard"
+        ],
+        "workers": [],
+        "description": "Village-based iron golem cell. ~400 ingots/h per cell."
+      },
+      "crop_tower": {
+        "id": "crop_tower",
+        "name": "Crop Tower",
+        "name_ko": "작물 타워",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "structure": "crop_tower",
+        "footprint": [
+          18,
+          28,
+          18
+        ],
+        "palette": "campus",
+        "outputs": {
+          "wheat": 4000.0,
+          "bread": 1300.0
+        },
+        "inputs": {},
+        "mobs": [
+          "farmer"
+        ],
+        "workers": [],
+        "description": "Villager crop tower with composter loop."
+      },
+      "tree_hall": {
+        "id": "tree_hall",
+        "name": "Tree Hall",
+        "name_ko": "나무 홀",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "structure": "tree_hall",
+        "footprint": [
+          20,
+          20,
+          28
+        ],
+        "palette": "campus",
+        "outputs": {
+          "oak_log": 2500.0,
+          "oak_sapling": 200.0,
+          "stick": 400.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Bone-meal tree farm hall."
+      },
+      "cow_cooker": {
+        "id": "cow_cooker",
+        "name": "Cow Cooker",
+        "name_ko": "소 조리장",
+        "dimension": "fac:campus",
+        "biome": "fac:crop_grid",
+        "structure": "crop_tower",
+        "footprint": [
+          16,
+          12,
+          16
+        ],
+        "palette": "campus",
+        "outputs": {
+          "cooked_beef": 900.0,
+          "leather": 900.0
+        },
+        "inputs": {
+          "wheat": 200.0
+        },
+        "mobs": [],
+        "workers": [],
+        "description": "Cooked beef / leather crammer."
+      },
+      "smelter": {
+        "id": "smelter",
+        "name": "Super Smelter",
+        "name_ko": "슈퍼 제련소",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "smelter",
+        "footprint": [
+          16,
+          12,
+          24
+        ],
+        "palette": "campus",
+        "outputs": {
+          "glass": 2400.0,
+          "smooth_stone": 2400.0
+        },
+        "inputs": {
+          "cobblestone": 2400.0,
+          "oak_log": 300.0
+        },
+        "mobs": [],
+        "workers": [],
+        "description": "Blast-furnace array. Fuel from tree hall."
+      },
+      "crafter_bay": {
+        "id": "crafter_bay",
+        "name": "Crafter Bay",
+        "name_ko": "제작 베이",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "crafter_bay",
+        "footprint": [
+          16,
+          10,
+          16
+        ],
+        "palette": "campus",
+        "outputs": {
+          "chest": 200.0,
+          "hopper": 150.0,
+          "item_frame": 200.0
+        },
+        "inputs": {
+          "oak_log": 800.0,
+          "iron_ingot": 400.0
+        },
+        "mobs": [],
+        "workers": [],
+        "description": "1.21+ crafter array for logistics parts."
+      },
+      "cobble_gen": {
+        "id": "cobble_gen",
+        "name": "Cobble Gen",
+        "name_ko": "조약돌 생성기",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "cobble_gen",
+        "footprint": [
+          12,
+          8,
+          12
+        ],
+        "palette": "campus",
+        "outputs": {
+          "cobblestone": 36000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Lava/water cobble generator, mined by hoppers+tnt or packed ice drills (OP)."
+      },
+      "gold_hall": {
+        "id": "gold_hall",
+        "name": "Gold Hall",
+        "name_ko": "금 홀",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "structure": "gold_hall",
+        "footprint": [
+          28,
+          24,
+          28
+        ],
+        "palette": "nether",
+        "outputs": {
+          "gold_ingot": 6000.0,
+          "gold_nugget": 2000.0,
+          "ender_pearl": 80.0,
+          "obsidian": 40.0
+        },
+        "inputs": {},
+        "mobs": [
+          "barterer"
+        ],
+        "workers": [],
+        "description": "Portal-based gold + piglin barter mix."
+      },
+      "quartz_pit": {
+        "id": "quartz_pit",
+        "name": "Quartz Pit",
+        "name_ko": "석영 피트",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "structure": "quartz_pit",
+        "footprint": [
+          16,
+          16,
+          16
+        ],
+        "palette": "nether",
+        "outputs": {
+          "quartz": 3000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Nether quartz vein strip on a foundry floor."
+      },
+      "hoglin_line": {
+        "id": "hoglin_line",
+        "name": "Hoglin Line",
+        "name_ko": "호글린 라인",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "structure": "gold_hall",
+        "footprint": [
+          18,
+          12,
+          18
+        ],
+        "palette": "nether",
+        "outputs": {
+          "cooked_porkchop": 1200.0,
+          "leather": 400.0
+        },
+        "inputs": {},
+        "mobs": [
+          "hoglin_stock"
+        ],
+        "workers": [],
+        "description": "Hoglin cooker."
+      },
+      "debris_line": {
+        "id": "debris_line",
+        "name": "Debris Line",
+        "name_ko": "잔해 라인",
+        "dimension": "fac:nether_works",
+        "biome": "fac:crimson_foundry",
+        "structure": "debris_line",
+        "footprint": [
+          16,
+          10,
+          20
+        ],
+        "palette": "nether",
+        "outputs": {
+          "netherite_scrap": 12.0
+        },
+        "inputs": {
+          "gold_ingot": 12.0
+        },
+        "mobs": [],
+        "workers": [],
+        "description": "Ancient debris smelt + smithing prep. Low rate, high value."
+      },
+      "chorus_grid": {
+        "id": "chorus_grid",
+        "name": "Chorus Grid",
+        "name_ko": "후렴과 그리드",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "structure": "chorus_grid",
+        "footprint": [
+          24,
+          22,
+          24
+        ],
+        "palette": "end",
+        "outputs": {
+          "chorus_fruit": 2500.0,
+          "popped_chorus_fruit": 2000.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Chorus flower grid."
+      },
+      "pearl_drop": {
+        "id": "pearl_drop",
+        "name": "Pearl Drop",
+        "name_ko": "진주 드롭",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "structure": "pearl_drop",
+        "footprint": [
+          20,
+          40,
+          20
+        ],
+        "palette": "end",
+        "outputs": {
+          "ender_pearl": 1800.0
+        },
+        "inputs": {},
+        "mobs": [
+          "pearl_hunter"
+        ],
+        "workers": [],
+        "description": "Enderman drop tower."
+      },
+      "shulker_bay": {
+        "id": "shulker_bay",
+        "name": "Shulker Bay",
+        "name_ko": "셜커 베이",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "structure": "shulker_bay",
+        "footprint": [
+          16,
+          12,
+          16
+        ],
+        "palette": "end",
+        "outputs": {
+          "shulker_shell": 80.0
+        },
+        "inputs": {},
+        "mobs": [
+          "shell_keeper"
+        ],
+        "workers": [],
+        "description": "Shulker duplication bay."
+      },
+      "elytra_dock": {
+        "id": "elytra_dock",
+        "name": "Elytra Dock",
+        "name_ko": "겉날개 도크",
+        "dimension": "fac:end_works",
+        "biome": "fac:end_garden",
+        "structure": "elytra_dock",
+        "footprint": [
+          14,
+          10,
+          18
+        ],
+        "palette": "end",
+        "outputs": {
+          "elytra": 2.0,
+          "dragon_breath": 8.0
+        },
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Ship dock / end city gateway plaza."
+      },
+      "creeper_stack": {
+        "id": "creeper_stack",
+        "name": "Creeper Stack",
+        "name_ko": "크리퍼 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "structure": "creeper_stack",
+        "footprint": [
+          20,
+          48,
+          20
+        ],
+        "palette": "void",
+        "outputs": {
+          "gunpowder": 2800.0
+        },
+        "inputs": {},
+        "mobs": [
+          "creeper_stock"
+        ],
+        "workers": [],
+        "description": "Cat-filtered creeper only stack."
+      },
+      "skeleton_stack": {
+        "id": "skeleton_stack",
+        "name": "Skeleton Stack",
+        "name_ko": "스켈레톤 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "structure": "skeleton_stack",
+        "footprint": [
+          20,
+          48,
+          20
+        ],
+        "palette": "void",
+        "outputs": {
+          "bone": 3500.0,
+          "arrow": 3500.0,
+          "bone_meal": 3500.0
+        },
+        "inputs": {},
+        "mobs": [
+          "skeleton_stock"
+        ],
+        "workers": [],
+        "description": "Skeleton-only dark stack."
+      },
+      "spider_stack": {
+        "id": "spider_stack",
+        "name": "Spider Stack",
+        "name_ko": "거미 스택",
+        "dimension": "fac:void_stack",
+        "biome": "fac:dark_chamber",
+        "structure": "spider_stack",
+        "footprint": [
+          18,
+          36,
+          18
+        ],
+        "palette": "void",
+        "outputs": {
+          "string": 2200.0,
+          "spider_eye": 400.0
+        },
+        "inputs": {},
+        "mobs": [
+          "spider_stock"
+        ],
+        "workers": [],
+        "description": "Spider stack for string / wool / bows."
+      },
+      "portal_hub": {
+        "id": "portal_hub",
+        "name": "Portal Hub",
+        "name_ko": "포탈 허브",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "portal_hub",
+        "footprint": [
+          16,
+          12,
+          16
+        ],
+        "palette": "campus",
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "Nether/end/void portal room. One per dimension."
+      },
+      "chunk_anchor": {
+        "id": "chunk_anchor",
+        "name": "Chunk Anchor",
+        "name_ko": "청크 앵커",
+        "dimension": "fac:campus",
+        "biome": "fac:steel_plains",
+        "structure": "chunk_anchor",
+        "footprint": [
+          8,
+          8,
+          8
+        ],
+        "palette": "campus",
+        "outputs": {},
+        "inputs": {},
+        "mobs": [],
+        "workers": [],
+        "description": "forceload / nether portal chunk loader marker."
+      }
+    }
+  }
+}
