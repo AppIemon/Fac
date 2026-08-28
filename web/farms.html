@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Fac — 야생 팜 설계 지식베이스 (100)</title>
+<style>
+  :root{--bg:#0b0f14;--panel:#121821;--line:#243044;--text:#d7e3f4;--muted:#8aa0b8;--ok:#3ee0a0;--warn:#ffc857;--bad:#ff5d73;--accent:#5ee0ff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"IBM Plex Sans","Noto Sans KR",sans-serif;background:radial-gradient(1200px 600px at 10% -10%,#1a2a3d 0%,var(--bg) 55%);color:var(--text)}
+  header{padding:22px 32px 12px;border-bottom:1px solid var(--line)}
+  h1{font-size:20px;margin:0;letter-spacing:.06em}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);font-size:13px;margin-top:4px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 32px}
+  input,select{background:#0d131b;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px}
+  input{min-width:260px}
+  .cats{display:flex;gap:6px;flex-wrap:wrap}
+  .cats button{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:12px}
+  .cats button.on{color:var(--accent);border-color:var(--accent)}
+  main{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;padding:8px 32px 40px}
+  .list{display:flex;flex-direction:column;gap:8px;max-height:78vh;overflow:auto}
+  .card{background:color-mix(in srgb,var(--panel) 92%,black);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer}
+  .card:hover{border-color:var(--accent)}
+  .card.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .row{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+  .name{font-weight:600}
+  .tagline{color:var(--muted);font-size:12px;margin-top:4px}
+  .pill{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--muted)}
+  .pill.mob{color:#ff9db0;border-color:#5a2a33}.pill.resource{color:#8fd0ff;border-color:#25405a}
+  .pill.crop{color:#9be08a;border-color:#2c4a2a}.pill.wood{color:#d8b483;border-color:#4a3a25}
+  .pill.animal{color:#ffc857;border-color:#4a3f22}.pill.utility{color:#c9b3ff;border-color:#3a2f5a}
+  .st-works{color:var(--ok)}.st-works_with_caveat{color:var(--warn)}.st-situational{color:var(--bad)}
+  .detail{background:color-mix(in srgb,var(--panel) 92%,black);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:sticky;top:8px;max-height:78vh;overflow:auto}
+  .detail h2{font-size:17px;margin:0 0 2px}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:4px 10px;font-size:13px;margin:10px 0}
+  .kv b{color:var(--muted);font-weight:500}
+  .sec{margin-top:14px}
+  .sec h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  ol{margin:0;padding-left:18px}ol li{font-size:13px;margin:3px 0}
+  code{background:#0d131b;border:1px solid var(--line);border-radius:5px;padding:0 5px;font-size:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chips span{font-size:11px;background:#0d131b;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:var(--muted)}
+  footer{color:var(--muted);font-size:12px;padding:0 32px 24px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Fac <span>야생 팜 설계 지식베이스</span></h1>
+  <div class="sub">검증된 서바이벌 팜 <b id="count">100</b>개 · 작동 원리 → 즉시 설계도 · 모든 블록/아이템/몹/바이옴을 <b>Minecraft 26.2 레지스트리</b>로 검증</div>
+</header>
+<div class="bar">
+  <input id="q" placeholder="검색: gold, iron, xp, 사탕수수, ender_pearl ..."/>
+  <div class="cats" id="cats"></div>
+</div>
+<main>
+  <div class="list" id="list"></div>
+  <div class="detail" id="detail"><div class="sub">왼쪽에서 팜을 선택하세요.</div></div>
+</main>
+<footer>데이터: <code>farms/data/*.json</code> · 설계도 생성: <code>python3 -m fac.farms blueprint &lt;id&gt;</code> · 검증: <code>python3 -m fac.farms validate</code></footer>
+<script>
+let DATA=[], CAT="all", Q="", SEL=null;
+const CATS=["all","mob","resource","crop","wood","animal","utility"];
+const CATKO={all:"전체",mob:"몹/경험치",resource:"자원",crop:"작물",wood:"나무",animal:"동물",utility:"유틸/레드스톤"};
+fetch('farms.json').then(r=>r.json()).then(d=>{DATA=d.farms;document.getElementById('count').textContent=d.count;renderCats();render();});
+function renderCats(){
+  document.getElementById('cats').innerHTML=CATS.map(c=>`<button data-c="${c}" class="${c===CAT?'on':''}">${CATKO[c]}</button>`).join('');
+  document.getElementById('cats').onclick=e=>{const b=e.target.closest('button');if(!b)return;CAT=b.dataset.c;renderCats();render();};
+}
+document.getElementById('q').addEventListener('input',e=>{Q=e.target.value.toLowerCase();render();});
+function match(f){
+  if(CAT!=="all"&&f.category!==CAT)return false;
+  if(!Q)return true;
+  const hay=[f.id,f.name,f.name_ko,f.principle,(f.tags||[]).join(' '),(f.items_out||[]).join(' ')].join(' ').toLowerCase();
+  return hay.includes(Q);
+}
+function render(){
+  const fs=DATA.filter(match);
+  document.getElementById('list').innerHTML=fs.map(f=>`
+    <div class="card ${SEL===f.id?'on':''}" data-id="${f.id}">
+      <div class="row"><span class="name">${f.name_ko} · ${f.name}</span><span class="pill ${f.category}">${CATKO[f.category]||f.category}</span></div>
+      <div class="tagline">${f.principle}</div>
+      <div class="row" style="margin-top:6px">
+        <span class="chips">${(f.items_out||[]).slice(0,4).map(i=>`<span>${i.replace('minecraft:','')}</span>`).join('')}</span>
+        <span class="st-${f.status}">${f.status}</span>
+      </div>
+    </div>`).join('') || '<div class="sub">결과 없음</div>';
+  document.getElementById('list').onclick=e=>{const c=e.target.closest('.card');if(!c)return;SEL=c.dataset.id;render();detail(DATA.find(x=>x.id===SEL));};
+  if(SEL&&fs.find(x=>x.id===SEL))detail(DATA.find(x=>x.id===SEL));
+}
+function steps(f){
+  const M={spawning_dark:"어두운 스폰 구역(광원 0) 확보 · 다른 곳은 스폰 방지",water_stream:"흐르는 물로 몹을 중앙 수집구로 유도",fall_damage:"낙하 데미지(약 23칸)로 자동/원킬",lava_blade:"용암 칼날로 드랍은 남기고 처치",campfire_kill:"모닥불 위에서 처치(드랍 보존)",hopper_collection:"호퍼→상자로 수집",afk_platform:"스폰에서 20~24칸에 AFK 자리",biome_specific:"필요 바이옴에서 건설",growth_tick:"광원9+공간 확보(랜덤틱 성장)",observer_harvest:"관측기로 성숙 감지→피스톤",piston_harvest:"피스톤으로 수확→물/호퍼",bonemeal:"뼛가루로 강제 성장",villager_farming:"농부 주민+퇴비통+농지+광원9",crafter:"제작기(1.21)를 레드스톤으로 가동",furnace_array:"화로 배열로 병렬 제련",bartering:"디스펜서로 금괴 지급→교환 드랍 수집",raid:"불길한 징조로 습격 반복 유도",village_mechanics:"침대/작업대 부여+밀폐"};
+  const s=[];
+  if(f.dimension!=="any")s.push((f.dimension==="nether"?"네더":f.dimension==="end"?"엔드":"오버월드")+"에서 건설");
+  if((f.biomes||[]).length)s.push("바이옴: "+f.biomes.join(", "));
+  if(f.y_level&&f.y_level!=="any")s.push("Y: "+f.y_level);
+  (f.mechanics||[]).forEach(m=>s.push(M[m]||m));
+  (f.caveats||[]).forEach(c=>s.push("주의: "+c));
+  return s;
+}
+function detail(f){
+  if(!f)return;
+  const src=(f.sources||[]).map(s=>`${s.creator}`).join(', ');
+  document.getElementById('detail').innerHTML=`
+    <h2>${f.name_ko} <span class="pill ${f.category}">${CATKO[f.category]||f.category}</span></h2>
+    <div class="sub">${f.name} · <code>${f.id}</code> · <span class="st-${f.status}">${f.status}</span> · v${f.version}</div>
+    <div class="kv">
+      <b>원리</b><span>${f.principle}</span>
+      <b>차원</b><span>${f.dimension}</span>
+      <b>바이옴</b><span>${(f.biomes||[]).map(b=>b.replace('minecraft:','')).join(', ')||'-'}</span>
+      <b>Y / 광원</b><span>${f.y_level} / ${f.light}</span>
+      <b>크기</b><span>${f.footprint.w}×${f.footprint.h}×${f.footprint.d}</span>
+      <b>생산량</b><span>${f.rate||'-'}</span>
+      <b>레드스톤</b><span>${f.redstone} · AFK ${f.afk?'O':'X'}</span>
+      <b>몹</b><span>${(f.mobs||[]).map(m=>m.replace('minecraft:','')).join(', ')||'-'}</span>
+      <b>산출물</b><span>${(f.items_out||[]).map(i=>i.replace('minecraft:','')).join(', ')||'-'}</span>
+      <b>출처</b><span>${src||'-'}</span>
+    </div>
+    <div class="sec"><h3>설계도 · 빌드 순서</h3><ol>${steps(f).map(s=>`<li>${s}</li>`).join('')}</ol></div>
+    <div class="sec"><h3>메커니즘 태그</h3><div class="chips">${(f.mechanics||[]).map(m=>`<span>${m}</span>`).join('')}</div></div>
+    <div class="sec"><h3>주요 블록/구성</h3><div class="chips">${(f.blocks||[]).map(b=>`<span>${b.replace('minecraft:','')}</span>`).join('')}</div></div>`;
+}
+</script>
+</body>
+</html>
