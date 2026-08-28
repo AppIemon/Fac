@@ -7,9 +7,9 @@ import subprocess
 import time
 from pathlib import Path
 
+from fac.paper import PAPER_JAR, ensure_paper_jar
 from fac.rcon import Rcon, RconError, wait_for_port
 
-PAPER_JAR = Path("/tmp/fac-server/paper-26.2-119.jar")
 SERVER_DIR = Path("/tmp/fac-server/instance")
 RCON_PASSWORD = "fac"
 RCON_PORT = 25575
@@ -17,8 +17,7 @@ RCON_PORT = 25575
 
 def prepare_instance(datapack: Path) -> Path:
     SERVER_DIR.mkdir(parents=True, exist_ok=True)
-    if not PAPER_JAR.exists():
-        raise FileNotFoundError(f"Paper jar missing: {PAPER_JAR}")
+    ensure_paper_jar()
     (SERVER_DIR / "eula.txt").write_text("eula=true\n", encoding="utf-8")
     (SERVER_DIR / "server.properties").write_text(
         "\n".join(

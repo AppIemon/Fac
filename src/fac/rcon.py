@@ -57,9 +57,12 @@ class Rcon:
         resp_id, resp_type, payload = data
         if ptype == TYPE_LOGIN and resp_id == -1:
             raise RconError("bad rcon password")
-        # Some servers pad with an empty follow-up packet.
-        extra = self._maybe_read()
-        if extra:
+        # Large command responses span multiple 4096-byte packets. Drain any
+        # follow-up packets so multi-line output (e.g. /fac setup) is complete.
+        while True:
+            extra = self._maybe_read()
+            if not extra:
+                break
             payload += extra[2]
         return payload.decode("utf-8", errors="replace")
 
