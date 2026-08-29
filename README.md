@@ -8,6 +8,25 @@
 
 ---
 
+## .litematic 출력 (실제로 지을 수 있는 설계도)
+
+```bash
+python3 -m engine.cli litematic sugarcane --length 12
+#   .litematic : blueprints/sugarcane_12.litematic
+#   시공 문서   : blueprints/sugarcane_12.txt
+#   왕복 검증   : 통과 — 블록 420칸 전부 일치
+```
+
+Litematica 모드에 그대로 넣으면 되는 스케매틱과, 층별 평면도·재료·시공 순서·신호 경로가
+담긴 문서를 같이 낸다. 블록 상태(피스톤/관측기 `facing`)까지 정확히 들어간다.
+
+**3중 검증을 거친다:**
+1. `verify_litematic()` — 저장한 파일을 다시 읽어 블록 단위 대조
+2. `tools/inspect_litematic.py` — litemapy 없이 NBT 를 직접 파싱해 헤더/팔레트/비트패킹 검사
+3. `tests/test_sugarcane.py` — **설계가 메커니즘상 실제로 도는지** 검사
+   (물이 흙에 붙어 있나, 관측기가 3번째 칸을 보나, 급전된 블록이 피스톤에 닿나,
+   레일이 흙 바로 아래인가, 물 수로 뚜껑이 있나 …)
+
 ## 30초 사용법
 
 ```bash

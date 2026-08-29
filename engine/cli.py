@@ -14,7 +14,8 @@ import json
 import pathlib
 import sys
 
-from . import blueprint, catalog, mechanics as M
+from . import blueprint, catalog, litedoc, mechanics as M
+from .designs import REGISTRY as DESIGNS, build as build_design
 from .archetypes import ARCHETYPES
 from .principle import COLLECTS, PROCESSES, SOURCES, TRANSPORTS
 
@@ -84,6 +85,27 @@ def cmd_principle(a) -> int:
     return 0
 
 
+def cmd_litematic(a) -> int:
+    params = {}
+    if a.length:
+        params["length"] = a.length
+    try:
+        d = build_design(a.design, **params)
+    except (KeyError, ValueError) as e:
+        print(f"설계 오류: {e}", file=sys.stderr)
+        return 2
+    title = f"{d.schematic.description or a.design}"
+    res = litedoc.export(title, d, a.out)
+    print(f"  .litematic : {res['litematic']}  ({res['bytes']:,} bytes)")
+    print(f"  시공 문서   : {res['doc']}")
+    print(f"  왕복 검증   : {'통과' if res['verified'] else '실패'} — {res['messages'][0]}")
+    if not res["verified"]:
+        for m in res["messages"][1:]:
+            print("    ", m, file=sys.stderr)
+        return 1
+    return 0
+
+
 def cmd_facts(a) -> int:
     print(f"Minecraft {M.GAME_VERSION} ({M.GAME_VERSION_NAME}, {M.GAME_VERSION_DATE}) 기준")
     print("  O = 공식 문서 확인,  ~ = 실측/통설 추정\n")
@@ -140,6 +162,12 @@ def main(argv=None) -> int:
     p.add_argument("--json", required=True)
     p.add_argument("--out", default="")
     p.set_defaults(fn=cmd_principle)
+
+    p = sub.add_parser("litematic", help=".litematic 스케매틱 생성")
+    p.add_argument("design", choices=sorted(DESIGNS))
+    p.add_argument("--length", type=int, default=0)
+    p.add_argument("--out", default="blueprints")
+    p.set_defaults(fn=cmd_litematic)
 
     p = sub.add_parser("facts", help="검증된 수치 시트")
     p.set_defaults(fn=cmd_facts)
