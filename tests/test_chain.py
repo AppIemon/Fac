@@ -168,6 +168,53 @@ class TestRealRegistry(unittest.TestCase):
             if p.design:
                 self.assertIn(p.design, DESIGNS, f"{pid}: 설계 {p.design} 가 없다")
 
+    def test_design_param_is_a_real_builder_argument(self):
+        """design_param 이 실제 설계 함수의 인자여야 한다.
+
+        이끼팜의 size 는 '베드 크기'지 '베드 개수'가 아니라서,
+        유닛 수를 그대로 넘기면 1x1 베드를 지으라는 엉뚱한 안내가 나갔다.
+        """
+        import inspect
+        from engine.designs import REGISTRY as DESIGNS
+        for pid, p in self.reg.by_id.items():
+            if not p.design_param:
+                continue
+            sig = inspect.signature(DESIGNS[p.design])
+            with self.subTest(process=pid):
+                self.assertIn(p.design_param, sig.parameters,
+                              f"{p.design} 에 {p.design_param} 인자가 없다")
+
+    def test_unit_scaling_designs_actually_scale(self):
+        """design_param 을 쓰는 공정은 유닛 수를 넘겼을 때 규모가 커져야 한다."""
+        from engine.designs import build as build_design, REGISTRY as DESIGNS
+        for pid, p in self.reg.by_id.items():
+            if not p.design_param:
+                continue
+            small = build_design(p.design, **{p.design_param: 2})
+            large = build_design(p.design, **{p.design_param: 6})
+            with self.subTest(process=pid):
+                self.assertLess(len(small.schematic.blocks),
+                                len(large.schematic.blocks),
+                                f"{p.design} 이 {p.design_param} 에 따라 커지지 않는다")
+
+    def test_plan_commands_actually_run(self):
+        """계획서가 인쇄한 litematic 명령이 실제로 실행되어야 한다.
+
+        설계마다 파라미터 이름이 달라서(length/cells/furnaces/bins) 계획서는
+        되는데 명령은 안 되는 상태가 실제로 있었다.
+        """
+        import re
+        import tempfile
+        from engine.cli import main as cli_main
+        plan_doc = render(plan("smooth_stone", 1000, self.reg))
+        cmds = re.findall(r"python3 -m engine\.cli (litematic .+)", plan_doc)
+        self.assertTrue(cmds, "계획서에 설계도 명령이 하나도 없다")
+        with tempfile.TemporaryDirectory() as tmp:
+            for cmd in cmds:
+                with self.subTest(cmd=cmd):
+                    argv = cmd.split() + ["--out", tmp]
+                    self.assertEqual(cli_main(argv), 0, f"실행 실패: {cmd}")
+
     def test_real_plan_renders(self):
         p = plan("bone_meal", 500, self.reg, {"bone_meal": "composter_sugar_cane"})
         doc = render(p)

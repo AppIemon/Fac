@@ -124,6 +124,60 @@ def registry() -> Registry:
                    {"sugar_cane": 1}, {"sugar": 1},
                    "제작법: 사탕수수 1개 → 설탕 1개"))
 
+    # --- 돌 라인 -----------------------------------------------------------
+    # 용암은 오버월드에서 30틱마다 퍼진다 -> 생성칸 하나가 이론상 시간당 2,400개.
+    LAVA_SPREAD_TICKS = 30
+    cell_rate = 3600.0 / (LAVA_SPREAD_TICKS / M.TPS)
+    r.add(Process(
+        id="cobblegen", name="조약돌 생성기", unit="생성칸",
+        outputs={"cobblestone": cell_rate},
+        design="cobblegen", design_param="cells", max_units_per_build=8,
+        throttleable=False, verify=ESTIMATE,
+        source=f"오버월드 용암 확산 {LAVA_SPREAD_TICKS}틱 → 칸당 이론상 "
+               f"{cell_rate:,.0f}개/시간",
+        limits=("바닐라에는 자동 블록 파괴기가 없다. 실제 산출은 플레이어의 곡괭이질"
+                "(초당 1~2개 = 시간당 3,600~7,200개)로 막힌다 — 칸을 늘려도 이 상한을 못 넘는다.",
+                "물먹임 계단을 써야 용암 수원이 흑요석이 되지 않는다.")))
+
+    for pid, name, src, dst in (
+            ("smelt_cobble_to_stone", "조약돌 → 돌 제련", "cobblestone", "stone"),
+            ("smelt_stone_to_smooth", "돌 → 매끄러운 돌 제련", "stone", "smooth_stone")):
+        r.add(Process(
+            id=pid, name=name, unit="화로",
+            inputs={src: M.FURNACE_ITEMS_PER_HOUR,
+                    "coal": M.fuel_items_needed(int(M.FURNACE_ITEMS_PER_HOUR), "coal")},
+            outputs={dst: M.FURNACE_ITEMS_PER_HOUR},
+            design="smelter", design_param="furnaces", max_units_per_build=16,
+            verify=CONFIRMED,
+            source=f"화로 1대 = 아이템당 {M.FURNACE_SMELT_TICKS}틱 → "
+                   f"{M.FURNACE_ITEMS_PER_HOUR:,.0f}개/시간 · 석탄 1개당 8개",
+            limits=(f"호퍼 1줄로는 화로 "
+                    f"{int(M.HOPPER_ITEMS_PER_SEC * 3600 / M.FURNACE_ITEMS_PER_HOUR)}대까지. "
+                    "그 이상은 원료 라인을 나눈다.",)))
+
+    # --- 이끼 뼛가루 팜 -------------------------------------------------------
+    # 뼛가루 -> 이끼 -> 퇴비통 -> 뼛가루 는 되먹임 고리라 솔버가 사이클로 잡는다.
+    # 고리를 모듈 안에 감추고 '순 수지'만 공정으로 노출한다.
+    from engine.designs.mossbed import yields as _moss_yields
+    my = _moss_yields()
+    CYCLES_PER_HOUR = 30.0     # 뼛가루 발사 -> 괭이질 -> 물 세척 -> 돌 보충 1회전
+    net_bonemeal = (my["with_moss_bonemeal"] - 1.0) * CYCLES_PER_HOUR
+    r.add(Process(
+        id="mossfarm_loop", name="이끼 뼛가루 팜 (퇴비통 포함 순수지)", unit="베드",
+        inputs={"stone": my["stone_consumed"] * CYCLES_PER_HOUR},
+        outputs={"bone_meal": net_bonemeal},
+        design="mossbed", design_param=None, max_units_per_build=1,
+        throttleable=False, verify=ESTIMATE,
+        source=f"뼛가루 1개 → 이끼 {my['counts']['moss_block']:.0f}개 + 초목 "
+               f"{sum(v for k, v in my['counts'].items() if k != 'moss_block'):.0f}개, "
+               f"퇴비 환산 {my['with_moss_bonemeal']:.2f}개 (순 +"
+               f"{my['with_moss_bonemeal'] - 1:.2f}) · 회전 {CYCLES_PER_HOUR:.0f}회/시간 가정",
+        limits=("이끼 수확이 수동이라 회전수가 산출을 좌우한다. 30회/시간은 가정값이다.",
+                "초목만 퇴비화하면 뼛가루 0.85개로 오히려 손해다. 이끼 블록(65%)을 "
+                "반드시 같이 넣어야 순이익이 난다.",
+                "베드는 '돌'이어야 한다. 조약돌은 이끼로 변환되지 않는다.",
+                "퇴비통 뱅크가 함께 필요하다: litematic composterbank")))
+
     r.add(Process(
         id="smelt_cactus_green", name="선인장 제련 → 초록 염료", unit="화로",
         inputs={"cactus": M.FURNACE_ITEMS_PER_HOUR,

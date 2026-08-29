@@ -1,0 +1,189 @@
+"""모든 설계에 공통으로 걸리는 불변조건.
+
+설계마다 따로 검사하면 같은 실수를 반복한다 (상자 위를 막아 못 여는 버그가
+두 번 났다). 여기 한 번 넣으면 앞으로 추가되는 설계에도 자동으로 적용된다.
+"""
+import pathlib
+import sys
+import tempfile
+import unittest
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "tools"))
+
+from engine.blocks import OFFSET  # noqa: E402
+from engine.designs import REGISTRY, build  # noqa: E402
+from engine.schematic import verify_litematic  # noqa: E402
+
+# 상자 위에 오면 뚜껑을 못 여는 블록
+OPAQUE = {"stone", "dirt", "mud", "sand", "cobblestone", "smooth_stone",
+          "moss_block", "redstone_block", "furnace", "dispenser", "observer",
+          "piston", "sticky_piston"}
+CONTAINERS = {"chest", "hopper", "furnace", "composter", "dispenser", "dropper",
+              "barrel", "crafter"}
+# 호퍼가 물건을 밀어넣을 수 있는 대상
+HOPPER_TARGETS = CONTAINERS | {"air"}
+
+
+class TestAllDesigns(unittest.TestCase):
+    """REGISTRY 의 모든 설계에 대해 같은 검사를 돌린다."""
+
+    def designs(self):
+        for name in sorted(REGISTRY):
+            yield name, build(name)
+
+    def test_every_design_is_documented(self):
+        for name, d in self.designs():
+            with self.subTest(design=name):
+                self.assertTrue(d.schematic.blocks, "빈 설계")
+                self.assertTrue(d.principle, "작동 원리가 없다")
+                self.assertTrue(d.steps, "시공 순서가 없다")
+                self.assertTrue(d.rate, "산출량 설명이 없다")
+
+    def test_every_chest_can_be_opened(self):
+        """상자 바로 위가 불투명 블록이면 열리지 않는다."""
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short == "chest":
+                    above = s.get(x, y + 1, z).short
+                    with self.subTest(design=name, chest=(x, y, z)):
+                        self.assertNotIn(above, OPAQUE,
+                                         f"상자 위가 {above} 라 열 수 없다")
+
+    def test_hoppers_never_point_into_a_dead_solid_block(self):
+        """호퍼가 컨테이너도 공기도 아닌 블록을 향하면 거기서 흐름이 막힌다."""
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "hopper":
+                    continue
+                dx, dy, dz = OFFSET[b.properties["facing"]]
+                target = s.get(x + dx, y + dy, z + dz).short
+                with self.subTest(design=name, hopper=(x, y, z)):
+                    self.assertIn(target, HOPPER_TARGETS,
+                                  f"호퍼가 {target} 을(를) 향해 막혀 있다")
+
+    def test_furnaces_are_fed_and_drained(self):
+        """화로는 위=원료, 아래=산출 호퍼가 있어야 자동으로 돈다."""
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "furnace":
+                    continue
+                with self.subTest(design=name, furnace=(x, y, z)):
+                    above = s.get(x, y + 1, z)
+                    self.assertEqual(above.short, "hopper", "화로 위에 투입 호퍼가 없다")
+                    self.assertEqual(above.properties["facing"], "down",
+                                     "화로 위 호퍼가 아래를 향하지 않는다")
+                    self.assertEqual(s.get(x, y - 1, z).short, "hopper",
+                                     "화로 아래에 산출 호퍼가 없다")
+
+    def test_composters_are_fed_and_drained(self):
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "composter":
+                    continue
+                with self.subTest(design=name, composter=(x, y, z)):
+                    above = s.get(x, y + 1, z)
+                    self.assertEqual(above.short, "hopper", "퇴비통 위에 투입 호퍼가 없다")
+                    self.assertEqual(above.properties["facing"], "down")
+                    self.assertEqual(s.get(x, y - 1, z).short, "hopper",
+                                     "퇴비통 아래에 산출 호퍼가 없다")
+
+    def test_water_never_touches_a_lava_source(self):
+        """물이 용암 수원에 닿으면 흑요석이 되어 설계가 망가진다."""
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "lava":
+                    continue
+                for dx, dy, dz in OFFSET.values():
+                    if dy < 0:
+                        continue          # 아래쪽 접촉은 흑요석을 만들지 않는다
+                    n = s.get(x + dx, y + dy, z + dz)
+                    with self.subTest(design=name, lava=(x, y, z)):
+                        self.assertNotEqual(
+                            n.short, "water",
+                            "용암 수원 옆/위에 물 수원이 있다 → 흑요석이 된다")
+
+    def test_lava_is_contained(self):
+        """용암 수원이 설계 밖으로 흘러나가면 안 된다."""
+        for name, d in self.designs():
+            s = d.schematic
+            lo, hi = s.bounds
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "lava":
+                    continue
+                for dname, (dx, dy, dz) in OFFSET.items():
+                    if dname == "up":
+                        continue
+                    nx, ny, nz = x + dx, y + dy, z + dz
+                    inside = (lo[0] <= nx <= hi[0] and lo[1] <= ny <= hi[1]
+                              and lo[2] <= nz <= hi[2])
+                    n = s.get(nx, ny, nz).short
+                    with self.subTest(design=name, lava=(x, y, z), dir=dname):
+                        if n == "air":
+                            self.assertTrue(
+                                inside,
+                                f"용암이 설계 경계 밖({dname})으로 흐른다")
+
+    def test_dispensers_have_a_target(self):
+        """발사기가 향한 칸은 비어 있어야 내용물이 나간다."""
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "dispenser":
+                    continue
+                dx, dy, dz = OFFSET[b.properties["facing"]]
+                target = s.get(x + dx, y + dy, z + dz).short
+                with self.subTest(design=name, dispenser=(x, y, z)):
+                    self.assertNotIn(target, {"stone", "cobblestone"},
+                                     f"발사기가 {target} 에 막혀 있다")
+
+    def test_litematic_round_trip_and_format(self):
+        import inspect_litematic as IL
+        for name, d in self.designs():
+            with self.subTest(design=name), tempfile.TemporaryDirectory() as tmp:
+                path = f"{tmp}/{name}.litematic"
+                d.schematic.to_litematic(path)
+                ok, msgs = verify_litematic(path, d.schematic)
+                self.assertTrue(ok, msgs)
+
+                nbt = IL.parse(path)
+                self.assertEqual(nbt["Version"], 6)
+                self.assertEqual(nbt["MinecraftDataVersion"], 4903)
+                region = next(iter(nbt["Regions"].values()))
+                palette = region["BlockStatePalette"]
+                self.assertEqual(IL.name_of(palette[0]), "minecraft:air")
+                w = abs(region["Size"]["x"])
+                h = abs(region["Size"]["y"])
+                l = abs(region["Size"]["z"])
+                bits = max(2, (len(palette) - 1).bit_length())
+                idx = IL.unpack_states(region["BlockStates"], bits, w * h * l)
+                self.assertEqual(sum(1 for v in idx if v),
+                                 nbt["Metadata"]["TotalBlocks"])
+
+
+class TestMossEconomics(unittest.TestCase):
+    def setUp(self):
+        from engine.designs.mossbed import yields
+        self.y = yields()
+
+    def test_vegetation_alone_is_net_negative(self):
+        """이 사실이 설계를 좌우한다: 초목만 퇴비화하면 손해다."""
+        self.assertLess(self.y["veg_only_bonemeal"], 1.0)
+
+    def test_with_moss_it_is_net_positive(self):
+        self.assertGreater(self.y["with_moss_bonemeal"], 1.0)
+        self.assertAlmostEqual(self.y["with_moss_bonemeal"], 3.36, places=1)
+
+    def test_stone_consumption_matches_moss_produced(self):
+        self.assertAlmostEqual(self.y["stone_consumed"],
+                               self.y["counts"]["moss_block"])
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)

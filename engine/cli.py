@@ -85,11 +85,36 @@ def cmd_principle(a) -> int:
     return 0
 
 
+def parse_design_params(design: str, extra: list[str]) -> dict:
+    """설계 함수의 시그니처를 보고 --키 값 을 해석한다.
+
+    설계마다 파라미터 이름이 다르다(length / cells / furnaces / size / bins).
+    체인 계획서가 인쇄하는 명령이 그대로 실행되도록 여기서 일반화한다.
+    """
+    import inspect
+    sig = inspect.signature(DESIGNS[design])
+    out: dict = {}
+    i = 0
+    while i < len(extra):
+        tok = extra[i]
+        if not tok.startswith("--"):
+            raise ValueError(f"알 수 없는 인자: {tok}")
+        key = tok[2:].replace("-", "_")
+        if key not in sig.parameters:
+            allowed = ", ".join(f"--{k}" for k in sig.parameters)
+            raise ValueError(f"{design} 에 --{key} 인자가 없다. 사용 가능: {allowed}")
+        if i + 1 >= len(extra):
+            raise ValueError(f"--{key} 에 값이 없다")
+        raw = extra[i + 1]
+        default = sig.parameters[key].default
+        out[key] = int(raw) if isinstance(default, int) else raw
+        i += 2
+    return out
+
+
 def cmd_litematic(a) -> int:
-    params = {}
-    if a.length:
-        params["length"] = a.length
     try:
+        params = parse_design_params(a.design, getattr(a, "extra", []))
         d = build_design(a.design, **params)
     except (KeyError, ValueError) as e:
         print(f"설계 오류: {e}", file=sys.stderr)
@@ -217,7 +242,6 @@ def main(argv=None) -> int:
 
     p = sub.add_parser("litematic", help=".litematic 스케매틱 생성")
     p.add_argument("design", choices=sorted(DESIGNS))
-    p.add_argument("--length", type=int, default=0)
     p.add_argument("--out", default="blueprints")
     p.set_defaults(fn=cmd_litematic)
 
@@ -230,7 +254,11 @@ def main(argv=None) -> int:
     p = sub.add_parser("stats", help="카탈로그 통계")
     p.set_defaults(fn=cmd_stats)
 
-    a = ap.parse_args(argv)
+    a, extra = ap.parse_known_args(argv)
+    if a.cmd == "litematic":
+        a.extra = extra
+    elif extra:
+        ap.error(f"unrecognized arguments: {' '.join(extra)}")
     return a.fn(a)
 
 

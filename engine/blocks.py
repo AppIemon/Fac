@@ -53,6 +53,25 @@ GLASS = B("glass")
 WATER = B("water", level="0")
 SUGAR_CANE = B("sugar_cane", age="0")
 REDSTONE_BLOCK = B("redstone_block")
+LAVA = B("lava", level="0")
+COBBLESTONE = B("cobblestone")
+SMOOTH_STONE = B("smooth_stone")
+MOSS_BLOCK = B("moss_block")
+COMPOSTER = B("composter", level="0")
+
+
+def waterlogged_stairs(facing: str = EAST, kind: str = "cobblestone_stairs") -> Block:
+    """물먹임 계단. 물을 머금지만 흘려보내지 않아, 용암 수원이 흑요석이 되는 걸 막는다.
+    위키: 흐르는 용암이 물먹임 블록에 닿으면 조약돌은 그대로 생성된다."""
+    return B(kind, facing=facing, half="bottom", shape="straight", waterlogged="true")
+
+
+def dispenser(facing: str = UP) -> Block:
+    return B("dispenser", facing=facing, triggered="false")
+
+
+def furnace(facing: str = NORTH) -> Block:
+    return B("furnace", facing=facing, lit="false")
 
 
 def piston(facing: str, sticky: bool = False) -> Block:
@@ -91,6 +110,8 @@ PREVIEW_CHARS: dict[str, str] = {
     "sugar_cane": "|", "piston": "P", "sticky_piston": "P", "observer": "O",
     "redstone_wire": "r", "redstone_block": "R", "rail": "=", "powered_rail": "+",
     "hopper": "h", "chest": "C", "glass": "g", "oak_slab": "s",
+    "lava": "L", "cobblestone": "c", "smooth_stone": "S", "moss_block": "M",
+    "composter": "K", "furnace": "F", "cobblestone_stairs": "<", "dispenser": "n",
 }
 
 

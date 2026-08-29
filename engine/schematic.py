@@ -81,10 +81,18 @@ class Schematic:
         return "\n".join(out)
 
     def legend(self) -> str:
-        seen = {}
+        """같은 기호라도 블록 상태(facing 등)가 다르면 전부 나열한다.
+
+        호퍼/피스톤은 방향이 틀리면 작동하지 않으므로 범례에서 숨기면 안 된다.
+        """
+        seen: dict[str, set[str]] = {}
         for b in self.blocks.values():
-            seen.setdefault(preview_char(b), str(b))
-        return "\n".join(f" {ch}  {name}" for ch, name in sorted(seen.items()))
+            seen.setdefault(preview_char(b), set()).add(str(b))
+        lines = []
+        for ch, names in sorted(seen.items()):
+            for i, name in enumerate(sorted(names)):
+                lines.append(f" {ch if i == 0 else ' '}  {name}")
+        return "\n".join(lines)
 
     # -- 출력 --------------------------------------------------------------
     def to_litematic(self, path: str, data_version: int = MC_DATA_VERSION_26_2) -> str:
