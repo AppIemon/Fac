@@ -32,6 +32,7 @@ def build(bins: int = 6, structure=STONE) -> Design:
         s.set(x, 0, 0, COMPOSTER)
         s.set(x, -1, 0, hopper(EAST))    # 완성된 뼛가루를 빼서 동쪽으로
         s.set(x, -2, 0, structure)
+    s.set(bins, 2, 0, chest(EAST))       # 투입 라인 끝 (넘침 확인용)
     s.set(0, 3, 0, chest(NORTH))         # 초목/이끼 투입구
     s.set(bins, -1, 0, chest(EAST))      # 뼛가루 산출
     s.set(bins, -2, 0, structure)

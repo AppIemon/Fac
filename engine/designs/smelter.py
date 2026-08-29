@@ -45,6 +45,8 @@ def build(furnaces: int = 8, structure=STONE) -> Design:
         s.set(x, -1, 0, structure)
         s.set(x, -1, 1, structure)
 
+    s.set(n, 3, 0, chest(EAST))          # 원료 라인 끝 (넘침 확인용)
+    s.set(n, 2, 1, chest(EAST))          # 연료 라인 끝
     s.set(0, 4, 0, chest(NORTH))         # 원료 투입구
     s.set(0, 3, 1, chest(NORTH))         # 연료 투입구
     s.set(n, 0, 0, chest(EAST))          # 산출 상자
@@ -81,8 +83,8 @@ def build(furnaces: int = 8, structure=STONE) -> Design:
             f"호퍼 1줄은 초당 {M.HOPPER_ITEMS_PER_SEC}개(시간당 9,000개)까지만 나른다. "
             f"화로 {int(M.HOPPER_ITEMS_PER_SEC * 3600 / M.FURNACE_ITEMS_PER_HOUR)}대를 넘기면 "
             "원료 라인을 나눠야 한다.",
-            "라인 끝 호퍼는 막다른 길이라 아이템이 쌓인다. 정상이며, "
-            "그렇게 쌓여야 각 분배 호퍼가 끌어갈 재고가 생긴다.",
+            "라인 끝 상자에 아이템이 쌓이는 건 정상이다. 라인이 가득 차야 각 분배 "
+            "호퍼가 끌어갈 재고가 생긴다. 상자가 계속 넘치면 화로가 부족하다는 뜻이다.",
             "다만 분배가 완전히 균등하지는 않아 앞쪽 화로가 더 바쁘다. "
             "완전 균등이 필요하면 라인 끝을 처음으로 되돌리는 순환 구조로 만들 것.",
         ],

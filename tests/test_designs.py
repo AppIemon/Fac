@@ -180,6 +180,30 @@ class TestAllDesigns(unittest.TestCase):
                     self.assertNotIn(target, {"stone", "cobblestone"},
                                      f"발사기가 {target} 에 막혀 있다")
 
+    def test_every_item_chain_reaches_a_container(self):
+        """호퍼/드로퍼 사슬을 끝까지 따라가 아이템이 갈 곳에 도착하는지 본다.
+
+        불변조건 검사는 '이 호퍼가 막혔나' 같은 국소 검사라, 사슬이 중간에
+        허공으로 끊기는 건 못 잡는다. 이 검사가 켈프 수거 6줄이 통째로
+        끊겨 있던 걸 잡았다.
+        """
+        import trace_flow
+        for name, d in self.designs():
+            s = d.schematic
+            movers = {p for p, b in s.blocks.items() if b.short in trace_flow.MOVERS}
+            targeted = set()
+            for p in movers:
+                b = s.get(*p)
+                dx, dy, dz = OFFSET[b.properties["facing"]]
+                targeted.add((p[0] + dx, p[1] + dy, p[2] + dz))
+            for start in sorted(movers - targeted):
+                r = trace_flow.trace(s, start)
+                with self.subTest(design=name, start=start):
+                    self.assertTrue(
+                        r["ok"],
+                        f"사슬이 {r['end']}[{r['end_block']}] 에서 끝난다 "
+                        f"— {r.get('reason', '컨테이너가 아니다')}")
+
     def test_litematic_round_trip_and_format(self):
         import inspect_litematic as IL
         for name, d in self.designs():
