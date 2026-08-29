@@ -13,7 +13,7 @@ from engine.blocks import NORTH, OFFSET, OPPOSITE, SOUTH  # noqa: E402
 from engine.designs import build  # noqa: E402
 from engine.schematic import Schematic, verify_litematic  # noqa: E402
 
-SOLID = {"stone", "dirt", "redstone_block", "hopper", "chest"}
+SOLID = {"stone", "dirt", "mud", "glass", "redstone_block", "hopper", "chest"}
 OPAQUE_SUPPORT = {"stone", "dirt"}   # 레드스톤 가루를 받칠 수 있는 불투명 블록
 
 
@@ -25,11 +25,17 @@ class TestSugarcaneDesign(unittest.TestCase):
         self.s: Schematic = self.d.schematic
 
     # --- 성장 조건 ------------------------------------------------------
+    # 위키가 명시한 사탕수수 식재 가능 블록
+    PLANTABLE = {"grass_block", "dirt", "coarse_dirt", "rooted_dirt", "podzol",
+                 "mycelium", "sand", "red_sand", "suspicious_sand",
+                 "moss_block", "pale_moss_block", "mud", "muddy_mangrove_roots"}
+
     def test_soil_has_adjacent_water(self):
         """사탕수수는 심는 블록에 물이 '수평으로' 붙어 있어야 자란다."""
         for x in range(self.LENGTH):
             soil = self.s.get(x, 0, 2)
-            self.assertEqual(soil.short, "dirt", f"x={x} 흙 없음")
+            self.assertIn(soil.short, self.PLANTABLE,
+                          f"x={x} 사탕수수를 심을 수 없는 블록: {soil.short}")
             neighbours = [self.s.get(x + dx, 0, 2 + dz).short
                           for dx, dz in ((1, 0), (-1, 0), (0, 1), (0, -1))]
             self.assertIn("water", neighbours, f"x={x} 흙 옆에 물이 없다 → 자라지 않음")
@@ -93,41 +99,44 @@ class TestSugarcaneDesign(unittest.TestCase):
             self.assertEqual(self.s.get(x, 3, 4).short, "redstone_wire")
 
     # --- 수거 ------------------------------------------------------------
-    def test_rail_runs_directly_under_soil(self):
-        """호퍼 광산 수레는 '레일 바로 위 블록에 놓인' 아이템을 관통 수거한다."""
+    def test_planting_block_is_not_a_full_block(self):
+        """핵심: 일반 호퍼는 바로 위가 '꽉 찬 블록'이면 아이템을 줍지 못한다.
+
+        흙/모래는 꽉 찬 블록이라 아래 호퍼로 회수가 안 된다.
+        진흙은 꽉 찬 블록이 아니고, 위키가 '진흙 아래 호퍼는 위에 떨어진
+        아이템을 줍는다' 고 명시한다.
+        """
         for x in range(self.LENGTH):
-            self.assertIn(self.s.get(x, -1, 2).short, ("rail", "powered_rail"),
-                          f"x={x} 레일 없음")
-            self.assertEqual(self.s.get(x, 0, 2).short, "dirt",
-                             f"x={x} 레일 바로 위가 흙이 아니다 → 수거 안 됨")
+            self.assertEqual(self.s.get(x, 0, 2).short, "mud",
+                             f"x={x} 심는 블록이 진흙이 아니다 → 호퍼 수거 실패")
 
-    def test_powered_rails_have_power_source(self):
+    def test_hopper_directly_under_every_plant(self):
         for x in range(self.LENGTH):
-            if self.s.get(x, -1, 2).short == "powered_rail":
-                self.assertEqual(self.s.get(x, -2, 2).short, "redstone_block",
-                                 f"x={x} 가속 레일 아래에 전원이 없다")
+            self.assertEqual(self.s.get(x, -1, 2).short, "hopper",
+                             f"x={x} 진흙 바로 아래에 호퍼가 없다")
 
-    def test_rail_has_bumpers_at_both_ends(self):
-        """양 끝 벽이 있어야 광산 수레가 튕겨 왕복한다."""
-        for x in (-1, self.LENGTH):
-            self.assertIn(self.s.get(x, -1, 2).short, SOLID,
-                          f"x={x} 레일 끝 벽이 없다 → 수레가 멈춘다")
+    def test_hopper_line_flows_into_a_chest(self):
+        """호퍼가 전부 같은 방향을 보고, 마지막이 상자로 들어가야 한다."""
+        for x in range(self.LENGTH):
+            hop = self.s.get(x, -1, 2)
+            dx, dy, dz = OFFSET[hop.properties["facing"]]
+            nxt = self.s.get(x + dx, -1 + dy, 2 + dz)
+            self.assertIn(nxt.short, ("hopper", "chest"),
+                          f"x={x} 호퍼가 다음 호퍼/상자를 향하지 않는다 → 여기서 막힌다")
+        self.assertEqual(self.s.get(self.LENGTH, -1, 2).short, "chest")
 
-    def test_hopper_feeds_a_chest(self):
-        hoppers = [(p, b) for p, b in self.s.blocks.items() if b.short == "hopper"]
-        self.assertEqual(len(hoppers), 1)
-        (hx, hy, hz), hop = hoppers[0]
-        self.assertEqual(self.s.get(hx, hy + 1, hz).short, "rail",
-                         "호퍼가 레일 바로 아래에 있어야 수레를 비운다")
-        dx, dy, dz = OFFSET[hop.properties["facing"]]
-        self.assertEqual(self.s.get(hx + dx, hy + dy, hz + dz).short, "chest",
-                         "호퍼가 상자를 향하고 있지 않다")
+    def test_chest_can_actually_be_opened(self):
+        """상자 바로 위가 불투명 블록이면 열 수 없다."""
+        OPAQUE = {"stone", "dirt", "mud", "sand", "redstone_block"}
+        for (x, y, z), b in self.s.blocks.items():
+            if b.short == "chest":
+                above = self.s.get(x, y + 1, z)
+                self.assertNotIn(above.short, OPAQUE,
+                                 f"상자({x},{y},{z}) 위가 {above.short} 라 열리지 않는다")
 
-    def test_hopper_not_on_powered_rail_position(self):
-        (hx, _, _), _ = next(iter(
-            (p, b) for p, b in self.s.blocks.items() if b.short == "hopper"))
-        self.assertNotEqual(self.s.get(hx, -1, 2).short, "powered_rail",
-                            "호퍼 자리와 가속 레일(레드스톤 블록) 자리가 충돌한다")
+    def test_no_manual_entities_needed(self):
+        """광산 수레 방식을 버렸으므로 손으로 올릴 엔티티가 없어야 한다."""
+        self.assertEqual(self.d.manual_items, [])
 
     # --- 아이템 유실 방지 -------------------------------------------------
     def test_water_canal_is_capped(self):
@@ -154,7 +163,7 @@ class TestSugarcaneDesign(unittest.TestCase):
 
     def test_rejects_too_short(self):
         with self.assertRaises(ValueError):
-            build("sugarcane", length=2)
+            build("sugarcane", length=1)
 
     def test_litematic_round_trip(self):
         import tempfile

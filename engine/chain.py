@@ -1,0 +1,274 @@
+"""공장 연결 계층 — 산출/소비 속도를 물려 필요한 공장 수를 푼다.
+
+핵심 개념
+  Process : "유닛 1개가 시간당 무엇을 얼마나 먹고 뱉는가"
+  plan()  : 목표 아이템/시간당 수량 -> 각 공정의 유닛 수를 위상순서로 역산
+
+부산물 상계(netting)까지 한다. 예를 들어 스켈레톤 팜의 뼈로 뼛가루를 만들면
+컴포스터 쪽 수요가 그만큼 줄어든다.
+"""
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass, field
+
+from . import mechanics as M
+
+CONFIRMED = M.CONFIRMED
+ESTIMATE = M.ESTIMATE
+
+
+@dataclass(frozen=True)
+class Process:
+    """공정 하나. 모든 수치는 '유닛 1개당 시간당' 기준."""
+    id: str
+    name: str
+    unit: str                                   # 유닛의 단위 (포기, 화로, 컴포스터…)
+    outputs: dict[str, float]
+    inputs: dict[str, float] = field(default_factory=dict)
+    design: str | None = None                   # engine.designs 의 설계 이름
+    design_param: str | None = None             # 유닛 수를 넘길 파라미터 이름
+    max_units_per_build: int = 0                # 0 = 제한 없음
+    verify: str = ESTIMATE
+    source: str = ""
+    limits: tuple[str, ...] = ()
+    throttleable: bool = True
+    """수요에 맞춰 조절되는가.
+
+    True  : 먹인 만큼만 돈다 (제작기/화로/컴포스터). 가동률이 낮으면 원료도
+            그만큼만 먹는다.
+    False : 수요와 무관하게 자기 속도로 계속 나온다 (작물/몹 팜). 남는 건 부산물."""
+
+    def primary(self) -> str:
+        return max(self.outputs, key=lambda k: self.outputs[k])
+
+
+class Registry:
+    def __init__(self, processes: list[Process] | None = None):
+        self.by_id: dict[str, Process] = {}
+        for p in processes or []:
+            self.add(p)
+
+    def add(self, p: Process) -> Process:
+        if p.id in self.by_id:
+            raise ValueError(f"중복 공정 id: {p.id}")
+        for item, rate in {**p.inputs, **p.outputs}.items():
+            if rate <= 0:
+                raise ValueError(f"{p.id}: {item} 속도가 0 이하")
+        self.by_id[p.id] = p
+        return p
+
+    def producers(self, item: str) -> list[Process]:
+        return [p for p in self.by_id.values() if item in p.outputs]
+
+    def items(self) -> list[str]:
+        out = set()
+        for p in self.by_id.values():
+            out |= set(p.outputs) | set(p.inputs)
+        return sorted(out)
+
+
+@dataclass
+class Node:
+    process: Process
+    demand: float          # 이 공정이 채워야 할 주력 산출 수요 (부산물 상계 후)
+    units_exact: float
+    units: int
+    produced: dict[str, float]      # 실제 산출 (조절 가능하면 수요만큼)
+    consumed: dict[str, float]      # 실제 소비 (가동률에 비례)
+    item: str              # 이 공정이 선택된 이유가 된 아이템
+    capacity: float = 0.0  # 유닛 수 x 유닛당 능력 (최대치)
+
+    @property
+    def utilization(self) -> float:
+        return (self.demand / self.capacity) if self.capacity else 0.0
+
+    @property
+    def builds(self) -> list[int]:
+        """한 채당 유닛 수로 쪼갠 시공 단위."""
+        cap = self.process.max_units_per_build
+        if not cap or self.units <= cap:
+            return [self.units]
+        full, rest = divmod(self.units, cap)
+        return [cap] * full + ([rest] if rest else [])
+
+
+@dataclass
+class Plan:
+    target: str
+    rate: float
+    nodes: list[Node] = field(default_factory=list)
+    raw: dict[str, float] = field(default_factory=dict)      # 공급원 없는 원료
+    surplus: dict[str, float] = field(default_factory=dict)  # 남는 부산물
+    warnings: list[str] = field(default_factory=list)
+    choices: dict[str, str] = field(default_factory=dict)    # item -> process id
+
+
+class ChainError(Exception):
+    pass
+
+
+def _choose(item: str, reg: Registry, choices: dict[str, str],
+            warnings: list[str]) -> Process | None:
+    if item in choices:
+        pid = choices[item]
+        if pid not in reg.by_id:
+            raise ChainError(f"선택한 공정이 없다: {pid}")
+        return reg.by_id[pid]
+    cands = reg.producers(item)
+    if not cands:
+        return None
+    if len(cands) > 1:
+        pick = sorted(cands, key=lambda p: p.id)[0]
+        warnings.append(
+            f"{item} 생산 공정이 {len(cands)}개다 → {pick.id} 를 골랐다. "
+            f"다른 걸 쓰려면 --pick {item}={'|'.join(sorted(c.id for c in cands))}")
+        return pick
+    return cands[0]
+
+
+def _topo(target: str, reg: Registry, choices: dict[str, str],
+          warnings: list[str]) -> tuple[list[Process], dict[str, Process]]:
+    """소비자 -> 생산자 순서(위상정렬). 사이클이면 예외."""
+    chosen: dict[str, Process] = {}
+    order: list[Process] = []
+    state: dict[str, int] = {}   # 0=방문중, 1=완료
+
+    def visit(item: str, trail: tuple[str, ...]) -> None:
+        proc = _choose(item, reg, choices, warnings)
+        if proc is None:
+            return
+        chosen[item] = proc
+        if state.get(proc.id) == 1:
+            return
+        if state.get(proc.id) == 0:
+            raise ChainError("공정 사이클: " + " → ".join(trail + (proc.id,)))
+        state[proc.id] = 0
+        for need in sorted(proc.inputs):
+            visit(need, trail + (proc.id,))
+        state[proc.id] = 1
+        order.append(proc)
+
+    visit(target, ())
+    order.reverse()   # 소비자가 먼저 오도록
+    return order, chosen
+
+
+def plan(target: str, rate: float, reg: Registry,
+         choices: dict[str, str] | None = None) -> Plan:
+    if rate <= 0:
+        raise ChainError("목표 수량은 0보다 커야 한다")
+    choices = dict(choices or {})
+    warnings: list[str] = []
+
+    if not reg.producers(target) and target not in choices:
+        raise ChainError(
+            f"{target} 를 만드는 공정이 없다. 등록된 아이템: {', '.join(reg.items())}")
+
+    order, chosen = _topo(target, reg, choices, warnings)
+
+    demand: dict[str, float] = {target: float(rate)}
+    supply: dict[str, float] = {}
+    nodes: list[Node] = []
+    seen: set[str] = set()
+
+    for proc in order:
+        # 이 공정이 맡은 아이템(주력 산출 중 실제로 수요가 걸린 것)
+        item = next((i for i in proc.outputs if chosen.get(i) is proc and i in demand),
+                    proc.primary())
+        need = max(0.0, demand.get(item, 0.0) - supply.get(item, 0.0))
+        if need <= 0:
+            continue
+        per_unit = proc.outputs[item]
+        exact = need / per_unit
+        units = max(1, math.ceil(exact - 1e-9))
+        capacity = per_unit * units
+        # 조절 가능한 공정은 수요만큼만 돌아간다 -> 원료도 그만큼만 먹는다.
+        # 팜처럼 조절이 안 되는 공정은 능력만큼 계속 나오고 나머지는 부산물이 된다.
+        ratio = min(1.0, need / capacity) if proc.throttleable else 1.0
+        produced = {k: v * units * ratio for k, v in proc.outputs.items()}
+        consumed = {k: v * units * ratio for k, v in proc.inputs.items()}
+
+        for k, v in produced.items():
+            supply[k] = supply.get(k, 0.0) + v
+        for k, v in consumed.items():
+            demand[k] = demand.get(k, 0.0) + v
+
+        nodes.append(Node(proc, need, exact, units, produced, consumed, item, capacity))
+        seen.add(proc.id)
+
+    # 공급원이 없는 원료 / 남는 부산물 정리
+    raw: dict[str, float] = {}
+    for item, want in demand.items():
+        have = supply.get(item, 0.0)
+        if want - have > 1e-9 and not reg.producers(item):
+            raw[item] = round(want - have, 3)
+    surplus = {i: round(s - demand.get(i, 0.0), 3)
+               for i, s in supply.items() if s - demand.get(i, 0.0) > 1e-6 and i != target}
+    over = round(supply.get(target, 0.0) - rate, 3)
+    if over > 1e-6:
+        surplus[target] = over
+
+    warnings += _bottlenecks(nodes)
+    return Plan(target, float(rate), nodes, raw, surplus, warnings,
+                {i: p.id for i, p in chosen.items()})
+
+
+def _bottlenecks(nodes: list[Node]) -> list[str]:
+    """호퍼 라인이 흐름을 감당하는지 확인한다."""
+    out: list[str] = []
+    cap_per_hour = M.HOPPER_ITEMS_PER_SEC * 3600     # 호퍼 1줄 = 9,000개/시간
+    for n in nodes:
+        for item, rate in sorted(n.produced.items()):
+            lines = math.ceil(rate / cap_per_hour)
+            if lines > 1:
+                out.append(
+                    f"{n.process.id} 의 {item} 산출 {rate:,.0f}개/시간은 호퍼 1줄"
+                    f"({cap_per_hour:,.0f}개/시간)로 못 받는다 → 라인을 {lines}줄로 나눌 것")
+    return out
+
+
+def render(p: Plan) -> str:
+    L = [f"# 생산 계획: {p.target}  {p.rate:,.0f}개/시간",
+         f"기준 버전: Minecraft {M.GAME_VERSION} ({M.GAME_VERSION_NAME})", ""]
+    L.append("## 필요한 공장 (하류 → 상류)")
+    for i, n in enumerate(p.nodes, 1):
+        pr = n.process
+        L.append(f"\n{i}. {pr.name}  [{pr.id}]")
+        L.append(f"   유닛      : {n.units:,} {pr.unit}  (이론값 {n.units_exact:,.2f})")
+        if n.builds != [n.units]:
+            from collections import Counter
+            grouped = ", ".join(f"{size}{pr.unit} x {cnt}채"
+                                for size, cnt in Counter(n.builds).most_common())
+            L.append(f"   시공 단위 : 총 {len(n.builds)}채 — {grouped}")
+        throttle = "수요 연동" if pr.throttleable else "상시 가동"
+        L.append(f"   가동률    : {n.utilization*100:5.1f}%  "
+                 f"(수요 {n.demand:,.1f} / 능력 {n.capacity:,.1f} 개/시간, {throttle})")
+        if pr.inputs:
+            L.append("   소비      : " + ", ".join(
+                f"{k} {v:,.1f}/h" for k, v in sorted(n.consumed.items())))
+        L.append("   생산      : " + ", ".join(
+            f"{k} {v:,.1f}/h" for k, v in sorted(n.produced.items())))
+        mark = "O" if pr.verify == CONFIRMED else "~"
+        L.append(f"   근거      : [{mark}] {pr.source or '-'}")
+        for lim in pr.limits:
+            L.append(f"   한계      : {lim}")
+        if pr.design:
+            L.append(f"   설계도    : python3 -m engine.cli litematic {pr.design}"
+                     + (f" --{pr.design_param} {n.builds[0]}" if pr.design_param else ""))
+
+    if p.raw:
+        L += ["", "## 직접 공급해야 하는 원료 (자동화 공정 미등록)"]
+        L += [f"  {k:<28} {v:,.1f}개/시간" for k, v in sorted(p.raw.items())]
+    if p.surplus:
+        L += ["", "## 남는 부산물"]
+        L += [f"  {k:<28} {v:,.1f}개/시간" for k, v in sorted(p.surplus.items())]
+    if p.warnings:
+        L += ["", "## 경고"]
+        L += [f"  ! {w}" for w in p.warnings]
+    L += ["", "## 주의",
+          "  · 가동률이 낮은 공정은 그만큼 놀고 있다는 뜻이다. 목표 수량을 올리거나 "
+          "유닛 수를 줄여 맞출 것.",
+          f"  · 스폰 청크는 {M.SPAWN_CHUNKS_REMOVED_IN}에서 삭제됐다. 체인 전체가 "
+          "한 플레이어의 AFK 범위 안이거나 /forceload 되어야 동시에 돈다."]
+    return "\n".join(L)

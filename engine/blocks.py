@@ -48,6 +48,8 @@ AIR = B("air")
 STONE = B("stone")
 DIRT = B("dirt")
 SAND = B("sand")
+MUD = B("mud")
+GLASS = B("glass")
 WATER = B("water", level="0")
 SUGAR_CANE = B("sugar_cane", age="0")
 REDSTONE_BLOCK = B("redstone_block")
@@ -85,7 +87,7 @@ def chest(facing: str = NORTH) -> Block:
 
 # --- ASCII 미리보기용 글자 --------------------------------------------------
 PREVIEW_CHARS: dict[str, str] = {
-    "air": ".", "stone": "#", "dirt": "d", "sand": "d", "water": "~",
+    "air": ".", "stone": "#", "dirt": "d", "sand": "d", "mud": "m", "water": "~",
     "sugar_cane": "|", "piston": "P", "sticky_piston": "P", "observer": "O",
     "redstone_wire": "r", "redstone_block": "R", "rail": "=", "powered_rail": "+",
     "hopper": "h", "chest": "C", "glass": "g", "oak_slab": "s",

@@ -14,7 +14,7 @@ import json
 import pathlib
 import sys
 
-from . import blueprint, catalog, litedoc, mechanics as M
+from . import blueprint, catalog, chain as C, litedoc, mechanics as M
 from .designs import REGISTRY as DESIGNS, build as build_design
 from .archetypes import ARCHETYPES
 from .principle import COLLECTS, PROCESSES, SOURCES, TRANSPORTS
@@ -106,6 +106,50 @@ def cmd_litematic(a) -> int:
     return 0
 
 
+def _load_registry():
+    import importlib
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "data"))
+    return importlib.import_module("processes").REGISTRY
+
+
+def cmd_chain(a) -> int:
+    reg = _load_registry()
+    if a.action == "list":
+        print(f"공정 {len(reg.by_id)}개:")
+        for pid, p in sorted(reg.by_id.items()):
+            io = " + ".join(sorted(p.inputs)) or "(원료 없음)"
+            print(f"  {pid:<32} {io} → {' + '.join(sorted(p.outputs))}")
+        return 0
+    if a.action == "items":
+        print("생산 가능한 아이템:")
+        for item in reg.items():
+            makers = [p.id for p in reg.producers(item)]
+            print(f"  {item:<20} {'← ' + ', '.join(makers) if makers else '(원료 - 직접 공급)'}")
+        return 0
+
+    picks = {}
+    for spec in a.pick or []:
+        if "=" not in spec:
+            print(f"--pick 형식은 item=process_id 다: {spec}", file=sys.stderr)
+            return 2
+        k, v = spec.split("=", 1)
+        picks[k] = v
+    try:
+        p = C.plan(a.item, a.rate, reg, picks)
+    except C.ChainError as e:
+        print(f"체인 오류: {e}", file=sys.stderr)
+        return 2
+    doc = C.render(p)
+    if a.out:
+        path = pathlib.Path(a.out)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(doc + "\n", encoding="utf-8")
+        print(f"저장: {path}")
+    else:
+        print(doc)
+    return 0
+
+
 def cmd_facts(a) -> int:
     print(f"Minecraft {M.GAME_VERSION} ({M.GAME_VERSION_NAME}, {M.GAME_VERSION_DATE}) 기준")
     print("  O = 공식 문서 확인,  ~ = 실측/통설 추정\n")
@@ -162,6 +206,14 @@ def main(argv=None) -> int:
     p.add_argument("--json", required=True)
     p.add_argument("--out", default="")
     p.set_defaults(fn=cmd_principle)
+
+    p = sub.add_parser("chain", help="공장 연결 / 효율 맞추기")
+    p.add_argument("action", choices=["plan", "list", "items"])
+    p.add_argument("item", nargs="?", default="")
+    p.add_argument("--rate", type=float, default=100.0, help="목표 개수/시간")
+    p.add_argument("--pick", action="append", help="item=process_id (생산 공정 지정)")
+    p.add_argument("--out", default="")
+    p.set_defaults(fn=cmd_chain)
 
     p = sub.add_parser("litematic", help=".litematic 스케매틱 생성")
     p.add_argument("design", choices=sorted(DESIGNS))

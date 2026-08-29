@@ -8,6 +8,35 @@
 
 ---
 
+## 공장 연결 / 효율 맞추기
+
+목표 아이템과 시간당 수량만 주면 필요한 공장 수를 역산한다.
+
+```bash
+python3 -m engine.cli chain plan bone_meal --rate 500 --pick bone_meal=composter_sugar_cane
+```
+```
+1. 컴포스터 (sugar_cane)   1대     가동률  91.7%   sugar_cane 7,003/h 소비
+2. 사탕수수 팜           2,123포기  가동률 100.0%   총 34채 — 64포기 x 33채, 11포기 x 1채
+                                                 → python3 -m engine.cli litematic sugarcane --length 64
+```
+
+핵심은 **가동률**이다. 공정을 두 종류로 나눠 계산한다:
+
+| | 예 | 동작 |
+|---|---|---|
+| 수요 연동 | 제작기 · 화로 · 컴포스터 | 먹인 만큼만 돈다 → 가동률만큼만 원료를 먹는다 |
+| 상시 가동 | 작물 팜 · 몹 팜 | 수요와 무관하게 자기 속도로 나온다 → 남으면 부산물 |
+
+부산물은 자동으로 상계한다. 스켈레톤 팜의 뼈로 뼛가루를 만들면 컴포스터 쪽 수요가
+그만큼 줄고, 남는 화살은 부산물로 잡힌다. 호퍼 1줄(9,000개/시간)을 넘는 흐름은
+라인을 몇 줄로 나눠야 하는지 경고한다.
+
+```bash
+python3 -m engine.cli chain list     # 등록된 공정
+python3 -m engine.cli chain items    # 만들 수 있는 아이템과 경로
+```
+
 ## .litematic 출력 (실제로 지을 수 있는 설계도)
 
 ```bash
