@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fac farm catalog entry",
+  "type": "object",
+  "required": [
+    "id",
+    "ko",
+    "en",
+    "cat",
+    "arch",
+    "principle",
+    "dim",
+    "diff",
+    "verify"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "ko": {
+      "type": "string"
+    },
+    "en": {
+      "type": "string"
+    },
+    "cat": {
+      "enum": [
+        "mob",
+        "spawner",
+        "crop",
+        "column",
+        "animal",
+        "village",
+        "nether",
+        "end",
+        "resource",
+        "infra"
+      ]
+    },
+    "arch": {
+      "enum": [
+        "animal_farm",
+        "column_crop",
+        "composite",
+        "crop_piston_harvester",
+        "enderman_platform",
+        "iron_golem_farm",
+        "item_sorter",
+        "mob_platform_tower",
+        "nether_platform",
+        "smelter_array",
+        "spawner_box",
+        "villager_hall"
+      ]
+    },
+    "principle": {
+      "type": "string",
+      "minLength": 10
+    },
+    "dim": {
+      "enum": [
+        "overworld",
+        "nether",
+        "end"
+      ]
+    },
+    "rate": {
+      "type": "string"
+    },
+    "diff": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "afk": {
+      "type": "boolean"
+    },
+    "refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "params": {
+      "type": "object"
+    },
+    "risk": {
+      "type": "string"
+    },
+    "verify": {
+      "enum": [
+        "mechanics",
+        "at_risk"
+      ]
+    }
+  }
+}

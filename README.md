@@ -1,1 +1,123 @@
-# Fac
+# Fac — 마인크래프트 팜/공장 설계 엔진
+
+야생에서 지을 팜·공장을 **미리 설계해보는 저장소**.
+팜을 하나하나 외우는 대신, **작동 원리를 입력하면 설계도가 나오게** 만들어 뒀다.
+
+> 기준 버전: **Minecraft Java Edition 26.2 "Chaos Cubed"** (2026-06-16)
+> 2026년부터 버전 체계가 연도 기반으로 바뀌었다 (`1.21.x` → `26.x`).
+
+---
+
+## 30초 사용법
+
+```bash
+# 1) 원리만 넣으면 설계도가 나온다
+python3 -m engine.cli principle --json '{
+  "source":"natural_spawn","target":"creeper","transport":"water",
+  "process":"fall","collect":"hopper","scale":{"platform":15,"layers":5}
+}'
+
+# 2) 엄선 100개 카탈로그에서 찾아 쓴다
+python3 -m engine.cli list --cat nether
+python3 -m engine.cli design gold_farm --out blueprints/
+
+# 3) 설계에 쓰이는 검증된 수치를 본다
+python3 -m engine.cli facts
+```
+
+출력에는 **층별 평면도 · 재료 목록 · 시공 순서 · 경고 · 점검표**가 전부 들어 있다.
+예시는 [`blueprints/`](blueprints/) 에 있다.
+
+---
+
+## 이게 왜 필요한가
+
+구버전 유튜브 설계도를 그대로 따라 지으면 **안 도는 팜이 많다.** 원인은 대체로 정해져 있다.
+
+- **1.21.9에서 스폰 청크가 완전히 삭제됐다.** "스폰 지점에 지어두면 항상 돈다"는
+  설계가 전부 무효가 됐고, `/forceload` 나 AFK로 대체해야 한다.
+- 1.18부터 적대 몹은 **하늘광이 아니라 블록광 0**에서만 스폰한다.
+- 네더에서 물길을 쓰는 설계는 애초에 작동하지 않는다 (물이 증발한다).
+- 낙하 높이가 몹 체력과 안 맞으면 몹이 안 죽는다.
+
+이 엔진은 **설계도를 그리기 전에 이런 모순을 먼저 잡아낸다.**
+
+```
+$ python3 -m engine.cli principle --json '{"source":"spawner","target":"blaze","process":"fall","dimension":"nether"}'
+  ! 네더에서는 물이 즉시 증발한다 → transport를 piston/gravity/mob_ai 로 바꿔야 한다.
+  ! blaze 은(는) 낙하 데미지가 통하지 않는다 → lava 또는 manual 로 바꿔야 한다.
+  ! 스폰 청크는 1.21.9에서 삭제됨 → AFK 상주 또는 /forceload 로 청크를 고정해야 한다.
+```
+
+---
+
+## 핵심 아이디어: 모든 팜은 5단계다
+
+```
+산출원(source) → 이송(transport) → 처리(process) → 수거(collect) → 저장(store)
+```
+
+이 5칸만 채우면 어떤 팜이든 설계된다. 자세한 건 [`docs/01_설계원리.md`](docs/01_설계원리.md).
+
+---
+
+## 카탈로그 (100개)
+
+| 분류 | 개수 | 분류 | 개수 |
+|---|---|---|---|
+| 자연 스폰 몹 | 14 | 마을/골렘/습격 | 10 |
+| 경작지/식물 | 14 | 동물 | 9 |
+| 기둥 성장 | 11 | 자원 생성 | 9 |
+| 네더 | 11 | 스포너 | 8 |
+| 엔드 | 6 | 인프라/공정 | 8 |
+
+차원별: 오버월드 78 / 네더 15 / 엔드 7
+
+```bash
+python3 -m engine.cli stats     # 통계
+python3 -m engine.cli list      # 전체 목록
+python3 -m engine.cli list --max-diff 2   # 초반에 지을 수 있는 것만
+python3 -m engine.cli list --at-risk      # 재검증이 필요한 것만
+```
+
+---
+
+## 검증 상태 (과장하지 않기)
+
+- ✅ **93개**: 26.2 공식 문서로 **작동 원리가 성립함을 확인**함
+- ⚠️ **7개**: 최근 버전 변경/버그성 메커니즘 의존 → **재검증 필요** (사유 명시됨)
+- ❌ **인게임 실측은 하지 않았다.** `rate` 는 메커니즘 계산 기반 추정치다.
+- ❌ `refs` 는 **출처 URL이 아니라 검색 키워드**다 (그 설계 계보로 알려진 제작자 이름).
+
+자세한 건 [`docs/04_검증정책.md`](docs/04_검증정책.md).
+
+---
+
+## 구조
+
+```
+engine/
+  mechanics.py    설계 상수 (낙하 공식/호퍼 속도/몹캡...) — 버전 바뀌면 여기만 고친다
+  principle.py    원리 5칸 → 아키타입 선택 + 모순 검출   ← 이 프로젝트의 핵심
+  archetypes.py   아키타입 12종 → 실제 복셀 설계도
+  grid.py         복셀 그리드 + 층별 ASCII 렌더러
+  blueprint.py    설계도 문서 조립
+  catalog.py      100개 카탈로그 조회
+  cli.py          명령줄
+data/
+  farms_src.py    100개 원본 (사람이 편집하는 곳)
+  farms.json      빌드 산출물 (tools/build_catalog.py 가 생성)
+docs/             설계 원리 / 버전 노트 / 워크플로 / 검증 정책
+blueprints/       생성된 설계도 예시
+tests/            27개 회귀 테스트
+```
+
+## 개발
+
+```bash
+python3 tools/build_catalog.py                 # 카탈로그 검증 + JSON 재생성
+python3 -m unittest discover -s tests -v       # 테스트
+```
+
+새 팜 추가는 대부분 `data/farms_src.py` 에 한 줄 추가하면 끝이다.
+정말 새로운 원리일 때만 `engine/archetypes.py` 에 함수를 하나 추가한다.
