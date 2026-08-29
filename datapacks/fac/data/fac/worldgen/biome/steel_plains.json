@@ -1,0 +1,58 @@
+{
+  "temperature": 0.7,
+  "downfall": 0.2,
+  "has_precipitation": false,
+  "effects": {
+    "sky_color": 1779768,
+    "fog_color": 1779768,
+    "water_color": 4020864,
+    "water_fog_color": 4020864,
+    "grass_color": 4872778,
+    "foliage_color": 4083262
+  },
+  "spawners": {
+    "monster": [],
+    "creature": [
+      {
+        "type": "minecraft:villager",
+        "weight": 8,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:iron_golem",
+        "weight": 4,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "ambient": [
+      {
+        "type": "minecraft:bat",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "axolotls": [],
+    "underground_water_creature": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "spawn_costs": {},
+  "carvers": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ]
+}

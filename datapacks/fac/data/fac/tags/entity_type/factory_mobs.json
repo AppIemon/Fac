@@ -1,0 +1,14 @@
+{
+  "values": [
+    "minecraft:villager",
+    "minecraft:iron_golem",
+    "minecraft:allay",
+    "minecraft:piglin",
+    "minecraft:hoglin",
+    "minecraft:enderman",
+    "minecraft:shulker",
+    "minecraft:creeper",
+    "minecraft:skeleton",
+    "minecraft:spider"
+  ]
+}

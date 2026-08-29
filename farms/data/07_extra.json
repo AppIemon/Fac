@@ -1,0 +1,73 @@
+{
+  "farms": [
+    {
+      "id": "magma_cube_farm",
+      "name": "Magma Cube Farm",
+      "name_ko": "마그마 큐브 팜",
+      "category": "mob", "subcategory": "magma_cube",
+      "principle": "Magma cubes spawn on large flat nether platforms (best in basalt deltas / nether wastes); big cubes split into small ones which are pushed to a kill for magma cream.",
+      "mechanics": ["spawning_platform", "biome_specific", "water_stream", "fall_damage", "manual_kill", "hopper_collection", "afk_platform"],
+      "dimension": "nether", "footprint": {"w": 24, "h": 16, "d": 24},
+      "blocks": ["minecraft:magma_block", "minecraft:hopper", "minecraft:chest", "minecraft:oak_trapdoor", "minecraft:nether_bricks"],
+      "mobs": ["minecraft:magma_cube"],
+      "items_out": ["minecraft:magma_cream"],
+      "biomes": ["minecraft:basalt_deltas", "minecraft:nether_wastes"],
+      "y_level": "on a flat nether plane / roof", "light": "any",
+      "rate": "steady magma cream/h", "afk": true, "redstone": "low", "difficulty": "medium",
+      "status": "works", "caveats": ["Magma cubes ignore light; big cubes must be allowed room to split into small cubes (which drop the cream). Basalt deltas has the highest magma-cube spawn weight."],
+      "sources": [{"creator": "ilmango", "kind": "youtube", "ref": "magma cube farm"}],
+      "tags": ["magma_cream", "brewing", "nether"]
+    },
+    {
+      "id": "ghast_farm",
+      "name": "Ghast Farm",
+      "name_ko": "가스트 팜",
+      "category": "mob", "subcategory": "ghast",
+      "principle": "Ghasts need a large open air volume to spawn; a big spawn-proofed platform in soul sand valley / nether wastes lets ghasts spawn and be funneled to a kill for ghast tears and gunpowder.",
+      "mechanics": ["spawning_platform", "biome_specific", "spawn_proofing", "aggro_lure", "manual_kill", "hopper_collection", "afk_platform"],
+      "dimension": "nether", "footprint": {"w": 32, "h": 20, "d": 32},
+      "blocks": ["minecraft:soul_sand", "minecraft:hopper", "minecraft:chest", "minecraft:oak_trapdoor", "minecraft:nether_bricks"],
+      "mobs": ["minecraft:ghast"],
+      "items_out": ["minecraft:ghast_tear", "minecraft:gunpowder"],
+      "biomes": ["minecraft:soul_sand_valley", "minecraft:nether_wastes", "minecraft:basalt_deltas"],
+      "y_level": "large open nether area", "light": "any",
+      "rate": "low (ghasts need lots of space)", "afk": true, "redstone": "medium", "difficulty": "hard",
+      "status": "works_with_caveat", "caveats": ["Ghasts require a 5x5x5 empty space to spawn, so rates are low; soul sand valley has the best ghast spawn weight."],
+      "sources": [{"creator": "ilmango", "kind": "youtube", "ref": "ghast farm"}],
+      "tags": ["ghast_tear", "gunpowder", "brewing", "nether"]
+    },
+    {
+      "id": "husk_farm_desert",
+      "name": "Husk Farm (desert)",
+      "name_ko": "허스크 팜 (사막)",
+      "category": "mob", "subcategory": "zombie",
+      "principle": "Husks spawn in place of zombies on desert surfaces at night; a dark desert-biome platform funnels them to a dry kill (no water, or they convert to drowned) for rotten flesh and gear.",
+      "mechanics": ["spawning_dark", "biome_specific", "spawning_platform", "fall_damage", "manual_kill", "hopper_collection", "afk_platform"],
+      "dimension": "overworld", "footprint": {"w": 24, "h": 24, "d": 24},
+      "blocks": ["minecraft:oak_trapdoor", "minecraft:hopper", "minecraft:chest", "minecraft:sandstone", "minecraft:magma_block"],
+      "mobs": ["minecraft:husk"],
+      "items_out": ["minecraft:rotten_flesh", "minecraft:iron_ingot", "minecraft:carrot"],
+      "biomes": ["minecraft:desert"],
+      "y_level": "desert surface / sky over desert", "light": "0",
+      "rate": "steady flesh + rare gear", "afk": true, "redstone": "low", "difficulty": "medium",
+      "status": "works", "caveats": ["Husks only spawn in desert biomes; keep the kill dry so they don't convert into drowned. Great emerald source via rotten-flesh cleric trades."],
+      "sources": [{"creator": "wattles", "kind": "youtube", "ref": "husk farm desert"}],
+      "tags": ["rotten_flesh", "emerald", "desert"]
+    },
+    {
+      "id": "perimeter_spawn_proofer",
+      "name": "Perimeter Spawn-Proofing Setup",
+      "name_ko": "스폰 방지 경계 정비",
+      "category": "utility", "subcategory": "control",
+      "principle": "Every cave/surface within 128 blocks of a sky mob/gold farm is lit or slabbed so the mob cap isn't wasted on random spawns — the single biggest rate multiplier for any spawn-based farm.",
+      "mechanics": ["spawn_proofing", "mob_cap_control", "flying_machine"],
+      "dimension": "overworld", "footprint": {"w": 32, "h": 6, "d": 32},
+      "blocks": ["minecraft:torch", "minecraft:smooth_stone_slab", "minecraft:white_carpet", "minecraft:light"],
+      "y_level": "around the target farm (128-block radius)", "light": ">=1 everywhere except the farm platform",
+      "rate": "N/A (multiplier for spawn farms)", "afk": false, "redstone": "none", "difficulty": "hard",
+      "status": "works", "caveats": ["Digging/lighting a full perimeter is a big project but can multiply a mob/gold farm's rate several times over."],
+      "sources": [{"creator": "RaysWorks", "kind": "youtube", "ref": "perimeter spawn proofing"}],
+      "tags": ["spawn_proofing", "mob_cap", "rate_boost"]
+    }
+  ]
+}

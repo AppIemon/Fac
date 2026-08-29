@@ -1,0 +1,188 @@
+{
+  "dimensions": {
+    "minecraft:overworld": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:steel_plains",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:stone",
+              "height": 3
+            },
+            {
+              "block": "minecraft:smooth_stone",
+              "height": 1
+            },
+            {
+              "block": "minecraft:gray_concrete",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "minecraft:the_nether": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:crimson_foundry",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:blackstone",
+              "height": 3
+            },
+            {
+              "block": "minecraft:polished_blackstone",
+              "height": 1
+            },
+            {
+              "block": "minecraft:red_nether_bricks",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "minecraft:the_end": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:end_garden",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:end_stone",
+              "height": 4
+            },
+            {
+              "block": "minecraft:purpur_block",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "fac:campus": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:steel_plains",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:stone",
+              "height": 3
+            },
+            {
+              "block": "minecraft:smooth_stone",
+              "height": 1
+            },
+            {
+              "block": "minecraft:gray_concrete",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "fac:nether_works": {
+      "type": "minecraft:the_nether",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:crimson_foundry",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:blackstone",
+              "height": 3
+            },
+            {
+              "block": "minecraft:polished_blackstone",
+              "height": 1
+            },
+            {
+              "block": "minecraft:red_nether_bricks",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "fac:end_works": {
+      "type": "minecraft:the_end",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:end_garden",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:end_stone",
+              "height": 4
+            },
+            {
+              "block": "minecraft:purpur_block",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    },
+    "fac:void_stack": {
+      "type": "minecraft:overworld",
+      "generator": {
+        "type": "minecraft:flat",
+        "settings": {
+          "biome": "fac:dark_chamber",
+          "layers": [
+            {
+              "block": "minecraft:bedrock",
+              "height": 1
+            },
+            {
+              "block": "minecraft:obsidian",
+              "height": 2
+            },
+            {
+              "block": "minecraft:black_concrete",
+              "height": 1
+            }
+          ],
+          "structure_overrides": []
+        }
+      }
+    }
+  }
+}

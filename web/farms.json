@@ -1,0 +1,6182 @@
+{
+  "version": "26.2",
+  "count": 100,
+  "farms": [
+    {
+      "id": "general_mob_tower",
+      "name": "General Mob Farm (dark tower)",
+      "name_ko": "일반 몹 타워",
+      "category": "mob",
+      "subcategory": "general",
+      "principle": "Dark spawning platforms high in the sky (or over the void of a lit area) let only hostile mobs spawn; water streams push them to a central fall/lava kill and hoppers collect drops.",
+      "mechanics": [
+        "spawning_dark",
+        "spawning_platform",
+        "water_stream",
+        "fall_damage",
+        "hopper_collection",
+        "afk_platform",
+        "mob_cap_control"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 30,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:soul_sand",
+        "minecraft:magma_block",
+        "minecraft:oak_sign",
+        "minecraft:oak_trapdoor"
+      ],
+      "mobs": [
+        "minecraft:zombie",
+        "minecraft:skeleton",
+        "minecraft:creeper",
+        "minecraft:spider"
+      ],
+      "items_out": [
+        "minecraft:rotten_flesh",
+        "minecraft:bone",
+        "minecraft:arrow",
+        "minecraft:gunpowder",
+        "minecraft:string"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "128+ (or 24+ blocks above surrounding, spawn-proof caves nearby)",
+      "light": "0 on spawn platform",
+      "rate": "~1-2k drops/h + steady XP (1 player AFK)",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Spawn-proof all caves within 128 blocks or the hostile mob cap (70) starves the farm."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "easy mob farm 1.21"
+        },
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "mob xp farm"
+        }
+      ],
+      "tags": [
+        "xp",
+        "starter",
+        "drops",
+        "gunpowder",
+        "bones",
+        "string"
+      ]
+    },
+    {
+      "id": "creeper_only_farm",
+      "name": "Creeper Farm (cat-filtered)",
+      "name_ko": "크리퍼 전용 팜",
+      "category": "mob",
+      "subcategory": "creeper",
+      "principle": "A tall dark platform where cats scare away all non-creeper mobs, so only creepers spawn; they drop to a controlled kill for pure gunpowder.",
+      "mechanics": [
+        "spawning_dark",
+        "spawning_platform",
+        "mob_filter_cat",
+        "fall_damage",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 26,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_trapdoor",
+        "minecraft:glass",
+        "minecraft:water"
+      ],
+      "mobs": [
+        "minecraft:creeper",
+        "minecraft:cat"
+      ],
+      "items_out": [
+        "minecraft:gunpowder"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "sky platform 128+",
+      "light": "0",
+      "rate": "~1-2 stacks gunpowder/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Charged creepers can destroy the build during thunderstorms unless roofed."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "creeper farm"
+        }
+      ],
+      "tags": [
+        "gunpowder",
+        "tnt",
+        "rockets"
+      ]
+    },
+    {
+      "id": "spawner_xp_farm",
+      "name": "Dungeon Spawner XP Farm",
+      "name_ko": "던전 스포너 XP 팜",
+      "category": "mob",
+      "subcategory": "spawner",
+      "principle": "A natural monster spawner (zombie/skeleton/spider) is enclosed and dark; mobs are washed into a 1-hit kill chamber for fast early-game XP and drops.",
+      "mechanics": [
+        "structure_required_spawner",
+        "spawning_dark",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 12,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:spawner",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:zombie",
+        "minecraft:skeleton",
+        "minecraft:spider"
+      ],
+      "items_out": [
+        "minecraft:rotten_flesh",
+        "minecraft:bone",
+        "minecraft:arrow",
+        "minecraft:string"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "at the found dungeon",
+      "light": "0 near spawner",
+      "rate": "spawner-limited (~4 mobs / 10-40s)",
+      "afk": false,
+      "redstone": "none",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Rate is capped by the single spawner; best as an early-game XP source."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "survival guide spawner xp"
+        }
+      ],
+      "tags": [
+        "xp",
+        "early_game",
+        "spawner"
+      ]
+    },
+    {
+      "id": "enderman_end_farm",
+      "name": "Enderman Ender Pearl / XP Farm (End)",
+      "name_ko": "엔더맨 팜 (엔드)",
+      "category": "mob",
+      "subcategory": "enderman",
+      "principle": "On the main End island / outer islands endermen spawn densely; an endermite (or player) lures them to a two-block-high kill spot where they take fatal fall/hit damage for huge XP and ender pearls.",
+      "mechanics": [
+        "spawning_dark",
+        "biome_specific",
+        "aggro_lure",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "end",
+      "footprint": {
+        "w": 40,
+        "h": 20,
+        "d": 40
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:white_carpet",
+        "minecraft:end_stone",
+        "minecraft:water"
+      ],
+      "mobs": [
+        "minecraft:enderman",
+        "minecraft:endermite"
+      ],
+      "items_out": [
+        "minecraft:ender_pearl"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:the_end",
+        "minecraft:end_highlands",
+        "minecraft:end_midlands"
+      ],
+      "y_level": "on End islands",
+      "light": "any (endermen ignore light in End)",
+      "rate": "very high XP + stacks of pearls/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Endermen teleport if they touch water/rain; use a dry enclosed platform."
+      ],
+      "sources": [
+        {
+          "creator": "gnembon",
+          "kind": "youtube",
+          "ref": "enderman farm"
+        },
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "enderman xp"
+        }
+      ],
+      "tags": [
+        "xp",
+        "ender_pearl",
+        "end"
+      ]
+    },
+    {
+      "id": "gold_farm_nether_portal",
+      "name": "Nether Roof Gold Farm (zombified piglin)",
+      "name_ko": "금 팜 (네더 지붕)",
+      "category": "mob",
+      "subcategory": "piglin",
+      "principle": "Zombified piglins spawn on nether-roof platforms; they are funneled to a 1-hit kill for gold nuggets/ingots and XP. Spawns are not limited by the hostile mob cap in the same way as portal spawns.",
+      "mechanics": [
+        "spawning_platform",
+        "nether_roof",
+        "biome_specific",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 40,
+        "h": 24,
+        "d": 40
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:magma_block",
+        "minecraft:oak_trapdoor",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:zombified_piglin"
+      ],
+      "items_out": [
+        "minecraft:gold_ingot",
+        "minecraft:gold_nugget",
+        "minecraft:rotten_flesh"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:nether_wastes",
+        "minecraft:crimson_forest",
+        "minecraft:warped_forest",
+        "minecraft:soul_sand_valley"
+      ],
+      "y_level": "on the nether roof (y=128) or a large spawn plane",
+      "light": "0",
+      "rate": "very high XP + many gold ingots/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Requires access to the nether roof or a very large spawn plane; light every other surface for 128 blocks."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "nether roof gold farm"
+        },
+        {
+          "creator": "RaysWorks",
+          "kind": "youtube",
+          "ref": "gold farm"
+        }
+      ],
+      "tags": [
+        "xp",
+        "gold",
+        "nether"
+      ]
+    },
+    {
+      "id": "piglin_bartering_farm",
+      "name": "Piglin Bartering Farm",
+      "name_ko": "피글린 물물교환 팜",
+      "category": "mob",
+      "subcategory": "piglin",
+      "principle": "Adult piglins are held on a platform and given gold ingots by a dispenser; their barter drops fall through to storage, yielding ender pearls, obsidian, and more from a renewable gold supply.",
+      "mechanics": [
+        "bartering",
+        "biome_specific",
+        "dispenser_feed",
+        "hopper_collection",
+        "item_filter",
+        "afk_platform"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 12,
+        "h": 8,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:hopper_minecart",
+        "minecraft:note_block",
+        "minecraft:soul_sand"
+      ],
+      "mobs": [
+        "minecraft:piglin"
+      ],
+      "items_out": [
+        "minecraft:ender_pearl",
+        "minecraft:obsidian",
+        "minecraft:crying_obsidian",
+        "minecraft:string",
+        "minecraft:quartz",
+        "minecraft:glowstone_dust",
+        "minecraft:soul_sand",
+        "minecraft:gravel",
+        "minecraft:iron_nugget",
+        "minecraft:fire_charge"
+      ],
+      "items_in": [
+        "minecraft:gold_ingot"
+      ],
+      "biomes": [
+        "minecraft:crimson_forest"
+      ],
+      "y_level": "any nether",
+      "light": "any",
+      "rate": "barter-rate limited by gold input (~1 barter/pig/6-8s)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Pair with a gold farm for a renewable input; piglins must stand on a non-full block or netherrack/soul-sand and not zombify (keep in Nether)."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "piglin bartering farm"
+        },
+        {
+          "creator": "shulkercraft",
+          "kind": "youtube",
+          "ref": "bartering farm"
+        }
+      ],
+      "tags": [
+        "ender_pearl",
+        "obsidian",
+        "bartering",
+        "nether"
+      ]
+    },
+    {
+      "id": "blaze_spawner_farm",
+      "name": "Blaze Farm (nether fortress spawner)",
+      "name_ko": "블레이즈 팜",
+      "category": "mob",
+      "subcategory": "blaze",
+      "principle": "A nether-fortress blaze spawner is boxed in; blazes are pushed by water (or trapped) into a kill spot for blaze rods, essential for brewing and eyes of ender.",
+      "mechanics": [
+        "structure_required_spawner",
+        "biome_specific",
+        "water_stream",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 11,
+        "h": 10,
+        "d": 11
+      },
+      "blocks": [
+        "minecraft:spawner",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_sign",
+        "minecraft:soul_sand"
+      ],
+      "mobs": [
+        "minecraft:blaze"
+      ],
+      "items_out": [
+        "minecraft:blaze_rod"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:nether_wastes"
+      ],
+      "y_level": "at the fortress spawner",
+      "light": "any",
+      "rate": "spawner-limited, steady rods + high XP",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Water only exists near the spawner via placement adjacent to the fortress structure; blazes are fire-immune so use fall/hits, not lava."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "blaze farm survival guide"
+        }
+      ],
+      "tags": [
+        "blaze_rod",
+        "xp",
+        "brewing",
+        "nether"
+      ]
+    },
+    {
+      "id": "wither_skeleton_farm",
+      "name": "Wither Skeleton Farm (fortress)",
+      "name_ko": "위더 스켈레톤 팜",
+      "category": "mob",
+      "subcategory": "wither_skeleton",
+      "principle": "Nether-fortress spawn spaces are spawn-proofed except a dark platform where wither skeletons spawn; they fall to a kill spot yielding coal, bones, and rare skulls for the Wither.",
+      "mechanics": [
+        "spawning_dark",
+        "biome_specific",
+        "spawn_proofing",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 20,
+        "h": 24,
+        "d": 20
+      },
+      "blocks": [
+        "minecraft:oak_trapdoor",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:nether_bricks",
+        "minecraft:magma_block"
+      ],
+      "mobs": [
+        "minecraft:wither_skeleton",
+        "minecraft:skeleton"
+      ],
+      "items_out": [
+        "minecraft:coal",
+        "minecraft:bone",
+        "minecraft:wither_skeleton_skull"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:nether_wastes",
+        "minecraft:soul_sand_valley"
+      ],
+      "y_level": "fortress bounding box",
+      "light": "0",
+      "rate": "steady coal/bones, ~1 skull/1-2h",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Wither skeletons only spawn inside the fortress bounding box; spawn-proof the whole fortress except the platform."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "wither skeleton farm"
+        }
+      ],
+      "tags": [
+        "skull",
+        "coal",
+        "wither",
+        "nether"
+      ]
+    },
+    {
+      "id": "guardian_farm",
+      "name": "Guardian / Elder Guardian Farm (ocean monument)",
+      "name_ko": "가디언 팜 (해저 신전)",
+      "category": "mob",
+      "subcategory": "guardian",
+      "principle": "The whole ocean monument's water is drained/reserved as the spawn area; guardians spawn in the monument water volume and are flushed down to a kill spot for prismarine, crystals and cod.",
+      "mechanics": [
+        "structure_required_monument",
+        "biome_specific",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 58,
+        "h": 40,
+        "d": 58
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:sponge",
+        "minecraft:magma_block",
+        "minecraft:soul_sand"
+      ],
+      "mobs": [
+        "minecraft:guardian",
+        "minecraft:elder_guardian"
+      ],
+      "items_out": [
+        "minecraft:prismarine_shard",
+        "minecraft:prismarine_crystals",
+        "minecraft:cod"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:deep_ocean",
+        "minecraft:deep_cold_ocean",
+        "minecraft:deep_frozen_ocean",
+        "minecraft:deep_lukewarm_ocean"
+      ],
+      "y_level": "at monument (sea level and below)",
+      "light": "any (guardians ignore light)",
+      "rate": "very high prismarine + XP/h",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Large water-clearing project (sponges/drainage). Guardians need the monument water volume to spawn."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "guardian farm"
+        },
+        {
+          "creator": "RaysWorks",
+          "kind": "youtube",
+          "ref": "guardian farm perimeter"
+        }
+      ],
+      "tags": [
+        "prismarine",
+        "xp",
+        "ocean"
+      ]
+    },
+    {
+      "id": "raid_farm",
+      "name": "Raid Farm (emeralds + totems)",
+      "name_ko": "습격 팜 (에메랄드/토템)",
+      "category": "mob",
+      "subcategory": "raid",
+      "principle": "A villager with Bad Omen triggers repeated raids in a controlled arena; raiders are funneled to a kill spot, dropping emeralds and (from evokers) totems of undying.",
+      "mechanics": [
+        "raid",
+        "village_mechanics",
+        "water_stream",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 30,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:bell",
+        "minecraft:red_bed",
+        "minecraft:campfire",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:villager",
+        "minecraft:pillager",
+        "minecraft:vindicator",
+        "minecraft:evoker",
+        "minecraft:ravager",
+        "minecraft:witch"
+      ],
+      "items_out": [
+        "minecraft:emerald",
+        "minecraft:totem_of_undying",
+        "minecraft:redstone",
+        "minecraft:arrow"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "high in sky to avoid stray spawns",
+      "light": "controlled",
+      "rate": "very high emeralds + steady totems/h",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Raid trigger and Bad Omen handling changed with the Trial Chambers update (ominous bottles). Build above y=high and spawn-proof to avoid raider scatter."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "raid farm 1.21"
+        },
+        {
+          "creator": "RaysWorks",
+          "kind": "youtube",
+          "ref": "raid farm"
+        }
+      ],
+      "tags": [
+        "emerald",
+        "totem",
+        "raid"
+      ]
+    },
+    {
+      "id": "iron_farm",
+      "name": "Iron Golem Farm (villager panic)",
+      "name_ko": "철 골렘 팜",
+      "category": "mob",
+      "subcategory": "iron_golem",
+      "principle": "Three+ villagers with beds and a nearby threat (zombie) panic and summon iron golems on a spawn platform; golems fall/are pushed to a lava/kill spot for guaranteed 3-5 iron each.",
+      "mechanics": [
+        "village_mechanics",
+        "villager_panic",
+        "spawning_platform",
+        "fall_damage",
+        "lava_blade",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 16,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:red_bed",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:lava",
+        "minecraft:campfire",
+        "minecraft:glass"
+      ],
+      "mobs": [
+        "minecraft:villager",
+        "minecraft:zombie",
+        "minecraft:iron_golem"
+      ],
+      "items_out": [
+        "minecraft:iron_ingot",
+        "minecraft:poppy"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any (build in sky to avoid caps)",
+      "light": "any",
+      "rate": "~1 golem / ~35s per module (~300-400 iron/h)",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Since 1.21.2 villagers detect existing golems up to ~45 blocks and stop spawning; keep modules 64+ blocks apart and don't leave stray golems nearby (MC-277889)."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "iron farm"
+        },
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "easy iron farm 1.21"
+        }
+      ],
+      "tags": [
+        "iron",
+        "starter",
+        "village"
+      ]
+    },
+    {
+      "id": "drowned_farm_river",
+      "name": "Drowned Farm (river/ocean spawn)",
+      "name_ko": "드라운드 팜",
+      "category": "mob",
+      "subcategory": "drowned",
+      "principle": "Drowned spawn in open river/ocean water below sea level; they are funneled to a kill spot for tridents, nautilus shells, and copper/rotten flesh. (Not the zombie-conversion type.)",
+      "mechanics": [
+        "spawning_dark",
+        "biome_specific",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 24,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:soul_sand",
+        "minecraft:magma_block",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:drowned"
+      ],
+      "items_out": [
+        "minecraft:trident",
+        "minecraft:nautilus_shell",
+        "minecraft:copper_ingot",
+        "minecraft:rotten_flesh"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:river",
+        "minecraft:ocean",
+        "minecraft:cold_ocean"
+      ],
+      "y_level": "spawn plane below y=58 (natural drowned)",
+      "light": "0",
+      "rate": "slow tridents (rare), steady shells/copper",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Only naturally-spawned drowned drop tridents/shells; zombie-converted drowned do not. River biome gives best rates."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "drowned farm trident"
+        },
+        {
+          "creator": "silentwisperer",
+          "kind": "youtube",
+          "ref": "drowned trident farm"
+        }
+      ],
+      "tags": [
+        "trident",
+        "copper",
+        "nautilus_shell",
+        "ocean"
+      ]
+    },
+    {
+      "id": "witch_hut_farm",
+      "name": "Witch Farm (swamp hut)",
+      "name_ko": "마녀 팜 (늪 오두막)",
+      "category": "mob",
+      "subcategory": "witch",
+      "principle": "A swamp witch hut spawns witches in its bounding box regardless of other spawns when the area is spawn-proofed; witches fall to a kill spot for redstone, glowstone, gunpowder, and sugar.",
+      "mechanics": [
+        "structure_required_hut",
+        "biome_specific",
+        "spawn_proofing",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 30,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:oak_trapdoor",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:soul_sand",
+        "minecraft:magma_block"
+      ],
+      "mobs": [
+        "minecraft:witch"
+      ],
+      "items_out": [
+        "minecraft:redstone",
+        "minecraft:glowstone_dust",
+        "minecraft:gunpowder",
+        "minecraft:sugar",
+        "minecraft:glass_bottle",
+        "minecraft:spider_eye"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:swamp",
+        "minecraft:mangrove_swamp"
+      ],
+      "y_level": "at the witch hut",
+      "light": "0",
+      "rate": "steady redstone/glowstone/h",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Spawn-proof the whole 128-block area so witch-hut spawns dominate; fall damage must exceed witch self-heal or use a player hit."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "witch farm swamp hut"
+        }
+      ],
+      "tags": [
+        "redstone",
+        "glowstone",
+        "gunpowder",
+        "swamp"
+      ]
+    },
+    {
+      "id": "slime_swamp_farm",
+      "name": "Slime Farm (swamp)",
+      "name_ko": "슬라임 팜 (늪)",
+      "category": "mob",
+      "subcategory": "slime",
+      "principle": "Slimes spawn in swamp biomes between y=50-70 at night; a flat lit-controlled platform gathers them to a kill for slime balls.",
+      "mechanics": [
+        "spawning_platform",
+        "biome_specific",
+        "afk_platform",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 32,
+        "h": 8,
+        "d": 32
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:slime"
+      ],
+      "items_out": [
+        "minecraft:slime_ball"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:swamp",
+        "minecraft:mangrove_swamp"
+      ],
+      "y_level": "50-70 (swamp) at night",
+      "light": "7- for swamp spawns",
+      "rate": "night-limited slime balls",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Swamp slime spawns only 50<=y<=70, light<=7 and at night; slime-chunk farms are the deep alternative."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "slime farm swamp"
+        }
+      ],
+      "tags": [
+        "slime_ball",
+        "swamp"
+      ]
+    },
+    {
+      "id": "slime_chunk_farm",
+      "name": "Slime Farm (slime chunk, deep)",
+      "name_ko": "슬라임 청크 팜",
+      "category": "mob",
+      "subcategory": "slime",
+      "principle": "In a slime chunk below y=40, slimes spawn regardless of light; several floors are dug out and lit for AFK, with slimes pushed to a kill.",
+      "mechanics": [
+        "spawning_platform",
+        "slime_chunk",
+        "water_stream",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 16,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:torch",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:slime"
+      ],
+      "items_out": [
+        "minecraft:slime_ball"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "< y=40 in a slime chunk",
+      "light": "any (deep slimes ignore light)",
+      "rate": "steady slime balls/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Requires locating a slime chunk; dig 3+ floors and light caves within 128 blocks to reduce competing spawns."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "slime chunk farm"
+        }
+      ],
+      "tags": [
+        "slime_ball",
+        "underground"
+      ]
+    },
+    {
+      "id": "spider_farm",
+      "name": "Spider Farm (string)",
+      "name_ko": "거미 팜",
+      "category": "mob",
+      "subcategory": "spider",
+      "principle": "A dark 3-wide spawning floor lets spiders spawn; sloped/ trapdoor tricks move them to a kill for string and spider eyes.",
+      "mechanics": [
+        "spawning_dark",
+        "spawning_platform",
+        "trapdoor_spawnproof",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 12,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:oak_trapdoor",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:spider"
+      ],
+      "items_out": [
+        "minecraft:string",
+        "minecraft:spider_eye"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "sky platform",
+      "light": "0",
+      "rate": "steady string/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Spiders need a 3x3 footprint to spawn and climb walls; use overhangs/trapdoors to prevent escape."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "spider farm"
+        }
+      ],
+      "tags": [
+        "string",
+        "spider_eye"
+      ]
+    },
+    {
+      "id": "cave_spider_spawner_farm",
+      "name": "Cave Spider Spawner Farm",
+      "name_ko": "동굴 거미 스포너 팜",
+      "category": "mob",
+      "subcategory": "spider",
+      "principle": "A mineshaft cave-spider spawner is enclosed; tiny cave spiders are washed to a 1-tall kill gap for fast string, eyes, and XP.",
+      "mechanics": [
+        "structure_required_spawner",
+        "spawning_dark",
+        "water_stream",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 8,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:spawner",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:smooth_stone_slab",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:cave_spider"
+      ],
+      "items_out": [
+        "minecraft:string",
+        "minecraft:spider_eye"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "at the mineshaft spawner",
+      "light": "0 near spawner",
+      "rate": "spawner-limited string + high XP",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Cave spiders are 1 block tall and poison; use a half-slab kill gap and drink milk if hit."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "cave spider xp farm"
+        }
+      ],
+      "tags": [
+        "string",
+        "xp",
+        "spawner"
+      ]
+    },
+    {
+      "id": "zombie_spawner_farm",
+      "name": "Zombie Spawner Farm",
+      "name_ko": "좀비 스포너 팜",
+      "category": "mob",
+      "subcategory": "zombie",
+      "principle": "A dungeon zombie spawner feeds a water channel into a kill chamber for rotten flesh (emerald trading with villagers) and early XP.",
+      "mechanics": [
+        "structure_required_spawner",
+        "spawning_dark",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 14,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:spawner",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_sign"
+      ],
+      "mobs": [
+        "minecraft:zombie"
+      ],
+      "items_out": [
+        "minecraft:rotten_flesh",
+        "minecraft:iron_ingot",
+        "minecraft:carrot",
+        "minecraft:potato"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "at the dungeon",
+      "light": "0 near spawner",
+      "rate": "spawner-limited flesh + XP",
+      "afk": false,
+      "redstone": "none",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Rotten flesh trades to cleric villagers for emeralds; rare iron/carrot/potato drops from equipped zombies."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "zombie spawner xp"
+        }
+      ],
+      "tags": [
+        "rotten_flesh",
+        "xp",
+        "spawner"
+      ]
+    },
+    {
+      "id": "trial_spawner_xp_farm",
+      "name": "Trial Spawner Loot/XP Cycle (Trial Chamber)",
+      "name_ko": "시련 스포너 팜 (시련 챔버)",
+      "category": "mob",
+      "subcategory": "trial",
+      "principle": "Trial spawners eject loot after each wave and have a 30-min cooldown, so you cycle through a chamber's many spawners; ominous mode (ominous bottle) upgrades keys/loot and drops the heavy core.",
+      "mechanics": [
+        "structure_required_trial",
+        "wave_clear",
+        "loot_eject",
+        "cooldown_cycle",
+        "ominous",
+        "manual_kill"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 48,
+        "h": 20,
+        "d": 48
+      },
+      "blocks": [
+        "minecraft:trial_spawner",
+        "minecraft:vault",
+        "minecraft:chest",
+        "minecraft:copper_bulb"
+      ],
+      "mobs": [
+        "minecraft:breeze",
+        "minecraft:zombie",
+        "minecraft:skeleton",
+        "minecraft:spider",
+        "minecraft:bogged",
+        "minecraft:silverfish"
+      ],
+      "items_out": [
+        "minecraft:trial_key",
+        "minecraft:ominous_trial_key",
+        "minecraft:heavy_core",
+        "minecraft:emerald",
+        "minecraft:arrow"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "-40 to -20 (chamber depth)",
+      "light": "any",
+      "rate": "per-cooldown cycle; heavy core ~7.5% per ominous vault",
+      "afk": false,
+      "redstone": "none",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Trial spawners cannot be moved and have a 30-min cooldown; cycle multiple spawners. Vaults unlock once per player."
+      ],
+      "sources": [
+        {
+          "creator": "ianxofour",
+          "kind": "youtube",
+          "ref": "trial chamber guide"
+        },
+        {
+          "creator": "craftdex",
+          "kind": "wiki",
+          "ref": "trial chamber 26.2"
+        }
+      ],
+      "tags": [
+        "xp",
+        "mace",
+        "heavy_core",
+        "trial_chamber"
+      ]
+    },
+    {
+      "id": "breeze_farm",
+      "name": "Breeze Rod Farm (trial spawner)",
+      "name_ko": "브리즈 로드 팜",
+      "category": "mob",
+      "subcategory": "breeze",
+      "principle": "Breeze trial spawners are cleared repeatedly; breezes drop breeze rods (for wind charges / crafting) and the fight yields keys.",
+      "mechanics": [
+        "structure_required_trial",
+        "wave_clear",
+        "loot_eject",
+        "cooldown_cycle",
+        "manual_kill"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 12,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:trial_spawner",
+        "minecraft:chest",
+        "minecraft:hopper"
+      ],
+      "mobs": [
+        "minecraft:breeze"
+      ],
+      "items_out": [
+        "minecraft:breeze_rod",
+        "minecraft:wind_charge"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "trial chamber depth",
+      "light": "any",
+      "rate": "per-cooldown cycle",
+      "afk": false,
+      "redstone": "none",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Breeze rods only come from breeze trial spawners; deflect wind charges. No fully-AFK design (trial spawner requires a player)."
+      ],
+      "sources": [
+        {
+          "creator": "ianxofour",
+          "kind": "youtube",
+          "ref": "breeze farm trial"
+        }
+      ],
+      "tags": [
+        "breeze_rod",
+        "wind_charge",
+        "trial_chamber"
+      ]
+    },
+    {
+      "id": "phantom_farm",
+      "name": "Phantom Farm (membrane)",
+      "name_ko": "팬텀 팜",
+      "category": "mob",
+      "subcategory": "phantom",
+      "principle": "A player who hasn't slept for 3+ days lures phantoms into a boxed kill area; phantoms drop membranes for elytra repair and slow-falling potions.",
+      "mechanics": [
+        "spawning_night",
+        "aggro_lure",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 16,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:soul_sand",
+        "minecraft:water",
+        "minecraft:oak_trapdoor"
+      ],
+      "mobs": [
+        "minecraft:phantom"
+      ],
+      "items_out": [
+        "minecraft:phantom_membrane"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "high, open sky above",
+      "light": "any (phantoms spawn above)",
+      "rate": "night-limited membranes",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Requires staying awake (insomnia). Phantoms only spawn under open sky above the player."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "phantom farm"
+        }
+      ],
+      "tags": [
+        "phantom_membrane",
+        "elytra"
+      ]
+    },
+    {
+      "id": "shulker_farm_end_city",
+      "name": "Shulker Farm (End city dupe)",
+      "name_ko": "셜커 팜 (엔드 시티)",
+      "category": "mob",
+      "subcategory": "shulker",
+      "principle": "A captured shulker in an End city is induced to spawn a new shulker when its bullet hits another shulker; the offspring is collected for a self-sustaining shulker shell supply.",
+      "mechanics": [
+        "structure_required_end_city",
+        "shulker_reproduction",
+        "minecart",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "end",
+      "footprint": {
+        "w": 16,
+        "h": 16,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:purpur_block",
+        "minecraft:piston",
+        "minecraft:observer"
+      ],
+      "mobs": [
+        "minecraft:shulker"
+      ],
+      "items_out": [
+        "minecraft:shulker_shell"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:end_highlands"
+      ],
+      "y_level": "at End city",
+      "light": "any",
+      "rate": "steady shells (2 shells = 1 box)",
+      "afk": false,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Needs a starter shulker pair; shells require killing offspring only (keep breeders alive)."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "shulker farm"
+        }
+      ],
+      "tags": [
+        "shulker_shell",
+        "shulker_box",
+        "end"
+      ]
+    },
+    {
+      "id": "hoglin_farm",
+      "name": "Hoglin Farm (crimson forest)",
+      "name_ko": "호글린 팜",
+      "category": "mob",
+      "subcategory": "hoglin",
+      "principle": "Hoglins breed with crimson fungi; babies grow and are pushed to a cooked-kill (fire/lava-adjacent) for cooked porkchop and leather.",
+      "mechanics": [
+        "breeding",
+        "biome_specific",
+        "growth_tick",
+        "fire_kill",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 12,
+        "h": 8,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:crimson_fungus",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:campfire",
+        "minecraft:nether_wart_block"
+      ],
+      "mobs": [
+        "minecraft:hoglin"
+      ],
+      "items_out": [
+        "minecraft:cooked_porkchop",
+        "minecraft:leather"
+      ],
+      "items_in": [
+        "minecraft:crimson_fungus"
+      ],
+      "biomes": [
+        "minecraft:crimson_forest"
+      ],
+      "y_level": "any nether",
+      "light": "any",
+      "rate": "steady cooked porkchop/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Hoglins flee from warped fungi/nylium and portals; keep the pen clear of repellents."
+      ],
+      "sources": [
+        {
+          "creator": "gnembon",
+          "kind": "youtube",
+          "ref": "hoglin farm"
+        }
+      ],
+      "tags": [
+        "food",
+        "leather",
+        "nether"
+      ]
+    },
+    {
+      "id": "sculk_xp_farm",
+      "name": "Sculk / Warden-free XP via mob deaths on catalyst",
+      "name_ko": "스컬크 XP 팜",
+      "category": "mob",
+      "subcategory": "sculk",
+      "principle": "Mobs are killed on top of a sculk catalyst so their XP is converted into sculk blocks and sculk sensors/shriekers material, farming sculk for building and redstone.",
+      "mechanics": [
+        "spawning_dark",
+        "sculk_catalyst",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 20,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:sculk_catalyst",
+        "minecraft:sculk",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:zombie",
+        "minecraft:skeleton",
+        "minecraft:creeper"
+      ],
+      "items_out": [
+        "minecraft:sculk",
+        "minecraft:sculk_sensor",
+        "minecraft:sculk_shrieker"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "0 on spawn area",
+      "rate": "steady sculk blocks/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Needs a starter sculk catalyst from the Deep Dark; mobs must die within range of the catalyst to convert XP."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "sculk farm"
+        }
+      ],
+      "tags": [
+        "sculk",
+        "building",
+        "redstone"
+      ]
+    },
+    {
+      "id": "cobblestone_generator",
+      "name": "Cobblestone Generator",
+      "name_ko": "조약돌 생성기",
+      "category": "resource",
+      "subcategory": "generator",
+      "principle": "Lava meeting flowing water forms cobblestone in a fixed spot; a piston or auto-miner breaks it and hoppers collect, giving unlimited cobblestone.",
+      "mechanics": [
+        "lava_water_generation",
+        "piston_harvest",
+        "observer_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:water",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:redstone"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cobblestone"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "very high (auto-clock limited)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Fastest designs use an observer-piston clock; keep the generation block isolated so only cobblestone forms."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "cobblestone farm"
+        }
+      ],
+      "tags": [
+        "cobblestone",
+        "building",
+        "generator"
+      ]
+    },
+    {
+      "id": "stone_generator",
+      "name": "Stone Generator",
+      "name_ko": "돌 생성기",
+      "category": "resource",
+      "subcategory": "generator",
+      "principle": "Lava flowing onto a source of water forms stone (not cobblestone) when the flow direction is controlled; auto-mined for smooth building stone without smelting.",
+      "mechanics": [
+        "lava_water_generation",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:water",
+        "minecraft:piston",
+        "minecraft:sticky_piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:stone"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "high",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Stone (vs cobble) forms only when lava flows over a still-water source in the correct geometry."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "stone generator"
+        }
+      ],
+      "tags": [
+        "stone",
+        "building",
+        "generator"
+      ]
+    },
+    {
+      "id": "cobbled_deepslate_generator",
+      "name": "Cobbled Deepslate Generator",
+      "name_ko": "심층암 조약돌 생성기",
+      "category": "resource",
+      "subcategory": "generator",
+      "principle": "Lava + water generation performed below y=0 (or with deepslate as the base) yields cobbled deepslate for dark building stock.",
+      "mechanics": [
+        "lava_water_generation",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:water",
+        "minecraft:deepslate",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cobbled_deepslate"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "high",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Deepslate variant forms when the generation replaces a deepslate block; otherwise you get cobblestone."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "deepslate generator"
+        }
+      ],
+      "tags": [
+        "cobbled_deepslate",
+        "building"
+      ]
+    },
+    {
+      "id": "basalt_generator",
+      "name": "Basalt Generator",
+      "name_ko": "현무암 생성기",
+      "category": "resource",
+      "subcategory": "generator",
+      "principle": "Lava next to soul soil with blue ice adjacent forms basalt; a piston array breaks and collects it for unlimited basalt building blocks.",
+      "mechanics": [
+        "basalt_generation",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "any",
+      "footprint": {
+        "w": 10,
+        "h": 6,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:soul_soil",
+        "minecraft:blue_ice",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:basalt"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "high",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Requires the exact lava/soul-soil/blue-ice geometry; works in any dimension."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "basalt generator"
+        }
+      ],
+      "tags": [
+        "basalt",
+        "building"
+      ]
+    },
+    {
+      "id": "obsidian_generator",
+      "name": "Obsidian Farm (auto pump)",
+      "name_ko": "흑요석 팜",
+      "category": "resource",
+      "subcategory": "generator",
+      "principle": "Water is pumped onto a controlled lava source to form obsidian in a fixed slot, which is then mined; automated variants use dispensers and a diamond/netherite auto-miner is manual.",
+      "mechanics": [
+        "lava_water_generation",
+        "dispenser_feed",
+        "manual_mine"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 5,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:water",
+        "minecraft:dispenser",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:obsidian"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "manual-mine limited",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Obsidian must be pickaxe-mined (no piston harvest); the farm only automates reformation of the lava slot."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "obsidian farm"
+        }
+      ],
+      "tags": [
+        "obsidian",
+        "nether_portal"
+      ]
+    },
+    {
+      "id": "sand_tnt_dupe",
+      "name": "Sand Duper (TNT duplication)",
+      "name_ko": "모래 복제기 (TNT)",
+      "category": "resource",
+      "subcategory": "gravity_dupe",
+      "principle": "A TNT duplicator repeatedly blows a column of falling sand, which is duplicated by the entity-in-portal / dupe mechanic and collected — the standard technical source of bulk sand.",
+      "mechanics": [
+        "tnt_dupe",
+        "gravity_block",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 20,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:tnt",
+        "minecraft:sand",
+        "minecraft:observer",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:sand"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "extremely high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "situational",
+      "caveats": [
+        "Relies on TNT/sand duplication, a technical (glitch-based) mechanic that some servers/anti-cheats disable; verify it is allowed on your world."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "sand duper"
+        }
+      ],
+      "tags": [
+        "sand",
+        "concrete",
+        "technical"
+      ]
+    },
+    {
+      "id": "gravel_tnt_dupe",
+      "name": "Gravel Duper (TNT duplication)",
+      "name_ko": "자갈 복제기 (TNT)",
+      "category": "resource",
+      "subcategory": "gravity_dupe",
+      "principle": "Same gravity-block duplication as the sand duper but with gravel, giving bulk gravel (and flint via crafting/trades).",
+      "mechanics": [
+        "tnt_dupe",
+        "gravity_block",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 20,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:tnt",
+        "minecraft:gravel",
+        "minecraft:observer",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:gravel",
+        "minecraft:flint"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "extremely high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "situational",
+      "caveats": [
+        "Duplication-based; disabled on many servers. Flint comes from crafting gravel or trading, not directly."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "gravel duper"
+        }
+      ],
+      "tags": [
+        "gravel",
+        "flint",
+        "technical"
+      ]
+    },
+    {
+      "id": "concrete_converter",
+      "name": "Auto Concrete Converter",
+      "name_ko": "콘크리트 자동 변환기",
+      "category": "resource",
+      "subcategory": "processor",
+      "principle": "Concrete powder is dropped into water to harden into concrete, then a piston/auto-miner breaks and collects it — turning bulk sand+gravel+dye into building concrete.",
+      "mechanics": [
+        "water_harden",
+        "piston_harvest",
+        "hopper_collection",
+        "item_dropper"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 10,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:white_concrete_powder",
+        "minecraft:water",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:dropper",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:white_concrete"
+      ],
+      "items_in": [
+        "minecraft:white_concrete_powder"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "input-limited (very high)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Pairs with a sand duper for endless concrete; any of the 16 colors works with the matching powder."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "auto concrete farm"
+        }
+      ],
+      "tags": [
+        "concrete",
+        "building"
+      ]
+    },
+    {
+      "id": "froglight_farm",
+      "name": "Froglight Farm",
+      "name_ko": "개구리불 팜",
+      "category": "resource",
+      "subcategory": "mob_product",
+      "principle": "Frogs eat small magma cubes and produce froglights; frog variant (temperate/warm/cold, set by the biome they grow up in) determines ochre/pearlescent/verdant.",
+      "mechanics": [
+        "frog_eat_magma",
+        "biome_variant",
+        "hopper_collection"
+      ],
+      "dimension": "any",
+      "footprint": {
+        "w": 12,
+        "h": 10,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:powder_snow",
+        "minecraft:slime_block"
+      ],
+      "mobs": [
+        "minecraft:frog",
+        "minecraft:magma_cube"
+      ],
+      "items_out": [
+        "minecraft:ochre_froglight",
+        "minecraft:pearlescent_froglight",
+        "minecraft:verdant_froglight"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "magma-cube-supply limited",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Frog variant is fixed by the biome the tadpole grows up in (warm->pearlescent, cold->verdant, temperate->ochre). Needs a small-magma-cube supply."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "froglight farm"
+        }
+      ],
+      "tags": [
+        "froglight",
+        "lighting",
+        "building"
+      ]
+    },
+    {
+      "id": "amethyst_farm",
+      "name": "Amethyst Farm (budding grow-and-mine)",
+      "name_ko": "자수정 팜",
+      "category": "resource",
+      "subcategory": "grow_mine",
+      "principle": "Amethyst clusters grow on budding amethyst; a flying-machine/piston-slime auto-miner (or manual) harvests the fully-grown clusters for shards.",
+      "mechanics": [
+        "cluster_growth",
+        "flying_machine",
+        "manual_mine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 8,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:budding_amethyst",
+        "minecraft:amethyst_block",
+        "minecraft:calcite",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:amethyst_shard",
+        "minecraft:amethyst_cluster"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "geode depth (or relocated buds not possible)",
+      "light": "any",
+      "rate": "slow (cluster growth limited)",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Budding amethyst cannot be moved (drops nothing), so the farm is built around an existing geode. Fully-grown clusters must be broken without silk touch for shards."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "amethyst farm flying machine"
+        }
+      ],
+      "tags": [
+        "amethyst_shard",
+        "spyglass",
+        "tinted_glass"
+      ]
+    },
+    {
+      "id": "ice_farm",
+      "name": "Ice Farm (freeze cycle)",
+      "name_ko": "얼음 팜",
+      "category": "resource",
+      "subcategory": "freeze",
+      "principle": "Water sources freeze into ice in a cold/snowy biome (or under an open sky at high y in cold biomes); a piston/auto-miner harvests ice, then water reflows to refreeze.",
+      "mechanics": [
+        "freeze_cycle",
+        "biome_specific",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 6,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:ice",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:ice"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:snowy_plains",
+        "minecraft:snowy_taiga",
+        "minecraft:frozen_river",
+        "minecraft:ice_spikes",
+        "minecraft:snowy_slopes",
+        "minecraft:grove"
+      ],
+      "y_level": "high, open sky in cold biome",
+      "light": "<=11 for freezing",
+      "rate": "steady ice/h (freeze-limited)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Water only freezes in cold biomes with light level <=11 and open sky; ice mined without silk touch yields nothing, so break to item requires care (use silk-touch harvester or collect as full ice via piston)."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "ice farm"
+        }
+      ],
+      "tags": [
+        "ice",
+        "blue_ice",
+        "packed_ice",
+        "transport"
+      ]
+    },
+    {
+      "id": "snow_farm",
+      "name": "Snow Farm (snow golem)",
+      "name_ko": "눈 팜 (눈 골렘)",
+      "category": "resource",
+      "subcategory": "mob_product",
+      "principle": "A snow golem trapped in a cold biome leaves a snow-layer trail; a piston or shovel-dispenser harvests the layers into snowballs for endless snow blocks.",
+      "mechanics": [
+        "snow_golem_trail",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 4,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:snow",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:snow_golem"
+      ],
+      "items_out": [
+        "minecraft:snowball"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:snowy_plains",
+        "minecraft:taiga",
+        "minecraft:snowy_taiga"
+      ],
+      "y_level": "any (cold biome)",
+      "light": "any",
+      "rate": "high snowballs/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Snow golem only leaves a trail in cold-enough biomes; keep it out of warm biomes (it melts) and rain."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "snow farm"
+        }
+      ],
+      "tags": [
+        "snowball",
+        "snow_block",
+        "white_dye"
+      ]
+    },
+    {
+      "id": "pointed_dripstone_farm",
+      "name": "Pointed Dripstone Farm",
+      "name_ko": "뾰족한 종유석 팜",
+      "category": "resource",
+      "subcategory": "grow_mine",
+      "principle": "Pointed dripstone on a dripstone block with a water source above grows downward over time; a piston breaks the grown tips for dripstone used in lava/pointed-dripstone builds.",
+      "mechanics": [
+        "dripstone_growth",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 12,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:dripstone_block",
+        "minecraft:pointed_dripstone",
+        "minecraft:water",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:pointed_dripstone"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "slow (growth-limited)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Growth is random-tick slow; used mainly to feed lava/water dripstone farms."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "dripstone farm"
+        }
+      ],
+      "tags": [
+        "pointed_dripstone",
+        "dripstone"
+      ]
+    },
+    {
+      "id": "lava_farm_dripstone",
+      "name": "Lava Farm (dripstone + cauldron)",
+      "name_ko": "용암 팜 (종유석/가마솥)",
+      "category": "resource",
+      "subcategory": "drip",
+      "principle": "A pointed dripstone under a lava source slowly fills a cauldron below with lava; many stations give a renewable lava supply for fuel and building.",
+      "mechanics": [
+        "dripstone_drip",
+        "cauldron_fill",
+        "manual_collect"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 8,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:lava",
+        "minecraft:pointed_dripstone",
+        "minecraft:dripstone_block",
+        "minecraft:cauldron"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:lava_bucket"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "very slow per station; scale wide",
+      "afk": true,
+      "redstone": "none",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Only one drip station fills one cauldron slowly; renewable but low rate. Great fuel source with no nether trips."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "renewable lava dripstone"
+        }
+      ],
+      "tags": [
+        "lava",
+        "fuel",
+        "renewable"
+      ]
+    },
+    {
+      "id": "clay_farm_dripstone",
+      "name": "Clay Farm (mud + dripstone)",
+      "name_ko": "점토 팜 (진흙/종유석)",
+      "category": "resource",
+      "subcategory": "drip",
+      "principle": "Mud placed above a pointed dripstone (with no water below the tip) slowly drips and converts to clay; automated placement/harvest gives renewable clay for bricks and terracotta.",
+      "mechanics": [
+        "mud_to_clay",
+        "dripstone_drip",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 8,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:mud",
+        "minecraft:pointed_dripstone",
+        "minecraft:clay",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:clay_ball",
+        "minecraft:clay"
+      ],
+      "items_in": [
+        "minecraft:mud"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "slow (drip-limited)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Mud is made from dirt + water bottle; conversion needs a pointed dripstone directly below the mud with air (no water) beneath the tip."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "clay farm mud dripstone"
+        }
+      ],
+      "tags": [
+        "clay",
+        "bricks",
+        "terracotta",
+        "renewable"
+      ]
+    },
+    {
+      "id": "sugarcane_observer",
+      "name": "Sugar Cane Farm (observer harvest)",
+      "name_ko": "사탕수수 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Each cane grows to 3 tall; an observer facing the top block detects growth and fires a piston to break the cane, which floats to a water channel and hoppers.",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 4,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:sugar_cane",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:sand"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:sugar_cane"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "growth-limited, fully AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Cane needs water adjacent to the base sand/dirt; observers on the middle block avoid breaking un-grown cane."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "sugarcane farm"
+        }
+      ],
+      "tags": [
+        "sugar_cane",
+        "paper",
+        "sugar",
+        "emerald"
+      ]
+    },
+    {
+      "id": "bamboo_farm",
+      "name": "Bamboo Farm (observer harvest)",
+      "name_ko": "대나무 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Bamboo grows fast and tall; an observer detects growth at a set height and a piston breaks it for fuel, scaffolding, and composter/bonemeal input.",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 16,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:bamboo",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:bamboo"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "very high, fully AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Bamboo needs light>=9. Great fuel (crafted to bamboo planks/sticks) and composter feedstock."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "bamboo farm"
+        }
+      ],
+      "tags": [
+        "bamboo",
+        "fuel",
+        "scaffolding",
+        "bonemeal"
+      ]
+    },
+    {
+      "id": "cactus_farm",
+      "name": "Cactus Farm",
+      "name_ko": "선인장 팜",
+      "category": "crop",
+      "subcategory": "passive",
+      "principle": "Cactus breaks itself when it grows next to a block; the dropped cactus floats along water into hoppers with zero redstone.",
+      "mechanics": [
+        "growth_tick",
+        "self_break",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 4,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:cactus",
+        "minecraft:sand",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cactus"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady, zero-redstone AFK",
+      "afk": true,
+      "redstone": "none",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Cactus needs sand and an empty diagonal; smelt cactus for green dye, or use for a passive XP/trash design."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "cactus farm"
+        }
+      ],
+      "tags": [
+        "cactus",
+        "green_dye"
+      ]
+    },
+    {
+      "id": "melon_farm",
+      "name": "Melon Farm (observer/piston)",
+      "name_ko": "수박 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Melon stems grow melons into a fixed slot; an observer detects the melon and a piston breaks it into a water channel for slices/seeds and emerald trades.",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 5,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:melon",
+        "minecraft:farmland",
+        "minecraft:water",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:melon_slice",
+        "minecraft:melon_seeds"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Stems must have a free dirt/farmland slot to grow the melon into; light>=9."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "melon farm"
+        }
+      ],
+      "tags": [
+        "melon",
+        "emerald",
+        "glistering_melon"
+      ]
+    },
+    {
+      "id": "pumpkin_farm",
+      "name": "Pumpkin Farm (observer/piston)",
+      "name_ko": "호박 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Pumpkin stems grow pumpkins into a slot watched by an observer; a piston breaks them for pumpkins (carved pumpkins, pie, emeralds, snow/iron golems).",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 5,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:pumpkin",
+        "minecraft:farmland",
+        "minecraft:water",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:pumpkin",
+        "minecraft:pumpkin_seeds"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Same as melon; pumpkins are the input for carved pumpkins/golems and strong emerald trades."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "pumpkin farm"
+        }
+      ],
+      "tags": [
+        "pumpkin",
+        "emerald",
+        "golem"
+      ]
+    },
+    {
+      "id": "villager_wheat_farm",
+      "name": "Villager Wheat Farm",
+      "name_ko": "주민 밀 농장",
+      "category": "crop",
+      "subcategory": "villager_auto",
+      "principle": "A farmer villager plants and harvests wheat automatically; excess he can't pick up falls through to a hopper-minecart under the farmland.",
+      "mechanics": [
+        "villager_farming",
+        "hopper_minecart",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 4,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:farmland",
+        "minecraft:water",
+        "minecraft:composter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:rail"
+      ],
+      "mobs": [
+        "minecraft:villager"
+      ],
+      "items_out": [
+        "minecraft:wheat",
+        "minecraft:wheat_seeds"
+      ],
+      "items_in": [
+        "minecraft:wheat_seeds"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "steady, fully AFK",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Give the villager a composter to make him a farmer; a hopper-minecart under the farmland collects overflow."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "villager crop farm"
+        }
+      ],
+      "tags": [
+        "wheat",
+        "bread",
+        "hay",
+        "food"
+      ]
+    },
+    {
+      "id": "villager_carrot_potato_farm",
+      "name": "Villager Carrot/Potato Farm",
+      "name_ko": "주민 당근/감자 농장",
+      "category": "crop",
+      "subcategory": "villager_auto",
+      "principle": "Same villager-farming loop but planted with carrots or potatoes; a huge food source for breeders, trades, and rabbit/pig breeding.",
+      "mechanics": [
+        "villager_farming",
+        "hopper_minecart",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 4,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:farmland",
+        "minecraft:water",
+        "minecraft:composter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:rail"
+      ],
+      "mobs": [
+        "minecraft:villager"
+      ],
+      "items_out": [
+        "minecraft:carrot",
+        "minecraft:potato",
+        "minecraft:poisonous_potato"
+      ],
+      "items_in": [
+        "minecraft:carrot",
+        "minecraft:potato"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "steady, fully AFK",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Carrots/potatoes feed villager breeders and make golden carrots; rare poisonous potato drops mixed in."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "villager carrot potato farm"
+        }
+      ],
+      "tags": [
+        "carrot",
+        "potato",
+        "golden_carrot",
+        "food"
+      ]
+    },
+    {
+      "id": "villager_beetroot_farm",
+      "name": "Villager Beetroot Farm",
+      "name_ko": "주민 비트 농장",
+      "category": "crop",
+      "subcategory": "villager_auto",
+      "principle": "Villager-farmed beetroot for soup, red dye, and trades; collected via hopper-minecart under the plots.",
+      "mechanics": [
+        "villager_farming",
+        "hopper_minecart",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 4,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:farmland",
+        "minecraft:water",
+        "minecraft:composter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:rail"
+      ],
+      "mobs": [
+        "minecraft:villager"
+      ],
+      "items_out": [
+        "minecraft:beetroot",
+        "minecraft:beetroot_seeds"
+      ],
+      "items_in": [
+        "minecraft:beetroot_seeds"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "steady, fully AFK",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Villagers won't replant beetroot as eagerly as wheat/carrot; keep seeds in the loop."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "villager beetroot"
+        }
+      ],
+      "tags": [
+        "beetroot",
+        "red_dye",
+        "soup"
+      ]
+    },
+    {
+      "id": "kelp_farm",
+      "name": "Kelp Farm (dried kelp fuel)",
+      "name_ko": "다시마 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Kelp grows upward in water; an observer at a set height and a piston break the column, dropped kelp is collected and smelted to dried kelp blocks (great furnace fuel).",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 16,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:kelp",
+        "minecraft:water",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:kelp",
+        "minecraft:dried_kelp"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "9 dried kelp craft into a dried kelp block, a renewable fuel; the piston breaks the top so lower kelp keeps growing."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "kelp farm fuel"
+        }
+      ],
+      "tags": [
+        "kelp",
+        "dried_kelp",
+        "fuel"
+      ]
+    },
+    {
+      "id": "nether_wart_farm",
+      "name": "Nether Wart Farm",
+      "name_ko": "네더 사마귀 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Nether wart grows on soul sand; a piston-flush or water-dispenser harvest (water works with soul sand) breaks all mature wart into collection.",
+      "mechanics": [
+        "growth_tick",
+        "water_flush",
+        "dispenser_feed",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 12,
+        "h": 4,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:soul_sand",
+        "minecraft:nether_wart",
+        "minecraft:dispenser",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:nether_wart"
+      ],
+      "items_in": [
+        "minecraft:nether_wart"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "growth-limited, semi-auto",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Essential for brewing. Water placed via dispenser on soul sand flushes wart without removing the soul sand."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "nether wart farm"
+        }
+      ],
+      "tags": [
+        "nether_wart",
+        "brewing",
+        "potions"
+      ]
+    },
+    {
+      "id": "cocoa_farm",
+      "name": "Cocoa Bean Farm",
+      "name_ko": "코코아 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Cocoa pods grow on jungle logs; a piston/flying-machine breaks mature pods for cocoa beans (brown dye, cookies).",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:jungle_log",
+        "minecraft:cocoa",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cocoa_beans"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Cocoa must be planted on jungle logs; only mature (dark) pods drop 3 beans."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "cocoa farm"
+        }
+      ],
+      "tags": [
+        "cocoa_beans",
+        "brown_dye",
+        "cookie"
+      ]
+    },
+    {
+      "id": "sweet_berry_farm",
+      "name": "Sweet Berry Farm (piston harvest)",
+      "name_ko": "달콤한 열매 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Sweet berry bushes grow berries; a piston/flying-machine bumps the bushes to pop the berries into water/hoppers for food and fox breeding.",
+      "mechanics": [
+        "growth_tick",
+        "piston_harvest",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 4,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:sweet_berry_bush",
+        "minecraft:piston",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:sweet_berries"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Berries are picked by breaking/bumping the bush at growth stage 2-3; also a passive mob-damage barrier."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "sweet berry farm"
+        }
+      ],
+      "tags": [
+        "sweet_berries",
+        "food",
+        "fox"
+      ]
+    },
+    {
+      "id": "glow_berry_farm",
+      "name": "Glow Berry Farm (cave vines)",
+      "name_ko": "발광 열매 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Cave vines grow downward and produce glow berries; an observer detects berries and a piston/flush harvests them for food and free light.",
+      "mechanics": [
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 12,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:cave_vines",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:glow_berries"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Glow berries plant cave vines and emit light 14; only berried vines drop berries when broken."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "glow berry farm"
+        }
+      ],
+      "tags": [
+        "glow_berries",
+        "light",
+        "food"
+      ]
+    },
+    {
+      "id": "chorus_fruit_farm",
+      "name": "Chorus Fruit Farm (End)",
+      "name_ko": "후렴과 팜",
+      "category": "crop",
+      "subcategory": "auto_harvest",
+      "principle": "Chorus flowers grow chorus plants on end stone; breaking the base with a piston/flying-machine collapses the whole plant into drops of chorus fruit and flowers.",
+      "mechanics": [
+        "growth_tick",
+        "piston_harvest",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "end",
+      "footprint": {
+        "w": 12,
+        "h": 12,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:end_stone",
+        "minecraft:chorus_flower",
+        "minecraft:chorus_plant",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:chorus_fruit",
+        "minecraft:chorus_flower"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:end_highlands",
+        "minecraft:end_midlands"
+      ],
+      "y_level": "on End islands",
+      "light": "any",
+      "rate": "growth-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Chorus flowers only grow on end stone; breaking the bottom block drops the entire plant. Popped chorus fruit = purpur."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "chorus fruit farm"
+        }
+      ],
+      "tags": [
+        "chorus_fruit",
+        "purpur",
+        "end"
+      ]
+    },
+    {
+      "id": "mushroom_farm",
+      "name": "Mushroom Farm (dark spread)",
+      "name_ko": "버섯 팜",
+      "category": "crop",
+      "subcategory": "spread",
+      "principle": "Red/brown mushrooms spread to nearby valid blocks at light<=12; a piston/flush harvests the spread mushrooms for stew, dyes, and huge-mushroom bonemeal builds.",
+      "mechanics": [
+        "mushroom_spread",
+        "low_light",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 6,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:mycelium",
+        "minecraft:podzol",
+        "minecraft:red_mushroom",
+        "minecraft:brown_mushroom",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:red_mushroom",
+        "minecraft:brown_mushroom"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "<=12 (dark)",
+      "rate": "slow spread, AFK",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Mushrooms spread only in low light; mycelium/podzol/nylium let them survive any light. Also grow huge mushrooms with bone meal for bulk."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "mushroom farm"
+        }
+      ],
+      "tags": [
+        "mushroom",
+        "stew",
+        "dye"
+      ]
+    },
+    {
+      "id": "moss_farm",
+      "name": "Moss Farm (bone meal spread)",
+      "name_ko": "이끼 팜",
+      "category": "crop",
+      "subcategory": "bonemeal",
+      "principle": "Bone meal on a moss block spreads moss to adjacent blocks and grows azalea/plants; a piston-based converter turns cheap blocks into moss, then into dirt/roots products.",
+      "mechanics": [
+        "bonemeal",
+        "moss_spread",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 6,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:moss_block",
+        "minecraft:dispenser",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:moss_block",
+        "minecraft:moss_carpet",
+        "minecraft:azalea"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "bonemeal-limited",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Pairs with a bone-meal (bamboo/kelp composter) farm; converts stone/dirt into moss for terraforming."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "moss farm"
+        }
+      ],
+      "tags": [
+        "moss",
+        "azalea",
+        "terraforming"
+      ]
+    },
+    {
+      "id": "flower_dye_farm",
+      "name": "Flower / Dye Farm (bone meal)",
+      "name_ko": "꽃/염료 팜",
+      "category": "crop",
+      "subcategory": "bonemeal",
+      "principle": "Bone meal used on grass blocks in a flower-rich biome spawns flowers; a piston/flush sweeps them into hoppers for a full palette of dyes.",
+      "mechanics": [
+        "bonemeal",
+        "biome_specific",
+        "flowing_water",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 4,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:grass_block",
+        "minecraft:dispenser",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:dandelion",
+        "minecraft:poppy",
+        "minecraft:cornflower",
+        "minecraft:azure_bluet",
+        "minecraft:oxeye_daisy"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [
+        "minecraft:flower_forest",
+        "minecraft:meadow",
+        "minecraft:plains"
+      ],
+      "y_level": "any",
+      "light": "any",
+      "rate": "bonemeal-limited",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Which flowers appear depends on the biome (flower forest gives the widest variety)."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "flower farm"
+        }
+      ],
+      "tags": [
+        "flowers",
+        "dye",
+        "bees"
+      ]
+    },
+    {
+      "id": "bonemeal_composter_farm",
+      "name": "Bone Meal Farm (composter)",
+      "name_ko": "뼛가루 팜 (퇴비통)",
+      "category": "crop",
+      "subcategory": "bonemeal",
+      "principle": "A fast plant farm (bamboo/kelp/cactus/sugar cane) feeds composters, which convert plant matter into bone meal — a renewable bone-meal engine for other farms.",
+      "mechanics": [
+        "composter",
+        "auto_feed",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:composter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:bamboo",
+        "minecraft:dropper"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:bone_meal"
+      ],
+      "items_in": [
+        "minecraft:bamboo",
+        "minecraft:kelp"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "input-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "A hopper above a composter auto-fills it; a hopper below pulls the bone meal. Feed with any bulk plant matter."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "bonemeal farm composter"
+        }
+      ],
+      "tags": [
+        "bone_meal",
+        "renewable",
+        "engine"
+      ]
+    },
+    {
+      "id": "sniffer_ancient_plant_farm",
+      "name": "Sniffer Ancient Plant Farm",
+      "name_ko": "스니퍼 고대 식물 팜",
+      "category": "crop",
+      "subcategory": "mob_assisted",
+      "principle": "Bred sniffers dig up torchflower and pitcher-pod seeds from moss/dirt; the seeds are grown for decorative plants and dyes, sustaining more sniffers.",
+      "mechanics": [
+        "sniffer_digging",
+        "breeding",
+        "growth_tick",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 6,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:moss_block",
+        "minecraft:dirt",
+        "minecraft:farmland",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:sniffer"
+      ],
+      "items_out": [
+        "minecraft:torchflower_seeds",
+        "minecraft:pitcher_pod",
+        "minecraft:torchflower",
+        "minecraft:pitcher_plant"
+      ],
+      "items_in": [
+        "minecraft:torchflower_seeds"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "slow (dig cooldown)",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Sniffers dig on moss/dirt-family blocks with a cooldown; breed with torchflower seeds. Decorative/collector farm."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "sniffer farm"
+        }
+      ],
+      "tags": [
+        "torchflower",
+        "pitcher_plant",
+        "sniffer",
+        "decoration"
+      ]
+    },
+    {
+      "id": "oak_tree_farm",
+      "name": "Oak Tree Farm (bone meal / observer)",
+      "name_ko": "참나무 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Saplings are force-grown with dispensed bone meal, then a piston/flying-machine or TNT layer chops the trunk; logs, apples, and saplings are collected.",
+      "mechanics": [
+        "bonemeal",
+        "growth_tick",
+        "piston_harvest",
+        "observer_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 12,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:oak_sapling",
+        "minecraft:dispenser",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:dirt"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:oak_log",
+        "minecraft:oak_sapling",
+        "minecraft:apple",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "bonemeal-limited, AFK",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Oak has variable trunk height; dispensers of bone meal + a full-height chopper handle the randomness. Oak also drops apples."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "oak tree farm"
+        }
+      ],
+      "tags": [
+        "oak_log",
+        "apple",
+        "charcoal",
+        "sticks"
+      ]
+    },
+    {
+      "id": "birch_tree_farm",
+      "name": "Birch Tree Farm",
+      "name_ko": "자작나무 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Birch grows to a fixed height, making it ideal for compact bone-meal + observer/piston auto-choppers with very consistent yields.",
+      "mechanics": [
+        "bonemeal",
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 9,
+        "h": 10,
+        "d": 9
+      },
+      "blocks": [
+        "minecraft:birch_sapling",
+        "minecraft:dispenser",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:birch_log",
+        "minecraft:birch_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "bonemeal-limited, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Fixed-height birch makes the most reliable fully-automatic tree farm."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "birch tree farm"
+        }
+      ],
+      "tags": [
+        "birch_log",
+        "reliable"
+      ]
+    },
+    {
+      "id": "spruce_giant_farm",
+      "name": "Spruce Giant (2x2) Tree Farm",
+      "name_ko": "가문비 대형 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "2x2 spruce saplings grow into giant trees; a flying-machine of pistons+slime sweeps up the huge trunk for the highest logs-per-hour of any wood farm.",
+      "mechanics": [
+        "bonemeal",
+        "giant_tree",
+        "flying_machine",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 32,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:spruce_sapling",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:spruce_log",
+        "minecraft:spruce_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "very high, flying-machine AFK",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "2x2 giant spruce yields the most wood; needs vertical clearance and a reliable flying machine."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "spruce flying machine tree farm"
+        }
+      ],
+      "tags": [
+        "spruce_log",
+        "bulk",
+        "flying_machine"
+      ]
+    },
+    {
+      "id": "jungle_giant_farm",
+      "name": "Jungle Giant (2x2) Tree Farm",
+      "name_ko": "정글 대형 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "2x2 jungle saplings grow into tall trees (also the cocoa host); a flying machine chops the trunk for jungle logs at high volume.",
+      "mechanics": [
+        "bonemeal",
+        "giant_tree",
+        "flying_machine",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 32,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:jungle_sapling",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:jungle_log",
+        "minecraft:jungle_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "very high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Jungle saplings have a low sapling drop rate, so keep a buffer; 2x2 gives big trees."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "jungle tree farm"
+        }
+      ],
+      "tags": [
+        "jungle_log",
+        "cocoa"
+      ]
+    },
+    {
+      "id": "acacia_tree_farm",
+      "name": "Acacia Tree Farm",
+      "name_ko": "아카시아 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Acacia grows at diagonal angles, so farms use a wide catch area with a flying-machine or layered pistons to harvest the scattered canopy and trunk.",
+      "mechanics": [
+        "bonemeal",
+        "growth_tick",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 14,
+        "h": 14,
+        "d": 14
+      },
+      "blocks": [
+        "minecraft:acacia_sapling",
+        "minecraft:dispenser",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:acacia_log",
+        "minecraft:acacia_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "medium-high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Acacia's diagonal growth makes harvesting messy; a wide flying-machine sweep is the standard solution."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "acacia tree farm"
+        }
+      ],
+      "tags": [
+        "acacia_log",
+        "orange_wood"
+      ]
+    },
+    {
+      "id": "dark_oak_farm",
+      "name": "Dark Oak (2x2) Tree Farm",
+      "name_ko": "짙은 참나무 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Dark oak only grows from 2x2 saplings; a compact bone-meal + flying-machine design gives dense dark-oak logs plus apples.",
+      "mechanics": [
+        "bonemeal",
+        "giant_tree",
+        "flying_machine",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 14,
+        "h": 16,
+        "d": 14
+      },
+      "blocks": [
+        "minecraft:dark_oak_sapling",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:dark_oak_log",
+        "minecraft:dark_oak_sapling",
+        "minecraft:apple",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Requires 2x2 saplings (won't grow as singles); drops apples like oak."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "dark oak farm"
+        }
+      ],
+      "tags": [
+        "dark_oak_log",
+        "apple"
+      ]
+    },
+    {
+      "id": "mangrove_farm",
+      "name": "Mangrove Tree Farm",
+      "name_ko": "맹그로브 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Mangrove propagules grow into trees (even over water); bone meal + a piston/flying-machine harvest gives logs, roots, and mud (via muddy mangrove roots).",
+      "mechanics": [
+        "bonemeal",
+        "growth_tick",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 14,
+        "h": 16,
+        "d": 14
+      },
+      "blocks": [
+        "minecraft:mangrove_propagule",
+        "minecraft:mangrove_roots",
+        "minecraft:dispenser",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:mangrove_log",
+        "minecraft:mangrove_propagule",
+        "minecraft:mangrove_roots",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Mangrove can grow on mud/over water; roots + water bottle make mud, feeding the clay farm."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "mangrove tree farm"
+        }
+      ],
+      "tags": [
+        "mangrove_log",
+        "mud",
+        "roots"
+      ]
+    },
+    {
+      "id": "cherry_tree_farm",
+      "name": "Cherry Tree Farm",
+      "name_ko": "벚나무 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Cherry saplings grow into pink-canopy trees; bone meal + observer/piston harvest yields cherry logs and pink petals for decoration.",
+      "mechanics": [
+        "bonemeal",
+        "growth_tick",
+        "observer_harvest",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 14,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:cherry_sapling",
+        "minecraft:dispenser",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cherry_log",
+        "minecraft:cherry_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "medium-high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Cherry leaves drop pink petals only when sheared/decayed; logs harvest like other single-sapling trees."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "cherry tree farm"
+        }
+      ],
+      "tags": [
+        "cherry_log",
+        "pink_petals",
+        "decoration"
+      ]
+    },
+    {
+      "id": "pale_oak_farm",
+      "name": "Pale Oak Tree Farm (Pale Garden)",
+      "name_ko": "창백한 참나무 팜",
+      "category": "wood",
+      "subcategory": "tree",
+      "principle": "Pale oak (from the Pale Garden) grows from 2x2 saplings with bone meal; a flying-machine harvest gives pale oak logs and (with the creaking heart) resin.",
+      "mechanics": [
+        "bonemeal",
+        "giant_tree",
+        "flying_machine",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 14,
+        "h": 18,
+        "d": 14
+      },
+      "blocks": [
+        "minecraft:pale_oak_sapling",
+        "minecraft:pale_oak_leaves",
+        "minecraft:slime_block",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:pale_oak_log",
+        "minecraft:pale_oak_sapling",
+        "minecraft:stick"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [
+        "minecraft:pale_garden"
+      ],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "high",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Pale oak needs 2x2 saplings; harvest saplings from the Pale Garden first. Resin is a separate creaking-heart product."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "pale oak farm 1.21.4"
+        }
+      ],
+      "tags": [
+        "pale_oak_log",
+        "pale_garden",
+        "white_wood"
+      ]
+    },
+    {
+      "id": "crimson_fungus_farm",
+      "name": "Crimson Stem Farm (huge fungus)",
+      "name_ko": "진홍 버섯 팜",
+      "category": "wood",
+      "subcategory": "nether_fungus",
+      "principle": "A crimson fungus on crimson nylium is bone-mealed into a huge fungus; a piston/TNT chopper harvests crimson stems, shroomlight, and nether wart blocks.",
+      "mechanics": [
+        "bonemeal",
+        "huge_fungus",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 12,
+        "h": 30,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:crimson_nylium",
+        "minecraft:crimson_fungus",
+        "minecraft:dispenser",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:crimson_stem",
+        "minecraft:shroomlight",
+        "minecraft:nether_wart_block",
+        "minecraft:crimson_fungus"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [
+        "minecraft:crimson_forest"
+      ],
+      "y_level": "any nether",
+      "light": "any",
+      "rate": "bonemeal-limited, AFK",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Warped/crimson stems are the only fireproof 'wood'; a warped-nylium block adjacent can stunt growth, so isolate the fungus."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "nether tree farm crimson"
+        }
+      ],
+      "tags": [
+        "crimson_stem",
+        "shroomlight",
+        "fireproof_wood",
+        "nether"
+      ]
+    },
+    {
+      "id": "warped_fungus_farm",
+      "name": "Warped Stem Farm (huge fungus)",
+      "name_ko": "뒤틀린 버섯 팜",
+      "category": "wood",
+      "subcategory": "nether_fungus",
+      "principle": "A warped fungus on warped nylium is bone-mealed into a huge fungus; harvest yields warped stems, shroomlight, and warped wart blocks for cyan builds.",
+      "mechanics": [
+        "bonemeal",
+        "huge_fungus",
+        "piston_harvest",
+        "hopper_collection"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 12,
+        "h": 30,
+        "d": 12
+      },
+      "blocks": [
+        "minecraft:warped_nylium",
+        "minecraft:warped_fungus",
+        "minecraft:dispenser",
+        "minecraft:piston",
+        "minecraft:observer",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:warped_stem",
+        "minecraft:shroomlight",
+        "minecraft:warped_wart_block",
+        "minecraft:warped_fungus"
+      ],
+      "items_in": [
+        "minecraft:bone_meal"
+      ],
+      "biomes": [
+        "minecraft:warped_forest"
+      ],
+      "y_level": "any nether",
+      "light": "any",
+      "rate": "bonemeal-limited, AFK",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Warped fungi are safe from piglin aggression zones; harvest the same way as crimson."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "nether tree farm warped"
+        }
+      ],
+      "tags": [
+        "warped_stem",
+        "shroomlight",
+        "fireproof_wood",
+        "nether"
+      ]
+    },
+    {
+      "id": "charcoal_super_smelter",
+      "name": "Charcoal Super Smelter",
+      "name_ko": "숯 슈퍼 제련소",
+      "category": "wood",
+      "subcategory": "processing",
+      "principle": "Logs from a tree farm are fed into a furnace array; a portion of output charcoal is looped back as fuel, making a self-sustaining charcoal engine.",
+      "mechanics": [
+        "furnace_array",
+        "auto_feed",
+        "fuel_loop",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 8,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:furnace",
+        "minecraft:blast_furnace",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_log"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:charcoal"
+      ],
+      "items_in": [
+        "minecraft:oak_log"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "furnace-count limited",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Feed with any logs; loop a fraction of the charcoal back as fuel so it never runs dry. Furnaces (not blast) are needed to smelt logs into charcoal."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "super smelter"
+        }
+      ],
+      "tags": [
+        "charcoal",
+        "fuel",
+        "smelting"
+      ]
+    },
+    {
+      "id": "cow_cooker",
+      "name": "Cow Farm (auto beef + leather)",
+      "name_ko": "소 팜 (구운 소고기/가죽)",
+      "category": "animal",
+      "subcategory": "food",
+      "principle": "Cows are auto-bred with wheat; adults are pushed by water/piston onto a campfire or lava blade that cooks them, dropping cooked beef and leather into hoppers.",
+      "mechanics": [
+        "breeding",
+        "auto_breed",
+        "growth_tick",
+        "fire_kill",
+        "water_stream",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 6,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:campfire",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:dispenser",
+        "minecraft:oak_fence"
+      ],
+      "mobs": [
+        "minecraft:cow"
+      ],
+      "items_out": [
+        "minecraft:cooked_beef",
+        "minecraft:leather"
+      ],
+      "items_in": [
+        "minecraft:wheat"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady food + leather, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Separate adults from babies; a campfire cooks the beef so no extra smelting is needed. Feed with a wheat farm."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "cow farm auto"
+        }
+      ],
+      "tags": [
+        "cooked_beef",
+        "leather",
+        "food"
+      ]
+    },
+    {
+      "id": "chicken_cooker",
+      "name": "Chicken Farm (auto egg + cooked chicken)",
+      "name_ko": "닭 팜 (자동)",
+      "category": "animal",
+      "subcategory": "food",
+      "principle": "Adult chickens on a slab lay eggs collected by a hopper; a dispenser throws eggs to hatch chicks below, which grow and are cooked by lava above the collection hopper.",
+      "mechanics": [
+        "egg_dispenser",
+        "auto_breed",
+        "growth_tick",
+        "lava_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 8,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:smooth_stone_slab",
+        "minecraft:lava",
+        "minecraft:glass"
+      ],
+      "mobs": [
+        "minecraft:chicken"
+      ],
+      "items_out": [
+        "minecraft:cooked_chicken",
+        "minecraft:feather",
+        "minecraft:egg"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "high food + feathers, fully AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Self-sustaining: eggs from the top layer feed the dispenser that spawns the next generation. Lava must not touch the adults."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "auto chicken farm"
+        }
+      ],
+      "tags": [
+        "cooked_chicken",
+        "feather",
+        "egg",
+        "arrows"
+      ]
+    },
+    {
+      "id": "pig_farm",
+      "name": "Pig Farm (porkchop)",
+      "name_ko": "돼지 팜",
+      "category": "animal",
+      "subcategory": "food",
+      "principle": "Pigs are bred with carrots/potatoes; adults are pushed to a fire/lava kill for cooked porkchop, a simple bulk food source.",
+      "mechanics": [
+        "breeding",
+        "auto_breed",
+        "growth_tick",
+        "fire_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 6,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:campfire",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_fence"
+      ],
+      "mobs": [
+        "minecraft:pig"
+      ],
+      "items_out": [
+        "minecraft:cooked_porkchop"
+      ],
+      "items_in": [
+        "minecraft:carrot"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady food, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Feed with carrots/potatoes/beetroot; same layout as the cow cooker."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "pig farm"
+        }
+      ],
+      "tags": [
+        "cooked_porkchop",
+        "food"
+      ]
+    },
+    {
+      "id": "sheep_wool_farm",
+      "name": "Auto Wool Farm (sheep + dispenser shears)",
+      "name_ko": "양털 팜",
+      "category": "animal",
+      "subcategory": "wool",
+      "principle": "A dyed sheep eats grass to regrow wool; a dispenser with shears clips it automatically on a redstone clock, giving endless colored wool.",
+      "mechanics": [
+        "grass_regrow",
+        "dispenser_shear",
+        "redstone_clock",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 4,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:dispenser",
+        "minecraft:shears",
+        "minecraft:grass_block",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:observer"
+      ],
+      "mobs": [
+        "minecraft:sheep"
+      ],
+      "items_out": [
+        "minecraft:white_wool"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady wool, fully AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Sheep must stand on grass to regrow wool; dye the sheep for a specific color (or breed for patterns)."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "auto wool farm"
+        }
+      ],
+      "tags": [
+        "wool",
+        "dye",
+        "carpet"
+      ]
+    },
+    {
+      "id": "rabbit_farm",
+      "name": "Rabbit Farm (hide + foot)",
+      "name_ko": "토끼 팜",
+      "category": "animal",
+      "subcategory": "food",
+      "principle": "Rabbits are bred with carrots; adults are pushed to a kill for rabbit hide (leather), meat, and the rare rabbit's foot.",
+      "mechanics": [
+        "breeding",
+        "auto_breed",
+        "growth_tick",
+        "fire_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 5,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:campfire",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_fence"
+      ],
+      "mobs": [
+        "minecraft:rabbit"
+      ],
+      "items_out": [
+        "minecraft:rabbit_hide",
+        "minecraft:cooked_rabbit",
+        "minecraft:rabbit_foot"
+      ],
+      "items_in": [
+        "minecraft:carrot"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady hide/meat, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "4 rabbit hide craft into 1 leather; rabbit's foot (brewing) is a rare drop."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "rabbit farm"
+        }
+      ],
+      "tags": [
+        "rabbit_hide",
+        "leather",
+        "rabbit_foot"
+      ]
+    },
+    {
+      "id": "bee_honey_farm",
+      "name": "Bee Farm (honey + honeycomb)",
+      "name_ko": "꿀벌 팜",
+      "category": "animal",
+      "subcategory": "product",
+      "principle": "Bees pollinate nearby flowers and fill hives to honey_level 5; dispensers with glass bottles (honey) and shears (honeycomb) auto-harvest without angering bees (campfire under the hive).",
+      "mechanics": [
+        "bee_pollination",
+        "dispenser_feed",
+        "dispenser_shear",
+        "redstone_clock",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:beehive",
+        "minecraft:bee_nest",
+        "minecraft:dispenser",
+        "minecraft:glass_bottle",
+        "minecraft:shears",
+        "minecraft:campfire",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:bee"
+      ],
+      "items_out": [
+        "minecraft:honey_bottle",
+        "minecraft:honeycomb"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "steady honey/comb, AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "A campfire (with a carpet on top to stop fire) under the hive prevents bees from getting angry when harvested; needs flowers nearby to pollinate."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "bee farm honey"
+        }
+      ],
+      "tags": [
+        "honey",
+        "honeycomb",
+        "candles",
+        "sugar"
+      ]
+    },
+    {
+      "id": "mooshroom_stew_farm",
+      "name": "Mooshroom Stew Farm",
+      "name_ko": "무시룸 스튜 팜",
+      "category": "animal",
+      "subcategory": "food",
+      "principle": "A mooshroom is milked with bowls (dispenser) for mushroom stew, or fed a flower then milked for suspicious stew; an endless renewable food source with zero killing.",
+      "mechanics": [
+        "dispenser_feed",
+        "milk_bowl",
+        "redstone_clock",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 5,
+        "h": 4,
+        "d": 5
+      },
+      "blocks": [
+        "minecraft:dispenser",
+        "minecraft:bowl",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:mycelium"
+      ],
+      "mobs": [
+        "minecraft:mooshroom"
+      ],
+      "items_out": [
+        "minecraft:mushroom_stew",
+        "minecraft:suspicious_stew"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "clock-limited, fully AFK",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Only mooshrooms (from Mushroom Fields) give stew; feeding a specific flower before milking makes a matching suspicious stew effect."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "mooshroom stew farm"
+        }
+      ],
+      "tags": [
+        "mushroom_stew",
+        "suspicious_stew",
+        "food"
+      ]
+    },
+    {
+      "id": "turtle_scute_farm",
+      "name": "Turtle Scute Farm",
+      "name_ko": "거북 등딱지 팜",
+      "category": "animal",
+      "subcategory": "product",
+      "principle": "Turtles bred with seagrass lay eggs on their home beach sand; babies grow up and drop turtle scute (for the turtle helmet) which is collected.",
+      "mechanics": [
+        "breeding",
+        "egg_laying",
+        "growth_tick",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 10,
+        "h": 4,
+        "d": 10
+      },
+      "blocks": [
+        "minecraft:sand",
+        "minecraft:turtle_egg",
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:turtle"
+      ],
+      "items_out": [
+        "minecraft:turtle_scute"
+      ],
+      "items_in": [
+        "minecraft:seagrass"
+      ],
+      "biomes": [
+        "minecraft:beach"
+      ],
+      "y_level": "sea level",
+      "light": "any",
+      "rate": "slow (growth-limited)",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Turtles only lay on the sand of their 'home' beach; babies drop 1 scute each when they mature. 5 scute = turtle helmet."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "turtle scute farm"
+        }
+      ],
+      "tags": [
+        "turtle_scute",
+        "helmet",
+        "potion_of_the_turtle_master"
+      ]
+    },
+    {
+      "id": "goat_horn_farm",
+      "name": "Goat Horn Farm",
+      "name_ko": "염소 뿔 팜",
+      "category": "animal",
+      "subcategory": "product",
+      "principle": "A goat is made to ram a hard block on a redstone-timed lure; the impact drops a goat horn, cycled for all 8 horn variants.",
+      "mechanics": [
+        "goat_ram",
+        "redstone_clock",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 5,
+        "d": 20
+      },
+      "blocks": [
+        "minecraft:packed_ice",
+        "minecraft:stone",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:piston"
+      ],
+      "mobs": [
+        "minecraft:goat"
+      ],
+      "items_out": [
+        "minecraft:goat_horn"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "slow (ram cooldown)",
+      "afk": false,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Goats ram a target every 30-300s onto certain hard blocks; a screaming goat rams far more often. Horn variant is random."
+      ],
+      "sources": [
+        {
+          "creator": "silentwisperer",
+          "kind": "youtube",
+          "ref": "goat horn farm"
+        }
+      ],
+      "tags": [
+        "goat_horn",
+        "collector"
+      ]
+    },
+    {
+      "id": "afk_fishing_farm",
+      "name": "AFK Fishing Farm",
+      "name_ko": "자동 낚시 팜",
+      "category": "animal",
+      "subcategory": "fishing",
+      "principle": "A held/auto-clicked fishing rod over a 1x1 open-water hole catches fish, junk, and enchanted treasure; drops are funneled by water into a hopper.",
+      "mechanics": [
+        "fishing",
+        "open_water",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 5,
+        "h": 4,
+        "d": 5
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:fishing_rod",
+        "minecraft:smooth_stone_slab"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cod",
+        "minecraft:salmon",
+        "minecraft:enchanted_book",
+        "minecraft:name_tag",
+        "minecraft:saddle",
+        "minecraft:nautilus_shell",
+        "minecraft:bow"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "low but valuable treasure, semi-AFK",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Needs 'open water' (a valid ring of water/air) for treasure; requires a held or auto right-click. Rates were reduced from the old 1.13-era designs."
+      ],
+      "sources": [
+        {
+          "creator": "silentwisperer",
+          "kind": "youtube",
+          "ref": "afk fishing farm"
+        }
+      ],
+      "tags": [
+        "fish",
+        "enchanted_book",
+        "mending",
+        "treasure"
+      ]
+    },
+    {
+      "id": "squid_ink_farm",
+      "name": "Squid / Glow Squid Ink Farm",
+      "name_ko": "오징어 먹물 팜",
+      "category": "animal",
+      "subcategory": "product",
+      "principle": "Squid spawn in a dark water box (or glow squid below y=30); they are flushed to a kill for ink sacs (black dye) or glow ink sacs (glowing signs).",
+      "mechanics": [
+        "spawning_dark",
+        "water_stream",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 16,
+        "h": 12,
+        "d": 16
+      },
+      "blocks": [
+        "minecraft:water",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:soul_sand",
+        "minecraft:magma_block"
+      ],
+      "mobs": [
+        "minecraft:squid",
+        "minecraft:glow_squid"
+      ],
+      "items_out": [
+        "minecraft:ink_sac",
+        "minecraft:glow_ink_sac"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "glow squid below y=30 in the dark",
+      "light": "0 for glow squid",
+      "rate": "steady ink/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Glow squid need light 0 and y<30; regular squid need a water volume. Ink sac = black dye; glow ink sac makes signs glow."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "glow squid farm"
+        }
+      ],
+      "tags": [
+        "ink_sac",
+        "black_dye",
+        "glow_ink_sac"
+      ]
+    },
+    {
+      "id": "villager_breeder",
+      "name": "Villager Breeder",
+      "name_ko": "주민 번식기",
+      "category": "animal",
+      "subcategory": "breeding",
+      "principle": "Two villagers with surplus food (carrots/potatoes/bread) and access to beds breed; baby villagers are transported out to stock trading halls, iron farms, and raid farms.",
+      "mechanics": [
+        "breeding",
+        "village_mechanics",
+        "food_supply",
+        "minecart_transport"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:red_bed",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:rail",
+        "minecraft:composter"
+      ],
+      "mobs": [
+        "minecraft:villager"
+      ],
+      "items_out": [],
+      "items_in": [
+        "minecraft:carrot",
+        "minecraft:potato",
+        "minecraft:bread"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9 (avoid mob spawns)",
+      "rate": "on-demand villagers",
+      "afk": false,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Villagers need enough food in inventory and a claimed bed each to breed; feed from a villager crop farm."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "villager breeder"
+        }
+      ],
+      "tags": [
+        "villager",
+        "trading_hall",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "super_smelter",
+      "name": "Super Smelter (furnace array)",
+      "name_ko": "슈퍼 제련소",
+      "category": "utility",
+      "subcategory": "smelting",
+      "principle": "Items and fuel are split across many furnaces by hoppers so smelting throughput scales with furnace count; outputs merge back into one chest.",
+      "mechanics": [
+        "furnace_array",
+        "auto_feed",
+        "hopper_collection",
+        "item_distribution"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 12,
+        "h": 8,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:furnace",
+        "minecraft:blast_furnace",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:comparator",
+        "minecraft:redstone"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:iron_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:copper_ingot"
+      ],
+      "items_in": [
+        "minecraft:raw_iron",
+        "minecraft:raw_gold",
+        "minecraft:raw_copper"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "scales with furnace count",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Use blast furnaces for ores/metals (2x speed) and regular furnaces for food/logs; balance fuel distribution."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "super smelter"
+        }
+      ],
+      "tags": [
+        "smelting",
+        "ore",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "item_sorter",
+      "name": "Item Sorting System",
+      "name_ko": "아이템 자동 분류기",
+      "category": "utility",
+      "subcategory": "storage",
+      "principle": "Hopper lines with comparator-read filter hoppers (item + 4 stacked filler items) divert each item type into its own storage, auto-sorting a whole farm network.",
+      "mechanics": [
+        "comparator_filter",
+        "hopper_chain",
+        "item_filter",
+        "overflow_protection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 6,
+        "d": 4
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:comparator",
+        "minecraft:redstone",
+        "minecraft:repeater",
+        "minecraft:chest",
+        "minecraft:barrel",
+        "minecraft:redstone_torch"
+      ],
+      "mobs": [],
+      "items_out": [],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "throughput = hopper speed (2.5 items/s per lane)",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Each filter needs the target item + 4 non-stackable/other items to bias the comparator; add overflow handling for full chests."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "item sorter"
+        }
+      ],
+      "tags": [
+        "sorting",
+        "storage",
+        "redstone"
+      ]
+    },
+    {
+      "id": "bulk_storage_system",
+      "name": "Bulk Storage System (with sorter + overflow)",
+      "name_ko": "대용량 창고 시스템",
+      "category": "utility",
+      "subcategory": "storage",
+      "principle": "A wall of double chests/barrels fed by an item sorter, with an overflow loop back to the input and a signal-strength full indicator, forms a scalable warehouse.",
+      "mechanics": [
+        "comparator_filter",
+        "hopper_chain",
+        "overflow_protection",
+        "storage_array"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 12,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:chest",
+        "minecraft:barrel",
+        "minecraft:hopper",
+        "minecraft:comparator",
+        "minecraft:redstone",
+        "minecraft:redstone_lamp"
+      ],
+      "mobs": [],
+      "items_out": [],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "storage capacity, not a producer",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Design overflow so a full category doesn't back up the whole hopper line; comparators can drive a 'full' lamp."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "storage system"
+        }
+      ],
+      "tags": [
+        "storage",
+        "warehouse",
+        "sorting"
+      ]
+    },
+    {
+      "id": "villager_trading_hall",
+      "name": "Villager Trading Hall (mending librarians)",
+      "name_ko": "주민 거래소",
+      "category": "utility",
+      "subcategory": "trading",
+      "principle": "Isolated villagers are assigned lecterns and re-rolled until they offer wanted trades (Mending, Silk Touch, etc.); cheap emerald trades and enchanted books flow from a stall array.",
+      "mechanics": [
+        "villager_trading",
+        "trade_reroll",
+        "workstation_link"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 20,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:lectern",
+        "minecraft:bell",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:glass"
+      ],
+      "mobs": [
+        "minecraft:villager"
+      ],
+      "items_out": [
+        "minecraft:enchanted_book",
+        "minecraft:emerald"
+      ],
+      "items_in": [
+        "minecraft:emerald"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "on-demand trades",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Trade prices scale with demand and were rebalanced in the 1.21 line; re-roll unemployed librarians by breaking/replacing the lectern until the desired book appears."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "trading hall mending"
+        }
+      ],
+      "tags": [
+        "mending",
+        "enchanted_book",
+        "emerald",
+        "trading"
+      ]
+    },
+    {
+      "id": "auto_crafter_array",
+      "name": "Auto-Crafter Array (1.21 Crafter)",
+      "name_ko": "자동 제작기 배열",
+      "category": "utility",
+      "subcategory": "crafting",
+      "principle": "The Crafter block, pulsed by redstone and fed by hoppers, auto-crafts recipes (rails, sticks, paper, dyes, food) turning raw farm output into finished items.",
+      "mechanics": [
+        "crafter",
+        "redstone_clock",
+        "auto_feed",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:crafter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:comparator",
+        "minecraft:redstone",
+        "minecraft:dropper"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:rail",
+        "minecraft:paper",
+        "minecraft:stick"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "clock-limited",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Crafter (added 1.21) enables fully-automatic crafting; use a comparator on the crafter to only fire when the grid is full."
+      ],
+      "sources": [
+        {
+          "creator": "ianxofour",
+          "kind": "youtube",
+          "ref": "crafter automation"
+        }
+      ],
+      "tags": [
+        "crafter",
+        "automation",
+        "1.21"
+      ]
+    },
+    {
+      "id": "block_compactor",
+      "name": "Block Compactor (ingots -> blocks)",
+      "name_ko": "블록 압축기",
+      "category": "utility",
+      "subcategory": "crafting",
+      "principle": "A Crafter fed 9-at-a-time compresses ingots/nuggets/resources into blocks (iron/gold/copper/etc.) to save storage space and simplify transport.",
+      "mechanics": [
+        "crafter",
+        "comparator_full",
+        "auto_feed",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 6,
+        "h": 5,
+        "d": 5
+      },
+      "blocks": [
+        "minecraft:crafter",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:comparator",
+        "minecraft:redstone"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:iron_block",
+        "minecraft:gold_block",
+        "minecraft:copper_block"
+      ],
+      "items_in": [
+        "minecraft:iron_ingot",
+        "minecraft:gold_ingot",
+        "minecraft:copper_ingot"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "input-limited",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Only fires when 9 items fill the grid (comparator on crafter); great tail-end for iron/gold farms."
+      ],
+      "sources": [
+        {
+          "creator": "ianxofour",
+          "kind": "youtube",
+          "ref": "auto compactor crafter"
+        }
+      ],
+      "tags": [
+        "compacting",
+        "storage",
+        "crafter"
+      ]
+    },
+    {
+      "id": "auto_brewer",
+      "name": "Automatic Brewing Station",
+      "name_ko": "자동 양조기",
+      "category": "utility",
+      "subcategory": "brewing",
+      "principle": "Hoppers and droppers feed brewing stands in sequence (water bottles, nether wart, then the effect ingredient and gunpowder/redstone), auto-producing stacks of potions.",
+      "mechanics": [
+        "brewing_automation",
+        "hopper_feed",
+        "redstone_sequencer",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:brewing_stand",
+        "minecraft:dropper",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:comparator",
+        "minecraft:redstone"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:potion",
+        "minecraft:splash_potion"
+      ],
+      "items_in": [
+        "minecraft:nether_wart",
+        "minecraft:blaze_powder",
+        "minecraft:glass_bottle",
+        "minecraft:gunpowder"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "batch-limited",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Sequence matters: nether wart first (awkward potion), then the effect ingredient, then modifiers (redstone/glowstone/gunpowder). Blaze powder fuels the stand."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "auto brewer"
+        }
+      ],
+      "tags": [
+        "potions",
+        "brewing",
+        "redstone"
+      ]
+    },
+    {
+      "id": "wandering_trader_trap",
+      "name": "Wandering Trader Farm/Trap",
+      "name_ko": "떠돌이 상인 트랩",
+      "category": "utility",
+      "subcategory": "trading",
+      "principle": "Wandering traders that spawn near the player are trapped and killed for leads (and their llamas), a renewable source of leads and rare plants via trades.",
+      "mechanics": [
+        "spawn_capture",
+        "manual_kill",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:water",
+        "minecraft:campfire",
+        "minecraft:oak_trapdoor"
+      ],
+      "mobs": [
+        "minecraft:wandering_trader",
+        "minecraft:trader_llama"
+      ],
+      "items_out": [
+        "minecraft:lead"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "near player spawn-proofed area",
+      "light": "any",
+      "rate": "trader-spawn limited (~every 20-40 min)",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Killing a leashed trader llama or trader drops leads; spawn rate is slow and tied to the wandering trader spawn cycle."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "wandering trader farm lead"
+        }
+      ],
+      "tags": [
+        "lead",
+        "wandering_trader",
+        "renewable"
+      ]
+    },
+    {
+      "id": "mob_switch",
+      "name": "Mob Switch (cap filler)",
+      "name_ko": "몹 스위치",
+      "category": "utility",
+      "subcategory": "technical",
+      "principle": "A large group of persistent mobs is kept loaded far away to fill a spawn category's mob cap, stopping natural spawns elsewhere so targeted farms (or perimeters) run at full rate.",
+      "mechanics": [
+        "mob_cap_fill",
+        "persistent_mobs",
+        "chunk_loading"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 8,
+        "d": 8
+      },
+      "blocks": [
+        "minecraft:oak_boat",
+        "minecraft:name_tag",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:zombified_piglin",
+        "minecraft:villager"
+      ],
+      "items_out": [],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "loaded but out of the way",
+      "light": "any",
+      "rate": "N/A (control device)",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "situational",
+      "caveats": [
+        "Technical control device; only affects the chosen cap category. Some servers restrict chunk-loaders. Name-tag or otherwise persist the mobs."
+      ],
+      "sources": [
+        {
+          "creator": "gnembon",
+          "kind": "youtube",
+          "ref": "mob switch"
+        }
+      ],
+      "tags": [
+        "mob_cap",
+        "technical",
+        "control"
+      ]
+    },
+    {
+      "id": "nether_portal_transport",
+      "name": "Nether Portal Item Transport",
+      "name_ko": "네더 포탈 아이템 운송",
+      "category": "utility",
+      "subcategory": "logistics",
+      "principle": "Items dropped through a linked nether portal traverse the 8:1 distance instantly in the other dimension; a hopper/dropper stream ships farm output across huge distances cheaply.",
+      "mechanics": [
+        "portal_transfer",
+        "item_stream",
+        "hopper_collection"
+      ],
+      "dimension": "any",
+      "footprint": {
+        "w": 6,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:obsidian",
+        "minecraft:hopper",
+        "minecraft:dropper",
+        "minecraft:chest",
+        "minecraft:water"
+      ],
+      "mobs": [],
+      "items_out": [],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "high, distance-free",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Portal linking must be precise so items arrive at the intended receiver; a collection water stream + hoppers catch items on the far side."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "portal item transport"
+        }
+      ],
+      "tags": [
+        "logistics",
+        "transport",
+        "nether"
+      ]
+    },
+    {
+      "id": "tunnel_bore_miner",
+      "name": "TNT/Flying-Machine Tunnel Bore",
+      "name_ko": "터널 굴착기",
+      "category": "utility",
+      "subcategory": "mining",
+      "principle": "A flying machine pushes TNT/instant-mine heads through stone, clearing large tunnels or perimeters; drops are swept up for bulk stone/ore and cleared spawn perimeters.",
+      "mechanics": [
+        "flying_machine",
+        "tnt_dupe",
+        "bulk_mining",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 8,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:slime_block",
+        "minecraft:honey_block",
+        "minecraft:observer",
+        "minecraft:piston",
+        "minecraft:tnt",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cobblestone",
+        "minecraft:deepslate"
+      ],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "very high clearing rate",
+      "afk": false,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "situational",
+      "caveats": [
+        "TNT-based bores rely on TNT duplication; disabled on many servers. Used to dig perimeters for high-rate mob/gold farms."
+      ],
+      "sources": [
+        {
+          "creator": "RaysWorks",
+          "kind": "youtube",
+          "ref": "tunnel bore perimeter"
+        }
+      ],
+      "tags": [
+        "mining",
+        "perimeter",
+        "technical"
+      ]
+    },
+    {
+      "id": "auto_shulker_loader",
+      "name": "Auto Shulker Box Loader/Unloader",
+      "name_ko": "셜커 상자 자동 적재기",
+      "category": "utility",
+      "subcategory": "storage",
+      "principle": "Hoppers fill shulker boxes to a set count (comparator) then a piston/dispenser cycles a fresh box; a matching unloader empties boxes back into storage — bulk transport packaging.",
+      "mechanics": [
+        "comparator_full",
+        "dispenser_cycle",
+        "hopper_chain"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:shulker_box",
+        "minecraft:dispenser",
+        "minecraft:hopper",
+        "minecraft:comparator",
+        "minecraft:redstone",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:shulker_box"
+      ],
+      "items_in": [
+        "minecraft:shulker_box"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "throughput-limited",
+      "afk": true,
+      "redstone": "high",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Pairs with a shulker farm for endless boxes; comparator detects a full box before ejecting it."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "shulker loader"
+        }
+      ],
+      "tags": [
+        "shulker_box",
+        "packaging",
+        "logistics"
+      ]
+    },
+    {
+      "id": "auto_food_smelter",
+      "name": "Auto Food Smoker (cooked food)",
+      "name_ko": "자동 훈연소",
+      "category": "utility",
+      "subcategory": "smelting",
+      "principle": "Smokers cook raw meat/food at double speed; hoppers feed raw food from animal farms and pull cooked food to storage, closing the food loop automatically.",
+      "mechanics": [
+        "smoker_array",
+        "auto_feed",
+        "hopper_collection"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 5
+      },
+      "blocks": [
+        "minecraft:smoker",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [],
+      "items_out": [
+        "minecraft:cooked_beef",
+        "minecraft:cooked_chicken",
+        "minecraft:baked_potato"
+      ],
+      "items_in": [
+        "minecraft:beef",
+        "minecraft:chicken",
+        "minecraft:potato"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": "any",
+      "rate": "scales with smoker count",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "easy",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Smokers only cook food items (2x speed); use dried kelp blocks or charcoal as renewable fuel."
+      ],
+      "sources": [
+        {
+          "creator": "Shulkercraft",
+          "kind": "youtube",
+          "ref": "auto smoker"
+        }
+      ],
+      "tags": [
+        "food",
+        "smoker",
+        "cooking"
+      ]
+    },
+    {
+      "id": "zombie_villager_curing",
+      "name": "Zombie Villager Curing Station (cheap trades)",
+      "name_ko": "좀비 주민 치료소",
+      "category": "utility",
+      "subcategory": "trading",
+      "principle": "Zombie villagers are cured with a splash Potion of Weakness + golden apple; a cured villager gives massive permanent trade discounts, making enchanted books/gear cheap.",
+      "mechanics": [
+        "curing",
+        "trade_discount",
+        "workstation_link"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 8,
+        "h": 6,
+        "d": 6
+      },
+      "blocks": [
+        "minecraft:iron_bars",
+        "minecraft:lectern",
+        "minecraft:red_bed",
+        "minecraft:hopper",
+        "minecraft:chest"
+      ],
+      "mobs": [
+        "minecraft:zombie_villager",
+        "minecraft:villager"
+      ],
+      "items_out": [
+        "minecraft:enchanted_book",
+        "minecraft:emerald"
+      ],
+      "items_in": [
+        "minecraft:golden_apple",
+        "minecraft:splash_potion"
+      ],
+      "biomes": [],
+      "y_level": "any",
+      "light": ">=9",
+      "rate": "on-demand discounted trades",
+      "afk": false,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Discount from repeated curing was capped/rebalanced in recent versions, but a single cure still gives strong permanent discounts. Keep the villager near the cure spot (gossip range)."
+      ],
+      "sources": [
+        {
+          "creator": "Pixlriffs",
+          "kind": "youtube",
+          "ref": "zombie villager curing discount"
+        }
+      ],
+      "tags": [
+        "discount",
+        "mending",
+        "trading",
+        "golden_apple"
+      ]
+    },
+    {
+      "id": "magma_cube_farm",
+      "name": "Magma Cube Farm",
+      "name_ko": "마그마 큐브 팜",
+      "category": "mob",
+      "subcategory": "magma_cube",
+      "principle": "Magma cubes spawn on large flat nether platforms (best in basalt deltas / nether wastes); big cubes split into small ones which are pushed to a kill for magma cream.",
+      "mechanics": [
+        "spawning_platform",
+        "biome_specific",
+        "water_stream",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 24,
+        "h": 16,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:magma_block",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_trapdoor",
+        "minecraft:nether_bricks"
+      ],
+      "mobs": [
+        "minecraft:magma_cube"
+      ],
+      "items_out": [
+        "minecraft:magma_cream"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:basalt_deltas",
+        "minecraft:nether_wastes"
+      ],
+      "y_level": "on a flat nether plane / roof",
+      "light": "any",
+      "rate": "steady magma cream/h",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Magma cubes ignore light; big cubes must be allowed room to split into small cubes (which drop the cream). Basalt deltas has the highest magma-cube spawn weight."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "magma cube farm"
+        }
+      ],
+      "tags": [
+        "magma_cream",
+        "brewing",
+        "nether"
+      ]
+    },
+    {
+      "id": "ghast_farm",
+      "name": "Ghast Farm",
+      "name_ko": "가스트 팜",
+      "category": "mob",
+      "subcategory": "ghast",
+      "principle": "Ghasts need a large open air volume to spawn; a big spawn-proofed platform in soul sand valley / nether wastes lets ghasts spawn and be funneled to a kill for ghast tears and gunpowder.",
+      "mechanics": [
+        "spawning_platform",
+        "biome_specific",
+        "spawn_proofing",
+        "aggro_lure",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "nether",
+      "footprint": {
+        "w": 32,
+        "h": 20,
+        "d": 32
+      },
+      "blocks": [
+        "minecraft:soul_sand",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:oak_trapdoor",
+        "minecraft:nether_bricks"
+      ],
+      "mobs": [
+        "minecraft:ghast"
+      ],
+      "items_out": [
+        "minecraft:ghast_tear",
+        "minecraft:gunpowder"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:soul_sand_valley",
+        "minecraft:nether_wastes",
+        "minecraft:basalt_deltas"
+      ],
+      "y_level": "large open nether area",
+      "light": "any",
+      "rate": "low (ghasts need lots of space)",
+      "afk": true,
+      "redstone": "medium",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works_with_caveat",
+      "caveats": [
+        "Ghasts require a 5x5x5 empty space to spawn, so rates are low; soul sand valley has the best ghast spawn weight."
+      ],
+      "sources": [
+        {
+          "creator": "ilmango",
+          "kind": "youtube",
+          "ref": "ghast farm"
+        }
+      ],
+      "tags": [
+        "ghast_tear",
+        "gunpowder",
+        "brewing",
+        "nether"
+      ]
+    },
+    {
+      "id": "husk_farm_desert",
+      "name": "Husk Farm (desert)",
+      "name_ko": "허스크 팜 (사막)",
+      "category": "mob",
+      "subcategory": "zombie",
+      "principle": "Husks spawn in place of zombies on desert surfaces at night; a dark desert-biome platform funnels them to a dry kill (no water, or they convert to drowned) for rotten flesh and gear.",
+      "mechanics": [
+        "spawning_dark",
+        "biome_specific",
+        "spawning_platform",
+        "fall_damage",
+        "manual_kill",
+        "hopper_collection",
+        "afk_platform"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 24,
+        "h": 24,
+        "d": 24
+      },
+      "blocks": [
+        "minecraft:oak_trapdoor",
+        "minecraft:hopper",
+        "minecraft:chest",
+        "minecraft:sandstone",
+        "minecraft:magma_block"
+      ],
+      "mobs": [
+        "minecraft:husk"
+      ],
+      "items_out": [
+        "minecraft:rotten_flesh",
+        "minecraft:iron_ingot",
+        "minecraft:carrot"
+      ],
+      "items_in": [],
+      "biomes": [
+        "minecraft:desert"
+      ],
+      "y_level": "desert surface / sky over desert",
+      "light": "0",
+      "rate": "steady flesh + rare gear",
+      "afk": true,
+      "redstone": "low",
+      "difficulty": "medium",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Husks only spawn in desert biomes; keep the kill dry so they don't convert into drowned. Great emerald source via rotten-flesh cleric trades."
+      ],
+      "sources": [
+        {
+          "creator": "wattles",
+          "kind": "youtube",
+          "ref": "husk farm desert"
+        }
+      ],
+      "tags": [
+        "rotten_flesh",
+        "emerald",
+        "desert"
+      ]
+    },
+    {
+      "id": "perimeter_spawn_proofer",
+      "name": "Perimeter Spawn-Proofing Setup",
+      "name_ko": "스폰 방지 경계 정비",
+      "category": "utility",
+      "subcategory": "control",
+      "principle": "Every cave/surface within 128 blocks of a sky mob/gold farm is lit or slabbed so the mob cap isn't wasted on random spawns — the single biggest rate multiplier for any spawn-based farm.",
+      "mechanics": [
+        "spawn_proofing",
+        "mob_cap_control",
+        "flying_machine"
+      ],
+      "dimension": "overworld",
+      "footprint": {
+        "w": 32,
+        "h": 6,
+        "d": 32
+      },
+      "blocks": [
+        "minecraft:torch",
+        "minecraft:smooth_stone_slab",
+        "minecraft:white_carpet",
+        "minecraft:light"
+      ],
+      "mobs": [],
+      "items_out": [],
+      "items_in": [],
+      "biomes": [],
+      "y_level": "around the target farm (128-block radius)",
+      "light": ">=1 everywhere except the farm platform",
+      "rate": "N/A (multiplier for spawn farms)",
+      "afk": false,
+      "redstone": "none",
+      "difficulty": "hard",
+      "version": "26.2",
+      "status": "works",
+      "caveats": [
+        "Digging/lighting a full perimeter is a big project but can multiply a mob/gold farm's rate several times over."
+      ],
+      "sources": [
+        {
+          "creator": "RaysWorks",
+          "kind": "youtube",
+          "ref": "perimeter spawn proofing"
+        }
+      ],
+      "tags": [
+        "spawn_proofing",
+        "mob_cap",
+        "rate_boost"
+      ]
+    }
+  ]
+}

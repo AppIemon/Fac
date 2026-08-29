@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:overworld",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "fac:dark_chamber",
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:obsidian",
+          "height": 2
+        },
+        {
+          "block": "minecraft:black_concrete",
+          "height": 1
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}
