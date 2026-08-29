@@ -110,19 +110,29 @@ def effective_mob_cap(category: str, loaded_chunks: int, players: int = 1) -> fl
     return base * players * min(1.0, loaded_chunks / SPAWN_CHUNK_AREA)
 
 
-def spawn_rate_estimate(spawnable_blocks: int, share_of_cap: float = 0.9,
-                        cycle_sec: float = 5.0, cap: float = 70.0) -> float:
-    """어두운 플랫폼 팜의 시간당 몹 스폰 수 추정(ESTIMATE).
+# 몹캡이 한 바퀴 도는 데 걸리는 실측 기반 주기(초).
+# 스폰 시도는 매 틱 일어나지만, 실제 처리량은 "스폰 -> 이송 -> 처치 -> 몹캡 반환"
+# 한 사이클이 결정한다. 잘 지은 팜의 실측 산출(시간당 수천 마리)에 맞춘 값이다.
+MOB_CAP_CYCLE_SEC = 60.0
+# 이 면적을 넘으면 스폰 면적이 아니라 몹캡이 병목이 된다(추가 면적의 효용이 사라짐).
+SPAWN_AREA_SATURATION = 1500
 
-    실제 스폰은 매 틱 청크별 시도로 결정되지만, 실전 설계에서는
-    "몹캡을 얼마나 독점하는가 x 몹캡이 다시 채워지는 주기"로 근사한다.
-    spawnable_blocks 는 유효 스폰 가능 블록 수(어둡고 지붕이 있는 바닥).
+
+def spawn_rate_estimate(spawnable_blocks: int, share_of_cap: float = 0.9,
+                        cycle_sec: float = MOB_CAP_CYCLE_SEC, cap: float = 70.0) -> float:
+    """어두운 플랫폼 팜의 시간당 몹 스폰 수 추정 (ESTIMATE).
+
+    모델: 시간당 = 몹캡 x 독점률 x 면적포화도 x (3600 / 몹캡 회전주기)
+
+    실제 스폰은 매 틱 청크별 시도로 결정되지만, 실전 팜의 산출은
+    "몹캡을 얼마나 독점하는가"와 "몹캡이 얼마나 빨리 회전하는가"로 결정된다.
+    잘 지은 범용 몹 트랩의 실측치(시간당 수천 마리)에 맞춰 보정한 추정식이며,
+    정확한 수치가 필요하면 인게임 실측으로 대체할 것.
     """
     if spawnable_blocks <= 0:
         return 0.0
-    saturation = min(1.0, spawnable_blocks / 1500.0)  # 1500칸이면 사실상 포화
-    per_cycle = cap * share_of_cap * saturation
-    return per_cycle * (3600.0 / cycle_sec)
+    saturation = min(1.0, spawnable_blocks / SPAWN_AREA_SATURATION)
+    return cap * share_of_cap * saturation * (3600.0 / cycle_sec)
 
 
 # ---------------------------------------------------------------------------
