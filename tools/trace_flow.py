@@ -17,7 +17,8 @@ from engine.schematic import Schematic  # noqa: E402
 
 MOVERS = {"hopper", "dropper"}
 # 사슬이 여기서 끝나면 정상이다. 발사기는 아이템을 소비해 밖으로 내보낸다.
-TERMINALS = {"chest", "furnace", "composter", "crafter", "barrel", "dispenser"}
+TERMINALS = {"chest", "furnace", "composter", "crafter", "barrel",
+             "dispenser", "water"}   # water = 물기둥 엘리베이터 투입구
 
 
 def trace(s: Schematic, start: tuple[int, int, int], limit: int = 400) -> dict:

@@ -21,7 +21,7 @@ from . import (cobble_factory, cobblegen, cobblegen_tnt, composterbank,
                kelpfarm, kelpfarm_bonemeal, mossbed,
                mossbed_auto,
                smelter,
-               smelter_dropper, smoothstone_factory, stonegen,
+               full_factory, smelter_dropper, smoothstone_factory, stonegen,
                sugarcane)  # noqa: E402
 
 REGISTRY = {
@@ -38,6 +38,7 @@ REGISTRY = {
     "cobble_factory": cobble_factory.build,
     "cobblegen_tnt": cobblegen_tnt.build,
     "kelpfarm_bonemeal": kelpfarm_bonemeal.build,
+    "full_factory": full_factory.build,
 }
 
 

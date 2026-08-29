@@ -181,7 +181,8 @@ class TestAllDesigns(unittest.TestCase):
                 dx, dy, dz = OFFSET[b.properties["facing"]]
                 target = s.get(x + dx, y + dy, z + dz).short
                 with self.subTest(design=name, dropper=(x, y, z)):
-                    self.assertIn(target, CONTAINERS,
+                    # 물을 향하는 건 정상이다 — 물기둥 엘리베이터에 아이템을 쏘아 넣는다
+                    self.assertIn(target, CONTAINERS | {"water"},
                                   f"드로퍼가 {target} 을(를) 향한다 → 아이템을 밖으로 뱉는다")
 
     def test_dispensers_have_a_target(self):

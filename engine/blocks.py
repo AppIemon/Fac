@@ -59,6 +59,7 @@ SMOOTH_STONE = B("smooth_stone")
 MOSS_BLOCK = B("moss_block")
 COMPOSTER = B("composter", level="0")
 KELP = B("kelp", age="0")
+SOUL_SAND = B("soul_sand")
 
 
 def waterlogged_hopper(facing: str = EAST) -> Block:
@@ -128,7 +129,8 @@ PREVIEW_CHARS: dict[str, str] = {
     "hopper": "h", "chest": "C", "glass": "g", "oak_slab": "s",
     "lava": "L", "cobblestone": "c", "smooth_stone": "S", "moss_block": "M",
     "composter": "K", "furnace": "F", "cobblestone_stairs": "<", "dispenser": "n",
-    "kelp": "|", "oak_leaves": "V", "dropper": "D",
+    "kelp": "|", "oak_leaves": "V", "dropper": "D", "soul_sand": "$",
+    "crafter": "X",
 }
 
 

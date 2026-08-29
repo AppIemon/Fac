@@ -29,7 +29,8 @@
 """
 from __future__ import annotations
 
-from ..blocks import (DOWN, GLASS, LAVA, MOSS_BLOCK, NORTH, SOUTH, STONE, UP, WATER,
+from ..blocks import (DOWN, EAST, GLASS, LAVA, MOSS_BLOCK, NORTH, SOUTH, STONE,
+                      UP, WATER,
                       chest, dispenser, hopper, piston, redstone_wire)
 from ..schematic import Schematic
 from . import Design
@@ -70,7 +71,9 @@ def build(width: int = 7, layers: int = 3, structure=STONE) -> Design:
     cx = width // 2
     mid = layers // 2
     seed_y = mid * LAYER_PITCH
-    seed_z = BED_ROWS[len(BED_ROWS) // 2]
+    # 씨앗을 첫 번째 베드 줄에 둔다. 가운데 줄은 양옆이 피스톤 회로 가루라
+    # 발사기에 호퍼로 급이할 길이 없다 (호퍼가 신호를 받아 잠긴다).
+    seed_z = BED_ROWS[0]
 
     for L in range(layers):
         y = L * LAYER_PITCH
@@ -120,6 +123,11 @@ def build(width: int = 7, layers: int = 3, structure=STONE) -> Design:
 
     # 씨앗 아래 뼛가루 발사기
     s.set(cx, seed_y - 1, seed_z, dispenser(UP))
+    # 발사기 급이 통로: z=0 벽을 호퍼 줄로 바꾼다.
+    # 여기는 피스톤 회로 가루와 맞닿지 않는 유일한 경로다.
+    for x in range(-1, cx):
+        s.set(x, seed_y - 1, 0, hopper(EAST))
+    s.set(cx, seed_y - 1, 0, hopper(SOUTH))    # 발사기로 밀어 넣는다
 
     # 수거 호퍼 기둥: 최상층 베드 높이부터 Y=0 까지 끊김 없이 아래로.
     # 재생성용 물이 흐를 때 부서진 이끼가 동쪽으로 밀려와 이 기둥으로 들어간다.
@@ -168,7 +176,9 @@ def build(width: int = 7, layers: int = 3, structure=STONE) -> Design:
             "8) 동쪽 끝(x=width) 베드 줄마다 아래방향 호퍼를 놓고 기둥으로 이어 "
             "Y=-1 남쪽 호퍼 줄 → 상자로 모은다. "
             "재생성용 물이 흐를 때 부서진 이끼가 동쪽으로 밀려와 여기로 들어간다.",
-            "9) 상자를 퇴비통 뱅크(litematic composterbank)에 물린다. "
+            f"9) 발사기 급이는 z=0 벽의 호퍼 줄(Y={0})로 들어온다. "
+            "여기가 피스톤 회로 가루에 닿지 않는 유일한 경로다.",
+            "10) 상자를 퇴비통 뱅크(litematic composterbank)에 물린다. "
             "이끼 블록을 반드시 함께 넣어야 순이익이 난다.",
         ],
         rate=f"베드 {y['cells']}칸 · 뼛가루 1개당 이끼 약 {y['moss_est']:.0f}개 (추정) → "

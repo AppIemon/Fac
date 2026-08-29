@@ -70,6 +70,35 @@ def crafting(pid: str, name: str, inputs: dict[str, float], outputs: dict[str, f
     )
 
 
+COMPOST_CHANCE_MOSS = 0.65     # 위키: 이끼 블록 퇴비 성공률
+
+def composter_for_harvest(pid: str, name: str, moss_per_harvest: float,
+                          bonemeal_per_harvest: float, design: str | None,
+                          note: str) -> Process:
+    """수확물 '한 벌'을 퇴비통 처리량으로 환산한다.
+
+    퇴비통 한 대의 상한은 호퍼 급이(초당 2.5개)와 레벨 7 도달 후 1초 대기다.
+    이끼 블록 성공률 65% -> 뼛가루 1개당 평균 10.8개 투입.
+    수확물 한 벌이 이끼 몇 개인지 알면 시간당 몇 벌을 처리하는지 나온다.
+    """
+    chance = COMPOST_CHANCE_MOSS
+    items_per_bm = COMPOST_LEVELS / chance
+    cycle = items_per_bm / M.HOPPER_ITEMS_PER_SEC + COMPOST_READY_DELAY_SEC
+    bm_per_hour = 3600.0 / cycle
+    items_per_hour = bm_per_hour * items_per_bm
+    harvests_per_hour = items_per_hour / moss_per_harvest
+    return Process(
+        id=pid, name=name, unit="통",
+        inputs={"moss_harvest": harvests_per_hour},
+        outputs={"bone_meal": harvests_per_hour * bonemeal_per_harvest},
+        design=design, design_param="bins" if design else None,
+        verify=ESTIMATE,
+        source=f"이끼 성공률 {chance:.0%} → 뼛가루당 {items_per_bm:.1f}개 투입 · "
+               f"호퍼 급이 {M.HOPPER_ITEMS_PER_SEC}개/초 + 대기 1초 → 통당 "
+               f"시간당 이끼 {items_per_hour:,.0f}개 = 수확물 {harvests_per_hour:.0f}벌. {note}",
+        limits=("퇴비통은 위 호퍼로만 넣을 수 있다. 옆면은 통하지 않는다.",))
+
+
 # ---------------------------------------------------------------------------
 # 등록
 # ---------------------------------------------------------------------------
@@ -189,14 +218,33 @@ def registry() -> Registry:
                 "참고 설계 'Bonemeal Farm 4k/h' 는 다층 베드 + 피스톤 자동 수확으로 "
                 "시간당 4,000개를 낸다. 이 설계는 거기까지 가지 못했다.")))
 
+    # 다층 자동 이끼 베드는 제자리 돌 재생성(용암이 위에서 물로)을 내장해서
+    # 돌을 밖에서 받지 않는다. 용암 수원과 물 수원은 소모되지 않으므로
+    # 사실상 무료로 돌이 다시 채워진다. 그래서 입력이 뼛가루뿐이다.
+    from engine.designs.mossbed_auto import yields as _auto_yields
+    ay = _auto_yields()
+    AUTO_CYCLES_PER_HOUR = 360.0    # 뼛가루 발사 -> 피스톤 -> 물 침수 -> 용암 재생성 1회전
     r.add(Process(
-        id="composter_moss_harvest", name="퇴비통 (이끼 + 초목 전량)", unit="통",
-        inputs={"moss_harvest": 1.0},
-        outputs={"bone_meal": my["with_moss_bonemeal"]},
-        design="composterbank", design_param="bins", verify=ESTIMATE,
-        source=f"이끼 {my['counts']['moss_block']:.0f}x65% + 초목 퇴비 환산 "
-               f"= 뼛가루 {my['with_moss_bonemeal']:.2f}개",
-        limits=("이끼 블록을 반드시 함께 넣어야 한다. 빼면 고리가 순손실이 된다.",)))
+        id="mossbed_auto", name="다층 자동 이끼 베드", unit="베드",
+        inputs={"bone_meal": AUTO_CYCLES_PER_HOUR},
+        outputs={"moss_harvest": AUTO_CYCLES_PER_HOUR},
+        design="mossbed_auto", design_param=None, max_units_per_build=1,
+        verify=ESTIMATE,
+        source=f"베드 {ay['cells']}칸 · 평평한 7x7 변환율(27/49)을 다층에 적용해 "
+               f"뼛가루당 이끼 약 {ay['moss_est']:.0f}개 (추정) · "
+               f"회전 {AUTO_CYCLES_PER_HOUR:.0f}회/시간 가정",
+        limits=("제자리 돌 재생성을 내장해 돌을 밖에서 받지 않는다.",
+                "회전수는 가정값이다. 참고 설계는 시간당 뼛가루 4,000개를 낸다.")))
+
+    r.add(composter_for_harvest(
+        "composter_moss_auto", "퇴비통 (다층 베드 수확물)",
+        ay["moss_est"], ay["bonemeal_est"], "composterbank",
+        "층을 촘촘히 쌓아 초목이 거의 없어 수확물이 사실상 전부 이끼 블록이다."))
+
+    r.add(composter_for_harvest(
+        "composter_moss_harvest", "퇴비통 (이끼 + 초목 전량)",
+        my["counts"]["moss_block"], my["with_moss_bonemeal"], None,
+        "이끼 블록을 반드시 함께 넣어야 한다. 빼면 고리가 순손실이 된다."))
 
     r.add(Process(
         id="composter_vegetation_only", name="퇴비통 (초목만 · 이끼는 보관)", unit="통",
