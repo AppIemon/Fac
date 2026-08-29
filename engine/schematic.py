@@ -43,6 +43,24 @@ class Schematic:
     def note(self, text: str) -> None:
         self.notes.append(text)
 
+    def paste(self, other: "Schematic", dx: int = 0, dy: int = 0, dz: int = 0,
+              label: str = "") -> None:
+        """다른 설계를 오프셋을 주고 겹쳐 넣는다 (공장 합성용).
+
+        이미 블록이 있는 자리에 다른 블록을 덮어쓰려 하면 예외를 낸다.
+        모듈을 잘못 겹쳐 놓고 모르는 채로 넘어가는 걸 막는다.
+        """
+        for (x, y, z), b in other.blocks.items():
+            pos = (x + dx, y + dy, z + dz)
+            old = self.blocks.get(pos)
+            if old is not None and old != b:
+                raise ValueError(
+                    f"모듈 충돌 {label or other.name} at {pos}: "
+                    f"{old} 자리에 {b} 를 놓으려 한다")
+            self.blocks[pos] = b
+        for n in other.notes:
+            self.notes.append(f"[{label or other.name}] {n}")
+
     # -- 조회 --------------------------------------------------------------
     @property
     def bounds(self) -> tuple[tuple[int, int, int], tuple[int, int, int]]:

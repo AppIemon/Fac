@@ -1,0 +1,99 @@
+# 드로퍼 분배 화로 8대 · 균등 분배 · 시간당 2,880개
+기준 버전: Minecraft 26.2 (Chaos Cubed, 2026-06-16) · DataVersion 4903
+
+## 작동 원리
+드로퍼 사슬이 원료를 줄 전체에 고르게 밀어 넣고, 각 드로퍼 아래 호퍼가 자기 화로 몫만 끌어내린다. 화로 8대 병렬.
+
+## 신호 경로
+  관측기 2개(서쪽 끝)가 서로를 마주보며 자가 발진 → 가루 줄(Y=+5)을 두드림
+  가루 → 받침 블록(Y=+4) 약한 급전 → 인접 드로퍼(Y=+3) 작동
+  드로퍼가 아이템을 동쪽 다음 드로퍼로 한 개씩 민다 (버퍼 = 균등 분배)
+  각 드로퍼 아래 호퍼(Y=+2)가 위에서 끌어와 화로 원료 슬롯으로
+  연료 열도 같은 방식. 다만 마지막에 옆(북)에서 넣어 연료 슬롯으로 간다
+  화로 아래 호퍼(Y=0)가 완성품을 끌어내 동쪽 상자로
+
+## 규격
+  가로(X) 11 × 높이(Y) 7 × 세로(Z) 2  ·  블록 131개
+  예상 산출: 화로 8대 → 시간당 2,880개 (연속 가동 기준)
+
+## 층별 평면도 (위 → 아래, 화면 위쪽이 북쪽)
+── Y=+5 ──────────────────────────────
+     10123456789
+ z+0 .rrrrrrrrOO
+ z+1 .rrrrrrrr..
+
+── Y=+4 ──────────────────────────────
+     10123456789
+ z+0 C########..
+ z+1 C########..
+
+── Y=+3 ──────────────────────────────
+     10123456789
+ z+0 hDDDDDDDDC.
+ z+1 hDDDDDDDDC.
+
+── Y=+2 ──────────────────────────────
+     10123456789
+ z+0 #hhhhhhhh..
+ z+1 #hhhhhhhh..
+
+── Y=+1 ──────────────────────────────
+     10123456789
+ z+0 #FFFFFFFF..
+ z+1 #hhhhhhhh..
+
+── Y=+0 ──────────────────────────────
+     10123456789
+ z+0 #hhhhhhhhC.
+ z+1 #########..
+
+── Y=-1 ──────────────────────────────
+     10123456789
+ z+0 ##########.
+ z+1 ##########.
+
+## 블록 기호
+ #  minecraft:stone
+ C  minecraft:chest[facing=east,type=single,waterlogged=false]
+    minecraft:chest[facing=north,type=single,waterlogged=false]
+ D  minecraft:dropper[facing=east,triggered=false]
+ F  minecraft:furnace[facing=north,lit=false]
+ O  minecraft:observer[facing=east,powered=false]
+    minecraft:observer[facing=west,powered=false]
+ h  minecraft:hopper[enabled=true,facing=down]
+    minecraft:hopper[enabled=true,facing=east]
+    minecraft:hopper[enabled=true,facing=north]
+ r  minecraft:redstone_wire[east=none,north=side,power=0,south=none,west=side]
+    minecraft:redstone_wire[east=side,north=none,power=0,south=side,west=none]
+    minecraft:redstone_wire[east=side,north=none,power=0,south=side,west=side]
+    minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=none]
+    minecraft:redstone_wire[east=side,north=side,power=0,south=none,west=side]
+
+## 재료 목록
+  stone                       50개
+  hopper                      34개
+  dropper                     16개
+  redstone_wire               16개
+  furnace                      8개
+  chest                        5개
+  observer                     2개
+
+## 시공 순서
+  1) 동서(X) 방향으로 화로 8대를 한 줄로 놓는다 (Y=+1).
+  2) 화로 아래에 동쪽을 향한 산출 호퍼 줄 → 끝에 상자.
+  3) 화로 위에 아래를 향한 호퍼, 그 위에 동쪽을 향한 드로퍼 사슬.
+  4) 화로 남쪽 옆칸(z=1)에 북쪽 호퍼 → 그 위 아래방향 호퍼 → 그 위 연료 드로퍼 사슬.
+  5) 드로퍼 사슬 위에 받침 블록을 깔고 그 위에 레드스톤 가루를 한 줄 잇는다.
+  6) 서쪽 끝에 투입 상자 2개(원료/연료)와 각각 동쪽 호퍼를 놓아 사슬에 밀어 넣는다.
+  7) 동쪽 끝 사슬 자리에 상자를 놓는다. 비워 두면 아이템이 밖으로 튀어나온다.
+  8) 서쪽 끝에 관측기 2개를 마주보게 놓으면 클럭이 저절로 돈다.
+
+## 설계 메모
+  * 드로퍼 사슬 끝은 상자다. 드로퍼가 공기를 향하면 아이템을 월드로 뱉는다.
+  * 호퍼는 바로 위 컨테이너에서 끌어온다 — 드로퍼가 그 컨테이너 역할을 한다.
+  * 관측기 2개가 서로를 마주보면 자가 발진 클럭이 된다. 별도 점화가 필요 없다.
+
+## 주의
+  ! 관측기 클럭은 매우 빠르다. 서버가 버거우면 가루 줄 중간에 중계기를 넣어 늦출 것.
+  ! 드로퍼 사슬 끝을 상자로 막지 않으면 아이템이 월드로 뱉어져 사라진다.
+  ! 호퍼 1줄은 시간당 9,000개까지다. 화로 25대를 넘기면 산출 줄도 나눠야 한다.

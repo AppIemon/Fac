@@ -78,6 +78,10 @@ def waterlogged_stairs(facing: str = EAST, kind: str = "cobblestone_stairs") -> 
     return B(kind, facing=facing, half="bottom", shape="straight", waterlogged="true")
 
 
+def dropper(facing: str = EAST) -> Block:
+    return B("dropper", facing=facing, triggered="false")
+
+
 def dispenser(facing: str = UP) -> Block:
     return B("dispenser", facing=facing, triggered="false")
 

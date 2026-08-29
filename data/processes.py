@@ -139,6 +139,18 @@ def registry() -> Registry:
                 "(초당 1~2개 = 시간당 3,600~7,200개)로 막힌다 — 칸을 늘려도 이 상한을 못 넘는다.",
                 "물먹임 계단을 써야 용암 수원이 흑요석이 되지 않는다.")))
 
+    # 제자리 돌 생성기: 조약돌이 아니라 '돌'을 직접 낸다 → 제련이 한 단 줄어든다
+    r.add(Process(
+        id="stonegen", name="제자리 돌 생성기", unit="생성칸",
+        outputs={"stone": cell_rate},
+        design="stonegen", design_param="cells", max_units_per_build=8,
+        throttleable=False, verify=ESTIMATE,
+        source=f"용암이 위에서 물로 흘러들면 물이 '돌'이 된다 · 용암 확산 "
+               f"{LAVA_SPREAD_TICKS}틱 → 칸당 이론상 {cell_rate:,.0f}개/시간",
+        limits=("조약돌 경로는 두 번 구워야 하지만 이쪽은 한 번이면 된다 → 연료 절반.",
+                "채굴은 수동. 실제 상한은 곡괭이질(시간당 3,600~7,200개)이다.",
+                "이끼 베드에 넣을 돌도 여기서 나온다 (조약돌은 이끼로 변환 안 됨).")))
+
     for pid, name, src, dst in (
             ("smelt_cobble_to_stone", "조약돌 → 돌 제련", "cobblestone", "stone"),
             ("smelt_stone_to_smooth", "돌 → 매끄러운 돌 제련", "stone", "smooth_stone")):

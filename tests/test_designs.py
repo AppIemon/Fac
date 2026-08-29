@@ -130,6 +130,43 @@ class TestAllDesigns(unittest.TestCase):
                                 inside,
                                 f"용암이 설계 경계 밖({dname})으로 흐른다")
 
+    def test_hoppers_are_not_locked_by_adjacent_redstone(self):
+        """호퍼는 레드스톤 신호를 받으면 잠긴다.
+
+        가루 줄 옆에 이송 호퍼를 두면 클럭이 돌 때마다 공급이 끊긴다.
+        (호퍼 잠금을 일부러 쓰는 아이템 분류기는 이 설계군에 없다.)
+        """
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "hopper":
+                    continue
+                for dx, dy, dz in OFFSET.values():
+                    n = s.get(x + dx, y + dy, z + dz)
+                    if n.short in ("redstone_wire", "redstone_block", "repeater"):
+                        # 가루는 위쪽으로는 급전하지 않는다
+                        if n.short == "redstone_wire" and dy < 0:
+                            continue
+                        self.fail(f"{name}: 호퍼({x},{y},{z}) 옆에 {n.short} 가 있어 "
+                                  f"신호를 받으면 잠긴다")
+
+    def test_droppers_never_face_air(self):
+        """드로퍼가 공기를 향하면 아이템을 월드로 뱉어 잃는다.
+
+        호퍼는 막히면 그냥 멈추지만, 드로퍼는 밖으로 던진다. 사슬 끝은
+        반드시 컨테이너여야 한다.
+        """
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short != "dropper":
+                    continue
+                dx, dy, dz = OFFSET[b.properties["facing"]]
+                target = s.get(x + dx, y + dy, z + dz).short
+                with self.subTest(design=name, dropper=(x, y, z)):
+                    self.assertIn(target, CONTAINERS,
+                                  f"드로퍼가 {target} 을(를) 향한다 → 아이템을 밖으로 뱉는다")
+
     def test_dispensers_have_a_target(self):
         """발사기가 향한 칸은 비어 있어야 내용물이 나간다."""
         for name, d in self.designs():
