@@ -40,8 +40,9 @@ def build(columns: int = 12, structure=STONE) -> Design:
     )
 
     for x in range(columns):
-        s.fill(x, 0, 0, x, 5, 0, structure)          # 북쪽 벽
+        s.fill(x, -1, 0, x, 5, 0, structure)         # 북쪽 벽
 
+        s.set(x, -1, 1, structure)                    # 모래 받침 (모래는 중력 블록이다)
         s.set(x, 0, 1, SAND)                          # 켈프 식재면
         s.set(x, 1, 1, KELP)                          # 밑동 (영구)
         s.set(x, 2, 1, WATER)                         # 성장칸 (여기서 잘린다)
@@ -49,13 +50,14 @@ def build(columns: int = 12, structure=STONE) -> Design:
         s.set(x, 4, 1, waterlogged_hopper(EAST))      # 떠오른 아이템 수거
         s.set(x, 5, 1, structure)                     # 천장
 
+        s.set(x, -1, 2, structure)
         s.set(x, 0, 2, structure)
         s.set(x, 1, 2, structure)
         s.set(x, 2, 2, piston(NORTH))                 # 성장칸 2번째를 부순다
         s.set(x, 3, 2, observer(NORTH))               # 3번째 성장 감지
         s.fill(x, 4, 2, x, 5, 2, structure)
 
-        s.fill(x, 0, 3, x, 1, 3, structure)
+        s.fill(x, -1, 3, x, 1, 3, structure)
         s.set(x, 2, 3, structure)                     # 가루의 받침 = 피스톤 급전원
         s.set(x, 3, 3, redstone_wire(
             north="side",
@@ -64,9 +66,9 @@ def build(columns: int = 12, structure=STONE) -> Design:
         s.fill(x, 4, 3, x, 5, 3, structure)
 
     # 서쪽 끝막이
-    s.fill(-1, 0, 0, -1, 5, 3, structure)
+    s.fill(-1, -1, 0, -1, 5, 3, structure)
     # 동쪽 끝: 호퍼 줄이 흘러드는 상자
-    s.fill(columns, 0, 0, columns, 5, 3, structure)
+    s.fill(columns, -1, 0, columns, 5, 3, structure)
     s.set(columns, 4, 1, chest(EAST))
     s.set(columns, 5, 1, GLASS)                       # 상자 위는 불투명 금지
 

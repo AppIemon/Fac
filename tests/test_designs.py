@@ -41,6 +41,23 @@ class TestAllDesigns(unittest.TestCase):
                 self.assertTrue(d.steps, "시공 순서가 없다")
                 self.assertTrue(d.rate, "산출량 설명이 없다")
 
+    GRAVITY = {"sand", "red_sand", "gravel", "suspicious_sand", "suspicious_gravel",
+               "anvil", "concrete_powder", "dragon_egg"}
+
+    def test_gravity_blocks_have_support(self):
+        """모래/자갈은 아래가 비면 떨어진다.
+
+        켈프 팜의 모래 80개가 전부 받침 없이 떠 있었다. 지으면 통째로 무너진다.
+        """
+        for name, d in self.designs():
+            s = d.schematic
+            for (x, y, z), b in s.blocks.items():
+                if b.short in self.GRAVITY:
+                    below = s.get(x, y - 1, z).short
+                    with self.subTest(design=name, pos=(x, y, z)):
+                        self.assertNotEqual(below, "air",
+                                            f"{b.short} 아래가 비어 있다 → 떨어진다")
+
     def test_every_chest_can_be_opened(self):
         """상자 바로 위가 불투명 블록이면 열리지 않는다."""
         for name, d in self.designs():

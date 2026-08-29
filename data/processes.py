@@ -225,6 +225,24 @@ def registry() -> Registry:
         limits=("물기둥 안에서만 자란다. 관측기+피스톤으로 자란 칸을 끊는다.",)))
 
     r.add(Process(
+        id="cobblegen_tnt", name="TNT 복제 조약돌 생성기", unit="기",
+        outputs={"cobblestone": 27000.0},
+        design="cobblegen_tnt", design_param="units", max_units_per_build=4,
+        throttleable=False, verify=ESTIMATE,
+        source="참고 설계 '2.7万刷石机' 표기 수치 (실측 아님)",
+        limits=("TNT 복제는 버그성 메커니즘이라 서버에 따라 막혀 있을 수 있다.",
+                "채굴이 완전 자동이다 — 손으로 캘 필요가 없다.")))
+
+    r.add(Process(
+        id="kelp_bonemeal", name="뼛가루 켈프 팜", unit="기둥",
+        inputs={"bone_meal": 3600.0}, outputs={"kelp": 3600.0},
+        design="kelpfarm_bonemeal", design_param="columns", max_units_per_build=16,
+        verify=ESTIMATE,
+        source="위키 확인: 뼛가루 1개가 켈프를 1칸 자라게 한다 → 1:1",
+        limits=("성장 대기가 없어 산출량은 뼛가루 공급량이 정한다.",
+                "기둥 수는 클럭 속도상 여유가 크다 — 한 줄이면 충분하다.")))
+
+    r.add(Process(
         id="smelt_kelp_to_dried", name="켈프 → 말린 켈프 제련", unit="화로",
         inputs={"kelp": M.FURNACE_ITEMS_PER_HOUR,
                 "fuel_smelt": M.FURNACE_ITEMS_PER_HOUR},

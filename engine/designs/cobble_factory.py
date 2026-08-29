@@ -201,25 +201,26 @@ def build(furnaces: int = 2, kelp_rows: int = 4, structure=STONE) -> Design:
     for r in range(kelp_rows):
         z0 = KZ + 4 * r
         for x in range(kelp_cols):
-            s.fill(x, KY - 2, z0, x, KY + 3, z0, structure)
+            s.fill(x, KY - 3, z0, x, KY + 3, z0, structure)
+            s.set(x, KY - 3, z0 + 1, structure)    # 모래 받침 (중력 블록)
             s.set(x, KY - 2, z0 + 1, SAND)
             s.set(x, KY - 1, z0 + 1, KELP)
             s.set(x, KY + 0, z0 + 1, WATER)
             s.set(x, KY + 1, z0 + 1, WATER)
             s.set(x, KY + 2, z0 + 1, hopper(EAST))     # 떠오른 켈프를 받는다
             s.set(x, KY + 3, z0 + 1, structure)
-            s.fill(x, KY - 2, z0 + 2, x, KY - 1, z0 + 2, structure)
+            s.fill(x, KY - 3, z0 + 2, x, KY - 1, z0 + 2, structure)
             s.set(x, KY + 0, z0 + 2, piston(NORTH))
             s.set(x, KY + 1, z0 + 2, observer(NORTH))
             s.fill(x, KY + 2, z0 + 2, x, KY + 3, z0 + 2, structure)
-            s.fill(x, KY - 2, z0 + 3, x, KY - 1, z0 + 3, structure)
+            s.fill(x, KY - 3, z0 + 3, x, KY - 1, z0 + 3, structure)
             s.set(x, KY + 0, z0 + 3, structure)
             s.set(x, KY + 1, z0 + 3, redstone_wire(
                 north="side", east="side" if x < kelp_cols - 1 else "none",
                 west="side" if x > 0 else "none"))
             s.fill(x, KY + 2, z0 + 3, x, KY + 3, z0 + 3, structure)
-        s.fill(-1, KY - 2, z0, -1, KY + 3, z0 + 3, structure)
-        s.fill(kelp_cols, KY - 2, z0, kelp_cols, KY + 3, z0 + 3, structure)
+        s.fill(-1, KY - 3, z0, -1, KY + 3, z0 + 3, structure)
+        s.fill(kelp_cols, KY - 3, z0, kelp_cols, KY + 3, z0 + 3, structure)
         s.set(kelp_cols, KY + 2, z0 + 1, hopper(EAST))
 
     # 합류선: 각 줄의 수거를 북쪽으로 모은다

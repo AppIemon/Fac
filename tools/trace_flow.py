@@ -16,6 +16,8 @@ from engine.blocks import OFFSET  # noqa: E402
 from engine.schematic import Schematic  # noqa: E402
 
 MOVERS = {"hopper", "dropper"}
+# 사슬이 여기서 끝나면 정상이다. 발사기는 아이템을 소비해 밖으로 내보낸다.
+TERMINALS = {"chest", "furnace", "composter", "crafter", "barrel", "dispenser"}
 
 
 def trace(s: Schematic, start: tuple[int, int, int], limit: int = 400) -> dict:
@@ -27,12 +29,11 @@ def trace(s: Schematic, start: tuple[int, int, int], limit: int = 400) -> dict:
         b = s.get(*pos)
         if b.short not in MOVERS:
             return {"end": pos, "end_block": b.short, "steps": len(path), "path": path,
-                    "ok": b.short in ("chest", "furnace", "composter", "crafter", "barrel")}
+                    "ok": b.short in TERMINALS}
         dx, dy, dz = OFFSET[b.properties["facing"]]
         nxt = (pos[0] + dx, pos[1] + dy, pos[2] + dz)
         nb = s.get(*nxt)
-        if nb.short not in MOVERS and nb.short not in (
-                "chest", "furnace", "composter", "crafter", "barrel"):
+        if nb.short not in MOVERS and nb.short not in TERMINALS:
             return {"end": nxt, "end_block": nb.short, "steps": len(path), "path": path,
                     "ok": False, "reason": f"{nb.short} 에서 막힘"}
         if nxt in seen:
