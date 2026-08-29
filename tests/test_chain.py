@@ -77,14 +77,32 @@ class TestSolver(unittest.TestCase):
         p = plan("out", 2, reg)
         self.assertAlmostEqual(p.raw["ore"], 6.0)
 
-    def test_cycle_is_detected(self):
+    def test_net_positive_loop_is_solved(self):
+        """되먹임 고리는 정상이다. 한 바퀴 순이익이면 풀려야 한다.
+
+        연료 -> 화로 -> 연료, 뼛가루 -> 이끼 -> 퇴비통 -> 뼛가루 처럼
+        실제 공장은 고리를 이룬다.
+        """
         reg = Registry([
-            P("a", {"x": 1.0}, {"y": 1.0}),
-            P("b", {"y": 1.0}, {"x": 1.0}),
+            P("seed", {"bm": 100.0}),                       # 외부 공급
+            P("bed", {"harvest": 1.0}, {"bm": 1.0}),
+            P("comp", {"bm": 3.0}, {"harvest": 1.0}),       # 1 -> 3 순이익
+        ])
+        p = plan("harvest", 10, reg, choices={"bm": "comp"})
+        ids = [n.process.id for n in p.nodes]
+        self.assertIn("bed", ids)
+        self.assertIn("comp", ids)
+        self.assertTrue([w for w in p.warnings if "되먹임 고리" in w])
+
+    def test_net_negative_loop_diverges_with_a_clear_error(self):
+        """한 바퀴 순손실인 고리는 아무리 키워도 목표를 못 채운다."""
+        reg = Registry([
+            P("bed", {"harvest": 1.0}, {"bm": 1.0}),
+            P("comp", {"bm": 0.85}, {"harvest": 1.0}),      # 1 -> 0.85 순손실
         ])
         with self.assertRaises(ChainError) as cm:
-            plan("x", 1, reg)
-        self.assertIn("사이클", str(cm.exception))
+            plan("harvest", 10, reg, choices={"bm": "comp"})
+        self.assertIn("순손실", str(cm.exception))
 
     def test_unknown_target_errors(self):
         with self.assertRaises(ChainError):

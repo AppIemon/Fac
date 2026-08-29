@@ -127,11 +127,17 @@ def _choose(item: str, reg: Registry, choices: dict[str, str],
     return cands[0]
 
 
-def _topo(target: str, reg: Registry, choices: dict[str, str],
-          warnings: list[str]) -> tuple[list[Process], dict[str, Process]]:
-    """소비자 -> 생산자 순서(위상정렬). 사이클이면 예외."""
+def _graph(target: str, reg: Registry, choices: dict[str, str],
+           warnings: list[str]) -> tuple[list[Process], dict[str, Process], list[str]]:
+    """공정 그래프를 만든다. 되먹임 고리는 예외가 아니라 기록해서 돌려준다.
+
+    연료 -> 화로 -> 연료, 뼛가루 -> 이끼 -> 퇴비통 -> 뼛가루 처럼
+    실제 공장은 고리를 이룬다. 고리 자체는 정상이고, '한 바퀴 돌 때
+    순손실인 고리'만 문제다 (그건 solve 단계에서 발산으로 잡힌다).
+    """
     chosen: dict[str, Process] = {}
     order: list[Process] = []
+    cycles: list[str] = []
     state: dict[str, int] = {}   # 0=방문중, 1=완료
 
     def visit(item: str, trail: tuple[str, ...]) -> None:
@@ -142,7 +148,10 @@ def _topo(target: str, reg: Registry, choices: dict[str, str],
         if state.get(proc.id) == 1:
             return
         if state.get(proc.id) == 0:
-            raise ChainError("공정 사이클: " + " → ".join(trail + (proc.id,)))
+            loop = " → ".join(trail[trail.index(proc.id):] + (proc.id,)) \
+                if proc.id in trail else " → ".join(trail + (proc.id,))
+            cycles.append(loop)
+            return
         state[proc.id] = 0
         for need in sorted(proc.inputs):
             visit(need, trail + (proc.id,))
@@ -151,7 +160,7 @@ def _topo(target: str, reg: Registry, choices: dict[str, str],
 
     visit(target, ())
     order.reverse()   # 소비자가 먼저 오도록
-    return order, chosen
+    return order, chosen, cycles
 
 
 def plan(target: str, rate: float, reg: Registry,
@@ -165,27 +174,59 @@ def plan(target: str, rate: float, reg: Registry,
         raise ChainError(
             f"{target} 를 만드는 공정이 없다. 등록된 아이템: {', '.join(reg.items())}")
 
-    order, chosen = _topo(target, reg, choices, warnings)
+    order, chosen, cycles = _graph(target, reg, choices, warnings)
+    for loop in cycles:
+        warnings.append(f"되먹임 고리: {loop} — 한 바퀴 순이익이 나야 수렴한다.")
 
+    # --- 고정점 반복으로 각 공정의 가동량(x, 소수)을 푼다 -------------------
+    # 고리가 있으면 위상정렬 한 번으로는 못 푼다. 수요를 채울 때까지 반복해서
+    # 가동량을 키우고, 순이익 고리면 기하급수적으로 수렴한다.
+    x: dict[str, float] = {p.id: 0.0 for p in order}
+    by_id = {p.id: p for p in order}
+    MAX_ITERS, EPS, RUNAWAY = 500, 1e-9, 1e12
+
+    for _ in range(MAX_ITERS):
+        supply_f: dict[str, float] = {}
+        need_f: dict[str, float] = {target: float(rate)}
+        for pid, run in x.items():
+            if run <= 0:
+                continue
+            p = by_id[pid]
+            for k, v in p.outputs.items():
+                supply_f[k] = supply_f.get(k, 0.0) + v * run
+            for k, v in p.inputs.items():
+                need_f[k] = need_f.get(k, 0.0) + v * run
+        settled = True
+        for item, p in chosen.items():
+            deficit = need_f.get(item, 0.0) - supply_f.get(item, 0.0)
+            if deficit > EPS:
+                x[p.id] += deficit / p.outputs[item]
+                settled = False
+        if any(v > RUNAWAY for v in x.values()):
+            raise ChainError(
+                "고리가 발산한다 — 한 바퀴 돌 때 순손실이라 아무리 키워도 목표를 못 채운다. "
+                + (f"고리: {cycles[0]}" if cycles else ""))
+        if settled:
+            break
+    else:
+        raise ChainError(f"{MAX_ITERS}회 반복해도 수렴하지 않았다. 고리 수지를 확인할 것.")
+
+    # --- 소수 가동량 -> 정수 유닛 + 실제 물동량 ---------------------------
     demand: dict[str, float] = {target: float(rate)}
     supply: dict[str, float] = {}
     nodes: list[Node] = []
-    seen: set[str] = set()
 
     for proc in order:
-        # 이 공정이 맡은 아이템(주력 산출 중 실제로 수요가 걸린 것)
-        item = next((i for i in proc.outputs if chosen.get(i) is proc and i in demand),
-                    proc.primary())
-        need = max(0.0, demand.get(item, 0.0) - supply.get(item, 0.0))
-        if need <= 0:
+        run = x.get(proc.id, 0.0)
+        if run <= EPS:
             continue
+        item = next((i for i in proc.outputs if chosen.get(i) is proc), proc.primary())
         per_unit = proc.outputs[item]
-        exact = need / per_unit
+        exact = run
         units = max(1, math.ceil(exact - 1e-9))
         capacity = per_unit * units
-        # 조절 가능한 공정은 수요만큼만 돌아간다 -> 원료도 그만큼만 먹는다.
-        # 팜처럼 조절이 안 되는 공정은 능력만큼 계속 나오고 나머지는 부산물이 된다.
-        ratio = min(1.0, need / capacity) if proc.throttleable else 1.0
+        need = per_unit * run
+        ratio = min(1.0, run / units) if proc.throttleable else 1.0
         produced = {k: v * units * ratio for k, v in proc.outputs.items()}
         consumed = {k: v * units * ratio for k, v in proc.inputs.items()}
 
@@ -195,7 +236,6 @@ def plan(target: str, rate: float, reg: Registry,
             demand[k] = demand.get(k, 0.0) + v
 
         nodes.append(Node(proc, need, exact, units, produced, consumed, item, capacity))
-        seen.add(proc.id)
 
     # 공급원이 없는 원료 / 남는 부산물 정리
     raw: dict[str, float] = {}

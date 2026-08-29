@@ -17,7 +17,7 @@ class Design:
     manual_items: list[str] = field(default_factory=list)  # 스케매틱이 못 놓는 것
 
 
-from . import cobblegen, composterbank, mossbed, smelter, sugarcane  # noqa: E402
+from . import cobblegen, composterbank, kelpfarm, mossbed, smelter, sugarcane  # noqa: E402
 
 REGISTRY = {
     "sugarcane": sugarcane.build,
@@ -25,6 +25,7 @@ REGISTRY = {
     "smelter": smelter.build,
     "mossbed": mossbed.build,
     "composterbank": composterbank.build,
+    "kelpfarm": kelpfarm.build,
 }
 
 

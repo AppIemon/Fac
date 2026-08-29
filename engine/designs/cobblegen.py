@@ -19,14 +19,18 @@
 from __future__ import annotations
 
 from ..blocks import (EAST, GLASS, LAVA, SOUTH, STONE, chest, hopper,
-                      waterlogged_stairs)
+                      waterlogged_leaves, waterlogged_stairs)
 from ..schematic import Schematic
 from . import Design
 
 
-def build(cells: int = 6, structure=STONE) -> Design:
+def build(cells: int = 6, structure=STONE, water_block: str = "leaves") -> Design:
+    """water_block: 'leaves'(참고 설계 방식, 싸다) 또는 'stairs'(위키 튜토리얼 방식)."""
     if cells < 1:
         raise ValueError("cells 는 1 이상이어야 한다")
+    if water_block not in ("leaves", "stairs"):
+        raise ValueError("water_block 은 leaves 또는 stairs")
+    holder = waterlogged_leaves() if water_block == "leaves" else waterlogged_stairs(EAST)
 
     s = Schematic(
         name=f"cobblegen_{cells}",
@@ -36,7 +40,7 @@ def build(cells: int = 6, structure=STONE) -> Design:
     for z in range(cells):
         s.fill(-1, -1, z, -1, 1, z, structure)      # 서쪽 벽
         s.fill(0, -1, z, 0, -1, z, structure)
-        s.set(0, 0, z, waterlogged_stairs(EAST))    # 물먹임: 흐르지 않는 물
+        s.set(0, 0, z, holder)                      # 물먹임: 흐르지 않는 물
         s.set(0, 1, z, structure)
 
         s.set(1, -1, z, hopper(SOUTH))              # 생성칸 바로 아래 수거 호퍼
@@ -54,7 +58,9 @@ def build(cells: int = 6, structure=STONE) -> Design:
     s.set(1, -1, cells, chest(SOUTH))
     s.set(1, 0, cells, GLASS)   # 상자 위가 불투명하면 열리지 않는다
 
-    s.note("물먹임 계단은 물을 흘려보내지 않는다 → 용암 수원이 흑요석이 되지 않는다.")
+    s.note("물먹임 블록은 물을 흘려보내지 않는다 → 용암 수원이 흑요석이 되지 않는다.")
+    s.note("참고 설계 '2.7만 조약돌 생성기'가 계단 대신 물먹임 나뭇잎을 쓴다. "
+           "효과는 같고 재료가 훨씬 싸다.")
     s.note("조약돌은 (x=1, Y=0) 에 생성된다. 여기만 비워 두면 된다.")
     s.note("바닐라에는 자동 블록 파괴기가 없다. 조약돌은 플레이어가 캐야 하고, "
            "그 아래 호퍼부터가 자동이다.")
@@ -72,8 +78,9 @@ def build(cells: int = 6, structure=STONE) -> Design:
         steps=[
             f"1) 남북(Z) 방향으로 {cells}칸짜리 생성기 뱅크다. 아래층부터 쌓는다.",
             "2) Y=-1 에 호퍼 줄을 깔고 남쪽 끝 상자로 연결한다.",
-            "3) x=0 에 물을 붓고 그 자리에 계단을 놓아 물먹임 상태로 만든다. "
-            "계단의 막힌 면이 용암 쪽을 보게 한다.",
+            f"3) x=0 에 물을 붓고 그 자리에 "
+            + ("나뭇잎" if water_block == "leaves" else "계단")
+            + "을 놓아 물먹임 상태로 만든다. 물이 흐르지 않게 되는 게 핵심이다.",
             "4) x=2 에 용암을 붓는다. 이 순서를 지켜야 물이 흐르는 순간이 없다.",
             "5) x=1 (Y=0) 은 반드시 비워 둔다. 여기에 조약돌이 생긴다.",
             "6) 플레이어는 서쪽(x=-1 너머)이나 위에서 생성칸을 캔다.",

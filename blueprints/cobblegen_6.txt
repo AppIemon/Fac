@@ -29,12 +29,12 @@
 ── Y=+0 ──────────────────────────────
      10123
  z-1 #####
- z+0 #<.L#
- z+1 #<.L#
- z+2 #<.L#
- z+3 #<.L#
- z+4 #<.L#
- z+5 #<.L#
+ z+0 #V.L#
+ z+1 #V.L#
+ z+2 #V.L#
+ z+3 #V.L#
+ z+4 #V.L#
+ z+5 #V.L#
  z+6 ##g##
 
 ── Y=-1 ──────────────────────────────
@@ -50,17 +50,17 @@
 
 ## 블록 기호
  #  minecraft:stone
- <  minecraft:cobblestone_stairs[facing=east,half=bottom,shape=straight,waterlogged=true]
  C  minecraft:chest[facing=south,type=single,waterlogged=false]
  L  minecraft:lava[level=0]
+ V  minecraft:oak_leaves[distance=7,persistent=true,waterlogged=true]
  g  minecraft:glass
  h  minecraft:hopper[enabled=true,facing=south]
 
 ## 재료 목록
   stone                       94개
-  cobblestone_stairs           6개
   hopper                       6개
   lava                         6개
+  oak_leaves                   6개
   chest                        1개
   glass                        1개
 
@@ -71,13 +71,14 @@
 ## 시공 순서
   1) 남북(Z) 방향으로 6칸짜리 생성기 뱅크다. 아래층부터 쌓는다.
   2) Y=-1 에 호퍼 줄을 깔고 남쪽 끝 상자로 연결한다.
-  3) x=0 에 물을 붓고 그 자리에 계단을 놓아 물먹임 상태로 만든다. 계단의 막힌 면이 용암 쪽을 보게 한다.
+  3) x=0 에 물을 붓고 그 자리에 나뭇잎을 놓아 물먹임 상태로 만든다. 물이 흐르지 않게 되는 게 핵심이다.
   4) x=2 에 용암을 붓는다. 이 순서를 지켜야 물이 흐르는 순간이 없다.
   5) x=1 (Y=0) 은 반드시 비워 둔다. 여기에 조약돌이 생긴다.
   6) 플레이어는 서쪽(x=-1 너머)이나 위에서 생성칸을 캔다.
 
 ## 설계 메모
-  * 물먹임 계단은 물을 흘려보내지 않는다 → 용암 수원이 흑요석이 되지 않는다.
+  * 물먹임 블록은 물을 흘려보내지 않는다 → 용암 수원이 흑요석이 되지 않는다.
+  * 참고 설계 '2.7만 조약돌 생성기'가 계단 대신 물먹임 나뭇잎을 쓴다. 효과는 같고 재료가 훨씬 싸다.
   * 조약돌은 (x=1, Y=0) 에 생성된다. 여기만 비워 두면 된다.
   * 바닐라에는 자동 블록 파괴기가 없다. 조약돌은 플레이어가 캐야 하고, 그 아래 호퍼부터가 자동이다.
 

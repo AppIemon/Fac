@@ -145,7 +145,7 @@ def registry() -> Registry:
         r.add(Process(
             id=pid, name=name, unit="화로",
             inputs={src: M.FURNACE_ITEMS_PER_HOUR,
-                    "coal": M.fuel_items_needed(int(M.FURNACE_ITEMS_PER_HOUR), "coal")},
+                    "fuel_smelt": M.FURNACE_ITEMS_PER_HOUR},
             outputs={dst: M.FURNACE_ITEMS_PER_HOUR},
             design="smelter", design_param="furnaces", max_units_per_build=16,
             verify=CONFIRMED,
@@ -155,33 +155,96 @@ def registry() -> Registry:
                     f"{int(M.HOPPER_ITEMS_PER_SEC * 3600 / M.FURNACE_ITEMS_PER_HOUR)}대까지. "
                     "그 이상은 원료 라인을 나눈다.",)))
 
-    # --- 이끼 뼛가루 팜 -------------------------------------------------------
-    # 뼛가루 -> 이끼 -> 퇴비통 -> 뼛가루 는 되먹임 고리라 솔버가 사이클로 잡는다.
-    # 고리를 모듈 안에 감추고 '순 수지'만 공정으로 노출한다.
+    # --- 이끼 뼛가루 팜 (되먹임 고리) --------------------------------------
+    # 뼛가루 -> 이끼 -> 퇴비통 -> 뼛가루. 솔버가 고정점 반복으로 푼다.
+    # 'moss_harvest' 1단위 = 뼛가루 1개를 썼을 때 나오는 수확물 한 벌
+    # (이끼 27개 + 초목 16개).
     from engine.designs.mossbed import yields as _moss_yields
     my = _moss_yields()
     CYCLES_PER_HOUR = 30.0     # 뼛가루 발사 -> 괭이질 -> 물 세척 -> 돌 보충 1회전
-    net_bonemeal = (my["with_moss_bonemeal"] - 1.0) * CYCLES_PER_HOUR
     r.add(Process(
-        id="mossfarm_loop", name="이끼 뼛가루 팜 (퇴비통 포함 순수지)", unit="베드",
-        inputs={"stone": my["stone_consumed"] * CYCLES_PER_HOUR},
-        outputs={"bone_meal": net_bonemeal},
+        id="mossbed", name="이끼 베드", unit="베드",
+        inputs={"bone_meal": CYCLES_PER_HOUR,
+                "stone": my["stone_consumed"] * CYCLES_PER_HOUR},
+        outputs={"moss_harvest": CYCLES_PER_HOUR},
         design="mossbed", design_param=None, max_units_per_build=1,
-        throttleable=False, verify=ESTIMATE,
+        verify=ESTIMATE,
         source=f"뼛가루 1개 → 이끼 {my['counts']['moss_block']:.0f}개 + 초목 "
                f"{sum(v for k, v in my['counts'].items() if k != 'moss_block'):.0f}개, "
-               f"퇴비 환산 {my['with_moss_bonemeal']:.2f}개 (순 +"
-               f"{my['with_moss_bonemeal'] - 1:.2f}) · 회전 {CYCLES_PER_HOUR:.0f}회/시간 가정",
+               f"돌 {my['stone_consumed']:.0f}칸 소비 · 회전 {CYCLES_PER_HOUR:.0f}회/시간 가정",
         limits=("이끼 수확이 수동이라 회전수가 산출을 좌우한다. 30회/시간은 가정값이다.",
-                "초목만 퇴비화하면 뼛가루 0.85개로 오히려 손해다. 이끼 블록(65%)을 "
-                "반드시 같이 넣어야 순이익이 난다.",
                 "베드는 '돌'이어야 한다. 조약돌은 이끼로 변환되지 않는다.",
-                "퇴비통 뱅크가 함께 필요하다: litematic composterbank")))
+                "참고 설계 'Bonemeal Farm 4k/h' 는 다층 베드 + 피스톤 자동 수확으로 "
+                "시간당 4,000개를 낸다. 이 설계는 거기까지 가지 못했다.")))
+
+    r.add(Process(
+        id="composter_moss_harvest", name="퇴비통 (이끼 + 초목 전량)", unit="통",
+        inputs={"moss_harvest": 1.0},
+        outputs={"bone_meal": my["with_moss_bonemeal"]},
+        design="composterbank", design_param="bins", verify=ESTIMATE,
+        source=f"이끼 {my['counts']['moss_block']:.0f}x65% + 초목 퇴비 환산 "
+               f"= 뼛가루 {my['with_moss_bonemeal']:.2f}개",
+        limits=("이끼 블록을 반드시 함께 넣어야 한다. 빼면 고리가 순손실이 된다.",)))
+
+    r.add(Process(
+        id="composter_vegetation_only", name="퇴비통 (초목만 · 이끼는 보관)", unit="통",
+        inputs={"moss_harvest": 1.0},
+        outputs={"bone_meal": my["veg_only_bonemeal"], "moss_block": my["stone_consumed"]},
+        verify=ESTIMATE,
+        source=f"초목만 퇴비화 = 뼛가루 {my['veg_only_bonemeal']:.2f}개 "
+               f"(이끼 블록은 자재로 보관)",
+        limits=("뼛가루 고리로는 순손실(1개 미만)이라 발산한다. "
+                "이끼 블록 자체가 목적일 때만 쓸 것.",)))
+
+    # --- 켈프 연료 라인 (되먹임 고리) ----------------------------------------
+    # fuel_smelt = '아이템 1개를 제련할 수 있는 연료' 단위.
+    # 말린 켈프 블록은 4,000틱 = 20개 제련. 만드는 데 켈프 9개를 굽느라 9개분을
+    # 되먹으므로 순 11개분 (위키가 명시한 수치와 일치).
+    KELP_GROWTH_TICKS = 9752.0      # 위키: 14%/랜덤틱 → 평균 9,752틱
+    kelp_per_plant_hour = 3600.0 / (KELP_GROWTH_TICKS / M.TPS)
+    r.add(Process(
+        id="kelp_farm", name="켈프 팜", unit="포기",
+        outputs={"kelp": kelp_per_plant_hour},
+        design="kelpfarm", design_param="columns", max_units_per_build=64,
+        throttleable=False, verify=ESTIMATE,
+        source=f"켈프 성장 14%/랜덤틱 → 평균 {KELP_GROWTH_TICKS:,.0f}틱 "
+               f"({KELP_GROWTH_TICKS / M.TPS:.0f}초) → 포기당 "
+               f"{kelp_per_plant_hour:.2f}개/시간",
+        limits=("물기둥 안에서만 자란다. 관측기+피스톤으로 자란 칸을 끊는다.",)))
+
+    r.add(Process(
+        id="smelt_kelp_to_dried", name="켈프 → 말린 켈프 제련", unit="화로",
+        inputs={"kelp": M.FURNACE_ITEMS_PER_HOUR,
+                "fuel_smelt": M.FURNACE_ITEMS_PER_HOUR},
+        outputs={"dried_kelp": M.FURNACE_ITEMS_PER_HOUR},
+        design="smelter", design_param="furnaces", max_units_per_build=16,
+        verify=CONFIRMED,
+        source=f"화로 1대 {M.FURNACE_ITEMS_PER_HOUR:,.0f}개/시간"))
+
+    r.add(crafting("craft_dried_kelp_block", "말린 켈프 → 블록 (제작기)",
+                   {"dried_kelp": 9}, {"dried_kelp_block": 1},
+                   "위키 확인: 말린 켈프 9개 → 블록 1개"))
+
+    r.add(Process(
+        id="burn_dried_kelp_block", name="말린 켈프 블록 연소", unit="투입구",
+        inputs={"dried_kelp_block": 1.0},
+        outputs={"fuel_smelt": 20.0},
+        verify=CONFIRMED,
+        source="위키 확인: 말린 켈프 블록 4,000틱 = 20개 제련 (석탄 8개의 2.5배). "
+               "블록을 만드는 데 켈프 9개를 굽느라 9개분을 되먹으므로 순 11개분.",
+        limits=("연료는 고리다. 켈프를 말리는 화로도 같은 연료를 먹는다.",)))
+
+    r.add(Process(
+        id="burn_coal", name="석탄 연소", unit="투입구",
+        inputs={"coal": 1.0}, outputs={"fuel_smelt": 8.0},
+        verify=CONFIRMED,
+        source="위키 확인: 석탄 1개 = 1,600틱 = 8개 제련",
+        limits=("석탄은 캐야 한다. 자동 공급 공정이 없다.",)))
 
     r.add(Process(
         id="smelt_cactus_green", name="선인장 제련 → 초록 염료", unit="화로",
         inputs={"cactus": M.FURNACE_ITEMS_PER_HOUR,
-                "coal": M.fuel_items_needed(int(M.FURNACE_ITEMS_PER_HOUR), "coal")},
+                "fuel_smelt": M.FURNACE_ITEMS_PER_HOUR},
         outputs={"green_dye": M.FURNACE_ITEMS_PER_HOUR},
         verify=CONFIRMED,
         source=f"화로 1대 = 아이템당 {M.FURNACE_SMELT_TICKS}틱 → "

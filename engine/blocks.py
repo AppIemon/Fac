@@ -58,6 +58,18 @@ COBBLESTONE = B("cobblestone")
 SMOOTH_STONE = B("smooth_stone")
 MOSS_BLOCK = B("moss_block")
 COMPOSTER = B("composter", level="0")
+KELP = B("kelp", age="0")
+
+
+def waterlogged_hopper(facing: str = EAST) -> Block:
+    """물먹임 호퍼. 물기둥을 막지 않으면서 떠오른 아이템을 받는다."""
+    return B("hopper", facing=facing, enabled="true")
+
+
+def waterlogged_leaves(kind: str = "oak_leaves") -> Block:
+    """물먹임 잎. 물을 머금되 흘려보내지 않아 용암 수원이 흑요석이 되는 걸 막는다.
+    참고 설계 '2.7만 조약돌 생성기' 가 계단 대신 이걸 쓴다 (훨씬 싸다)."""
+    return B(kind, distance="7", persistent="true", waterlogged="true")
 
 
 def waterlogged_stairs(facing: str = EAST, kind: str = "cobblestone_stairs") -> Block:
@@ -112,6 +124,7 @@ PREVIEW_CHARS: dict[str, str] = {
     "hopper": "h", "chest": "C", "glass": "g", "oak_slab": "s",
     "lava": "L", "cobblestone": "c", "smooth_stone": "S", "moss_block": "M",
     "composter": "K", "furnace": "F", "cobblestone_stairs": "<", "dispenser": "n",
+    "kelp": "|", "oak_leaves": "V", "dropper": "D",
 }
 
 
