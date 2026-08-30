@@ -56,7 +56,7 @@ def describe(s: Schematic, label: str, start: tuple[int, int, int]) -> str:
 
 if __name__ == "__main__":
     from engine.designs import build
-    name = sys.argv[1] if len(sys.argv) > 1 else "cobble_factory"
+    name = sys.argv[1] if len(sys.argv) > 1 else "full_factory"
     kw = {}
     for a in sys.argv[2:]:
         k, v = a.split("=")

@@ -23,7 +23,7 @@ from __future__ import annotations
 
 from .. import mechanics as M
 from ..blocks import (EAST, GLASS, KELP, NORTH, SAND, STONE, WATER,
-                      chest, observer, piston, redstone_wire, waterlogged_hopper)
+                      chest, observer, piston, redstone_wire, collect_hopper)
 from ..schematic import Schematic
 from . import Design
 
@@ -47,7 +47,7 @@ def build(columns: int = 12, structure=STONE) -> Design:
         s.set(x, 1, 1, KELP)                          # 밑동 (영구)
         s.set(x, 2, 1, WATER)                         # 성장칸 (여기서 잘린다)
         s.set(x, 3, 1, WATER)                         # 성장칸 (여기서 감지)
-        s.set(x, 4, 1, waterlogged_hopper(EAST))      # 떠오른 아이템 수거
+        s.set(x, 4, 1, collect_hopper(EAST))      # 떠오른 아이템 수거
         s.set(x, 5, 1, structure)                     # 천장
 
         s.set(x, -1, 2, structure)

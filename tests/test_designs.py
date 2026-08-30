@@ -160,12 +160,90 @@ class TestAllDesigns(unittest.TestCase):
                     continue
                 for dx, dy, dz in OFFSET.values():
                     n = s.get(x + dx, y + dy, z + dz)
-                    if n.short in ("redstone_wire", "redstone_block", "repeater"):
+                    if n.short in ("redstone_wire", "redstone_block", "repeater",
+                                   "lever"):
                         # 가루는 위쪽으로는 급전하지 않는다
                         if n.short == "redstone_wire" and dy < 0:
                             continue
                         self.fail(f"{name}: 호퍼({x},{y},{z}) 옆에 {n.short} 가 있어 "
                                   f"신호를 받으면 잠긴다")
+                    # 가루가 얹힌 블록은 약하게 급전된다 — 그 옆 호퍼도 잠긴다.
+                    # (이끼 베드 급이 통로가 층 가루 밑을 지나가다 이걸로 걸렸다.)
+                    if s.get(x + dx, y + dy + 1, z + dz).short == "redstone_wire" \
+                            and n.short not in ("air", "redstone_wire"):
+                        self.fail(f"{name}: 호퍼({x},{y},{z}) 옆 블록 "
+                                  f"({x+dx},{y+dy},{z+dz}) 위에 가루가 얹혀 있어 "
+                                  f"약하게 급전된다 → 호퍼가 잠긴다")
+
+    MECHANISMS = {"dropper", "dispenser", "crafter", "piston", "sticky_piston"}
+    POWER = {"redstone_block", "lever", "redstone_torch", "repeater", "comparator"}
+
+    @staticmethod
+    def _observer_outputs(s):
+        """관측기 출력면이 때리는 칸 → 관측기 위치."""
+        out = {}
+        for (x, y, z), b in s.blocks.items():
+            if b.short != "observer":
+                continue
+            dx, dy, dz = OFFSET[b.properties["facing"]]   # facing = '보는' 방향
+            out[(x - dx, y - dy, z - dz)] = (x, y, z)     # 출력은 반대편 면
+        return out
+
+    def test_every_redstone_line_has_a_power_source(self):
+        """가루 줄에 급전원이 없으면 회로 전체가 죽은 장식이다.
+
+        관측기 클럭을 뒤집어 놓아(가루 쪽을 '보게' 해서) 출력면이 엉뚱한 데를
+        때리고 있던 걸 이 검사가 잡았다. 관측기는 보는 방향의 '반대편'으로
+        출력한다.
+        """
+        for name, d in self.designs():
+            s = d.schematic
+            outs = self._observer_outputs(s)
+            dust = {p for p, b in s.blocks.items() if b.short == "redstone_wire"}
+            seen = set()
+            for start in sorted(dust):
+                if start in seen:
+                    continue
+                net, stack = set(), [start]
+                while stack:                      # 붙어 있는 가루를 한 뭉치로
+                    p = stack.pop()
+                    if p in net:
+                        continue
+                    net.add(p)
+                    for dx, dy, dz in OFFSET.values():
+                        q = (p[0] + dx, p[1] + dy, p[2] + dz)
+                        if q in dust and q not in net:
+                            stack.append(q)
+                seen |= net
+                fed = any(p in outs for p in net) or any(
+                    s.get(p[0] + dx, p[1] + dy, p[2] + dz).short in self.POWER
+                    for p in net for dx, dy, dz in OFFSET.values())
+                with self.subTest(design=name, line=sorted(net)[0]):
+                    self.assertTrue(fed, f"가루 {len(net)}칸에 급전원이 없다")
+
+    def test_every_mechanism_can_be_triggered(self):
+        """드로퍼·발사기·제작기·피스톤은 신호를 받아야 움직인다.
+
+        급전 방식은 셋 중 하나다: 관측기 출력면이 직접 때리거나, 옆 블록
+        위에 가루가 얹혀 그 블록이 약하게 급전되거나, 가루가 바로 옆에 있거나.
+        """
+        for name, d in self.designs():
+            s = d.schematic
+            outs = self._observer_outputs(s)
+            for p, b in s.blocks.items():
+                if b.short not in self.MECHANISMS:
+                    continue
+                ok = p in outs
+                for dx, dy, dz in OFFSET.values():
+                    q = (p[0] + dx, p[1] + dy, p[2] + dz)
+                    n = s.get(*q).short
+                    if n in self.POWER or n == "redstone_wire" or q in outs:
+                        ok = True
+                    # 가루가 얹힌 블록은 약하게 급전된다
+                    if s.get(q[0], q[1] + 1, q[2]).short == "redstone_wire":
+                        ok = True
+                with self.subTest(design=name, mech=(b.short, p)):
+                    self.assertTrue(ok, f"{b.short} 에 급전원이 없다 → 영영 안 움직인다")
 
     def test_droppers_never_face_air(self):
         """드로퍼가 공기를 향하면 아이템을 월드로 뱉어 잃는다.

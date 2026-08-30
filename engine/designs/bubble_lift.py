@@ -1,4 +1,4 @@
-"""물기둥 아이템 엘리베이터.
+"""물기둥 아이템 엘리베이터 (기둥만).
 
 위키(Tutorials/Item transportation) 확인:
   "Using soul sand and bubble columns, it is possible to transport items upward
@@ -10,24 +10,30 @@
     · 이끼 고리: 이끼 베드 → 퇴비통 → 뼛가루 → 다시 이끼 베드 발사기
   중력만으로는 둘 다 닫히지 않는다.
 
-구성 (기둥은 (0,*,0), 주변은 벽):
-  Y=y1     물먹임 호퍼  ← 떠오른 아이템을 받아 다음 공정으로
+구성 (기둥은 (x,*,z), 주변은 벽):
+  Y=y1     호퍼        ← 떠오른 아이템을 받아 다음 공정으로
   Y=..     물 수원 (밀폐)
   Y=y0+1   물 수원 — 여기로 드로퍼가 아이템을 쏘아 넣는다
   Y=y0     영혼 모래
+
+드로퍼와 그 클럭은 부르는 쪽이 놓는다. 공장마다 아이템이 들어오는 방향이
+달라서 여기서 같이 놓으면 자리가 겹치기 때문이다. 드로퍼를 먼저 놓고 부르면
+밀폐 루프가 그 칸을 건드리지 않는다.
+
+주의: 기둥 옆에 호퍼를 두지 말 것. 밀폐가 비면 기포가 서지 않는다.
 """
 from __future__ import annotations
 
-from ..blocks import (EAST, NORTH, SOUL_SAND, SOUTH, STONE, WATER, dropper,
-                      hopper, observer, redstone_wire)
+from ..blocks import SOUL_SAND, STONE, WATER, collect_hopper
 
 
-def build_lift(s, x: int, z: int, y0: int, y1: int, out_facing: str = EAST,
-               feed_from: str = "west", structure=STONE) -> None:
-    """(x, y0..y1, z) 에 물기둥 엘리베이터를 놓는다.
+def lift_column(s, x: int, z: int, y0: int, y1: int, out_facing: str,
+                structure=STONE) -> None:
+    """(x, y0..y1, z) 에 물기둥을 세우고 사방을 막는다.
 
-    feed_from 쪽에 드로퍼와 자가 발진 클럭을 함께 놓아, 아래에서 들어온
-    아이템을 기둥 안으로 쏘아 넣는다.
+    y0    영혼 모래
+    y0+1.. 물 수원 (여기 어딘가로 드로퍼가 쏘아 넣는다)
+    y1    수거 호퍼 (out_facing 쪽으로 내보낸다)
     """
     if y1 <= y0 + 1:
         raise ValueError("엘리베이터는 최소 2칸 이상이어야 한다")
@@ -35,27 +41,13 @@ def build_lift(s, x: int, z: int, y0: int, y1: int, out_facing: str = EAST,
     s.set(x, y0, z, SOUL_SAND)
     for y in range(y0 + 1, y1):
         s.set(x, y, z, WATER)
-    s.set(x, y1, z, hopper(out_facing))        # 물먹임 호퍼 — 떠오른 아이템 수거
+    # 꼭대기 호퍼는 반드시 물먹임이어야 한다. 그래야 기포 기둥이 호퍼 칸까지
+    # 이어져 아이템이 그 안으로 떠올라 수거된다. 마른 호퍼면 아이템이 한 칸
+    # 아래 물 표면에서 맴돌다 만다.
+    s.set(x, y1, z, collect_hopper(out_facing))
 
-    # 기둥 밀폐 (물이 새면 기포가 서지 않는다)
-    fx = x - 1 if feed_from == "west" else x + 1
+    # 밀폐 — 이미 뭔가 놓인 칸(드로퍼·이웃 모듈의 벽)은 건드리지 않는다.
     for y in range(y0, y1 + 1):
         for dx, dz in ((0, -1), (0, 1), (-1, 0), (1, 0)):
-            nx, nz = x + dx, z + dz
-            if (nx, nz) == (fx, z) and y == y0 + 1:
-                continue                        # 투입용 드로퍼 자리
-            if (nx, y, nz) not in s.blocks:
-                s.set(nx, y, nz, structure)
-
-    # 투입: 드로퍼가 물기둥 안으로 아이템을 쏜다.
-    # 급전은 z축(뒤쪽)으로 뽑아, 드로퍼 뒤 x축을 아이템 투입용으로 비워 둔다.
-    feed_dir = EAST if feed_from == "west" else "west"
-    s.set(fx, y0 + 1, z, dropper(feed_dir))
-    s.set(fx, y0 + 1, z - 1, structure)          # 가루 받침 = 드로퍼 급전원
-    s.set(fx, y0 + 2, z - 1, redstone_wire(north="side"))
-    s.set(fx, y0 + 2, z - 2, redstone_wire(south="side", north="side"))
-    s.set(fx, y0 + 1, z - 2, structure)
-    s.set(fx, y0 + 2, z - 3, observer(SOUTH))    # 자가 발진 클럭
-    s.set(fx, y0 + 2, z - 4, observer(NORTH))
-    s.set(fx, y0, z, structure)
-    s.set(fx, y0, z - 1, structure)
+            if (x + dx, y, z + dz) not in s.blocks:
+                s.set(x + dx, y, z + dz, structure)

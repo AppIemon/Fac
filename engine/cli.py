@@ -14,7 +14,7 @@ import json
 import pathlib
 import sys
 
-from . import blueprint, catalog, chain as C, litedoc, mechanics as M
+from . import blueprint, catalog, chain as C, litedoc, mechanics as M, startup
 from .designs import REGISTRY as DESIGNS, build as build_design
 from .archetypes import ARCHETYPES
 from .principle import COLLECTS, PROCESSES, SOURCES, TRANSPORTS
@@ -175,6 +175,22 @@ def cmd_chain(a) -> int:
     return 0
 
 
+def cmd_startup(a) -> int:
+    try:
+        params = parse_design_params(a.design, getattr(a, "extra", []))
+        d = build_design(a.design, **params)
+    except (KeyError, ValueError) as e:
+        print(f"설계 오류: {e}", file=sys.stderr)
+        return 2
+    doc = startup.render(a.design, d.schematic, d.manual_items)
+    if a.out:
+        pathlib.Path(a.out).write_text(doc + "\n", encoding="utf-8")
+        print(f"저장: {a.out}")
+    else:
+        print(doc)
+    return 0
+
+
 def cmd_facts(a) -> int:
     print(f"Minecraft {M.GAME_VERSION} ({M.GAME_VERSION_NAME}, {M.GAME_VERSION_DATE}) 기준")
     print("  O = 공식 문서 확인,  ~ = 실측/통설 추정\n")
@@ -245,6 +261,11 @@ def main(argv=None) -> int:
     p.add_argument("--out", default="blueprints")
     p.set_defaults(fn=cmd_litematic)
 
+    p = sub.add_parser("startup", help="시운전 절차 생성")
+    p.add_argument("design", choices=sorted(DESIGNS))
+    p.add_argument("--out", default="")
+    p.set_defaults(fn=cmd_startup)
+
     p = sub.add_parser("facts", help="검증된 수치 시트")
     p.set_defaults(fn=cmd_facts)
 
@@ -255,7 +276,7 @@ def main(argv=None) -> int:
     p.set_defaults(fn=cmd_stats)
 
     a, extra = ap.parse_known_args(argv)
-    if a.cmd == "litematic":
+    if a.cmd in ("litematic", "startup"):
         a.extra = extra
     elif extra:
         ap.error(f"unrecognized arguments: {' '.join(extra)}")

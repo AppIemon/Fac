@@ -62,8 +62,13 @@ KELP = B("kelp", age="0")
 SOUL_SAND = B("soul_sand")
 
 
-def waterlogged_hopper(facing: str = EAST) -> Block:
-    """물먹임 호퍼. 물기둥을 막지 않으면서 떠오른 아이템을 받는다."""
+def collect_hopper(facing: str = EAST) -> Block:
+    """물기둥·물살 끝에서 아이템을 받는 호퍼.
+
+    자바의 호퍼에는 waterlogged 속성이 아예 없다(물을 머금지 못한다). 그래서
+    물기둥 맨 위 수원 '바로 위' 칸에 놓는다. 기포에 밀려 올라온 아이템은 수면
+    위로 튀어나와 이 칸에 들어오고, 호퍼는 자기 칸 안의 아이템을 줍는다.
+    블록 상태는 보통 호퍼와 같지만, 자리 잡는 규칙이 달라 따로 둔다."""
     return B("hopper", facing=facing, enabled="true")
 
 
@@ -101,6 +106,11 @@ def observer(facing: str) -> Block:
     """facing = 관측기가 '바라보는'(감지하는) 방향. 출력은 그 반대편으로 나간다."""
     assert facing in OFFSET, facing
     return B("observer", facing=facing, powered="false")
+
+
+def lever(facing: str = NORTH, face: str = "wall", powered: bool = False) -> Block:
+    """레버. face="wall" 이면 facing 의 반대쪽 블록에 붙는다 (붙은 블록을 강하게 급전)."""
+    return B("lever", face=face, facing=facing, powered=str(powered).lower())
 
 
 def redstone_wire(east="none", west="none", north="none", south="none", power="0") -> Block:

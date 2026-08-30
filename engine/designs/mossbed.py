@@ -22,8 +22,8 @@
 """
 from __future__ import annotations
 
-from ..blocks import (EAST, GLASS, MOSS_BLOCK, SOUTH, STONE, UP, chest,
-                      dispenser, hopper)
+from ..blocks import (EAST, GLASS, MOSS_BLOCK, SOUTH, STONE, UP, WEST, chest,
+                      dispenser, hopper, lever, redstone_wire)
 from ..schematic import Schematic
 from . import Design
 
@@ -82,6 +82,18 @@ def build(size: int = 7, structure=STONE) -> Design:
         s.set(-1, 0, z, structure)
         s.set(-1, 1, z, dispenser(EAST))
         s.set(-1, -1, z, structure)
+
+    # 스위치. 이 설계는 사람이 돌리는 반자동이다 — 뼛가루 레버를 한 번,
+    # 그다음 물 레버를 켰다 껐다 하면 한 회전이다. (발사기는 신호가 켜지는
+    # 순간에만 작동하므로, 물 레버는 켜서 물을 놓고 꺼서 다시 담는다.)
+    s.set(c - 1, -1, c, lever(WEST))                    # 뼛가루 발사기에 직접 붙인다
+    for z in range(size):
+        s.set(-2, 0, z, structure)
+        s.set(-2, 1, z, structure)                      # 가루 받침 = 발사기 급전원
+        s.set(-2, 2, z, redstone_wire(
+            north="side" if z else "side", south="side" if z < size - 1 else "none"))
+    s.set(-2, 1, -1, structure)
+    s.set(-2, 2, -1, lever(SOUTH, face="floor"))        # 물 발사기 줄 스위치
 
     # 동쪽 끝: 수거 호퍼 줄 (Y=0). 물에 밀려온 아이템이 여기로 떨어진다.
     for z in range(size):

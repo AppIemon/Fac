@@ -14,59 +14,77 @@
   7. 베드에 돌을 다시 채우고 반복
 
 ## 규격
-  가로(X) 9 × 높이(Y) 3 × 세로(Z) 9  ·  블록 187개
+  가로(X) 10 × 높이(Y) 4 × 세로(Z) 9  ·  블록 210개
   예상 산출: 뼛가루 1개 → 퇴비 환산 약 3.36개 (순 +2.36개), 돌 27칸 소비. 속도는 괭이질 주기에 달려 있다.
 
 ## 층별 평면도 (위 → 아래, 화면 위쪽이 북쪽)
+── Y=+2 ──────────────────────────────
+     2101234567
+ z-1 ?.........
+ z+0 r.........
+ z+1 r.........
+ z+2 r.........
+ z+3 r.........
+ z+4 r.........
+ z+5 r.........
+ z+6 r.........
+ z+7 ..........
+
 ── Y=+1 ──────────────────────────────
-     101234567
- z-1 #########
- z+0 n........
- z+1 n........
- z+2 n........
- z+3 n........
- z+4 n........
- z+5 n........
- z+6 n........
- z+7 ########g
+     2101234567
+ z-1 ##########
+ z+0 #n........
+ z+1 #n........
+ z+2 #n........
+ z+3 #n........
+ z+4 #n........
+ z+5 #n........
+ z+6 #n........
+ z+7 .########g
 
 ── Y=+0 ──────────────────────────────
-     101234567
- z-1 #########
- z+0 ########h
- z+1 ########h
- z+2 ########h
- z+3 ####M###h
- z+4 ########h
- z+5 ########h
- z+6 ########h
- z+7 ########C
+     2101234567
+ z-1 .#########
+ z+0 #########h
+ z+1 #########h
+ z+2 #########h
+ z+3 #####M###h
+ z+4 #########h
+ z+5 #########h
+ z+6 #########h
+ z+7 .########C
 
 ── Y=-1 ──────────────────────────────
-     101234567
- z-1 #########
- z+0 #########
- z+1 #########
- z+2 #########
- z+3 ####n####
- z+4 #########
- z+5 #########
- z+6 #########
- z+7 #########
+     2101234567
+ z-1 .#########
+ z+0 .#########
+ z+1 .#########
+ z+2 .#########
+ z+3 .###?n####
+ z+4 .#########
+ z+5 .#########
+ z+6 .#########
+ z+7 .#########
 
 ## 블록 기호
  #  minecraft:stone
+ ?  minecraft:lever[face=floor,facing=south,powered=false]
+    minecraft:lever[face=wall,facing=west,powered=false]
  C  minecraft:chest[facing=south,type=single,waterlogged=false]
  M  minecraft:moss_block
  g  minecraft:glass
  h  minecraft:hopper[enabled=true,facing=south]
  n  minecraft:dispenser[facing=east,triggered=false]
     minecraft:dispenser[facing=up,triggered=false]
+ r  minecraft:redstone_wire[east=none,north=side,power=0,south=none,west=none]
+    minecraft:redstone_wire[east=none,north=side,power=0,south=side,west=none]
 
 ## 재료 목록
-  stone                      169개
+  stone                      183개
   dispenser                    8개
   hopper                       7개
+  redstone_wire                7개
+  lever                        2개
   chest                        1개
   glass                        1개
   moss_block                   1개
